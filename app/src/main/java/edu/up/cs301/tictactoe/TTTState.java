@@ -120,4 +120,8 @@ public class TTTState extends GameState {
     public void setWhoseMove(int id) {
     	playerToMove = id;
     }
+    public void getPosition(int x,int y){}
+    public String getWord(){return null;}
+    public void shuffle(){}
+
 }
