@@ -4,7 +4,7 @@ import edu.up.cs301.game.GameFramework.GameComputerPlayer;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
-import edu.up.cs301.tictactoe.BogMoveAction;
+import edu.up.cs301.boggle.BogMoveAction;
 
 /**
  * This is a really dumb computer player that always just makes a random move
