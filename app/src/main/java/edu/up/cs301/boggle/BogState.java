@@ -32,9 +32,9 @@ public class BogState extends GameState {
     public BogState()
     {
         // initialize the state to be a brand new game
-        board = new char[3][3];
-        for (int i = 0; i < 3; i++) {
-        	for (int j = 0; j < 3; j++) {
+        board = new char[4][4];
+        for (int i = 0; i < 4; i++) {
+        	for (int j = 0; j < 4; j++) {
         		board[i][j] = ' ';
         	}
         }
@@ -53,9 +53,9 @@ public class BogState extends GameState {
     {
     	// create a new 3x3 array, and copy the values from
     	// the original
-    	board = new char[3][3];
-    	for (int i = 0; i < 3; i++) {
-    		for (int j = 0; j < 3; j++) {
+    	board = new char[4][4];
+    	for (int i = 0; i < 4; i++) {
+    		for (int j = 0; j < 4; j++) {
     			board[i][j] = original.board[i][j];
     		}
     	}
