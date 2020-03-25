@@ -21,17 +21,17 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  * @author Steven R. Vegdahl
  * @version September 2016
  */
-public class TTTHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
+public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
     //Tag for logging
-    private static final String TAG = "TTTHumanPlayer1";
+    private static final String TAG = "BogHumanPlayer1";
     // the current activity
     private Activity myActivity;
 
     // the surface view
-    private TTTSurfaceView surfaceView;
+    private BogSurfaceView surfaceView;
 
     // the state
-    private TTTState state;
+    private BogState state;
 
     // the ID for the layout to use
     private int layoutId;
@@ -44,7 +44,7 @@ public class TTTHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * @param layoutId
      *      the id of the layout to use
      */
-    public TTTHumanPlayer1(String name, int layoutId) {
+    public BogHumanPlayer1(String name, int layoutId) {
         super(name);
         this.layoutId = layoutId;
     }
@@ -64,11 +64,11 @@ public class TTTHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             // if the move was out of turn or otherwise illegal, flash the screen
             surfaceView.flash(Color.RED, 50);
         }
-        else if (!(info instanceof TTTState))
-            // if we do not have a TTTState, ignore
+        else if (!(info instanceof BogState))
+            // if we do not have a BogState, ignore
             return;
         else {
-            state = (TTTState)info;
+            state = (BogState)info;
             surfaceView.setState(state);
             surfaceView.invalidate();
             Logger.log(TAG, "receiving");
@@ -87,7 +87,7 @@ public class TTTHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         activity.setContentView(layoutId);
 
         // set the surfaceView instance variable
-        surfaceView = (TTTSurfaceView)myActivity.findViewById(R.id.surfaceView);
+        surfaceView = (BogSurfaceView)myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener","OnTouch");
         surfaceView.setOnTouchListener(this);
         surfaceView.setState(state);
@@ -136,7 +136,7 @@ public class TTTHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (p == null) {
             surfaceView.flash(Color.RED, 50);
         } else {
-            TTTMoveAction action = new TTTMoveAction(this, p.y, p.x);
+            BogMoveAction action = new BogMoveAction(this, p.y, p.x);
             Logger.log("onTouch", "Human player sending TTTMA ...");
             game.sendAction(action);
             surfaceView.invalidate();

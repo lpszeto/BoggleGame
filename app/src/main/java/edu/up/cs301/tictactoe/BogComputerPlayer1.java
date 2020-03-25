@@ -12,12 +12,12 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  * @author Steven R. Vegdahl
  * @versio2 July 2013 
  */
-public class TTTComputerPlayer1 extends GameComputerPlayer
+public class BogComputerPlayer1 extends GameComputerPlayer
 {
     /*
-     * Constructor for the TTTComputerPlayer1 class
+     * Constructor for the BogComputerPlayer1 class
      */
-    public TTTComputerPlayer1(String name) {
+    public BogComputerPlayer1(String name) {
         // invoke superclass constructor
         super(name); // invoke superclass constructor
     }
@@ -48,7 +48,7 @@ public class TTTComputerPlayer1 extends GameComputerPlayer
     	// we'll end up here again (and possibly again, and again). At some point,
     	// we'll end up randomly pick a move that is legal.
         Logger.log("TTTComputer", "Sending move");
-    	game.sendAction(new TTTMoveAction(this, yVal, xVal));
+    	game.sendAction(new BogMoveAction(this, yVal, xVal));
     	
     }
 }

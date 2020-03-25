@@ -15,9 +15,9 @@ import android.graphics.Point;
  * @version September 2016
  * 
  */
-public class TTTComputerPlayer2 extends GameComputerPlayer {
+public class BogComputerPlayer2 extends GameComputerPlayer {
 	//Tag for logging
-	private static final String TAG = "TTTComputerPlayer2";
+	private static final String TAG = "BogComputerPlayer2";
 	/**
 	 * instance variable that tells which piece am I playing ('X' or 'O').
 	 * This is set once the player finds out which player they are, in the
@@ -31,7 +31,7 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 	 * @param name
 	 * 		the player's name
 	 */
-	public TTTComputerPlayer2(String name) {
+	public BogComputerPlayer2(String name) {
 		// invoke superclass constructor
 		super(name);
 	}// constructor
@@ -55,10 +55,10 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 	@Override
 	protected void receiveInfo(GameInfo info) {
 
-		// if it's not a TTTState message, ignore it; otherwise
+		// if it's not a BogState message, ignore it; otherwise
 		// cast it
-		if (!(info instanceof TTTState)) return;
-		TTTState myState = (TTTState)info;
+		if (!(info instanceof BogState)) return;
+		BogState myState = (BogState)info;
 
 		// if it's not our move, ignore it
 		if (myState.getWhoseMove() != this.playerNum) return;
@@ -70,7 +70,7 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 		Point win = findWin(myState, piece);
 		if (win != null) {
 			Logger.log("TTTComputer", "sending action");
-			game.sendAction(new TTTMoveAction(this, win.y, win.x));
+			game.sendAction(new BogMoveAction(this, win.y, win.x));
 			return;
 		}
 
@@ -80,7 +80,7 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 		Point loss = findWin(myState, opponentPiece);
 		if (loss != null) {
 			Logger.log("TTTComputer", "sending action");
-			game.sendAction(new TTTMoveAction(this, loss.y, loss.x));
+			game.sendAction(new BogMoveAction(this, loss.y, loss.x));
 			return;
 		}
 
@@ -105,7 +105,7 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 				if (myState.getPiece(j, i) == ' ') {
 					if (selectCount == 0) {
 						// make the move
-						game.sendAction(new TTTMoveAction(this, j, i));
+						game.sendAction(new BogMoveAction(this, j, i));
 						return;
 					}
 					selectCount--;
@@ -123,7 +123,7 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 	 * @return  If a winning move was found, a Point object containing
 	 *   the coordinates.  If no winning move was found, null.
 	 */
-	private Point findWin(TTTState state, char thePiece) {
+	private Point findWin(BogState state, char thePiece) {
 
 		// the winning move--initialized to null because we haven't found
 		// one yet
@@ -181,8 +181,8 @@ public class TTTComputerPlayer2 extends GameComputerPlayer {
 	 *   the coordinates.  If no winning move was found, null.
 	 */
 	// helper method to find a winning move
-	private Point helpFindWin(TTTState state, char thePiece, int rowStart,
-			int colStart, int rowDelta, int colDelta) {
+	private Point helpFindWin(BogState state, char thePiece, int rowStart,
+                              int colStart, int rowDelta, int colDelta) {
 
 		// our starting position
 		int row = rowStart;

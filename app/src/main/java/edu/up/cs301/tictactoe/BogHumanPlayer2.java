@@ -21,14 +21,14 @@ import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
  * @author Steven R. Vegdahl 
  * @version July 2013
  */
-public class TTTHumanPlayer2 extends GameHumanPlayer implements OnClickListener {
+public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener {
 	//Tag for logging
-	private static final String TAG = "TTTHumanPlayer2";
+	private static final String TAG = "BogHumanPlayer2";
 	// the activity under which we're running
 	GameMainActivity myActivity = null;
 	
 	// the game's state
-	TTTState state = null;
+	BogState state = null;
 	
 	/**
 	 * constuctor
@@ -36,7 +36,7 @@ public class TTTHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 	 * @param name
 	 * 		the player's name
 	 */
-	public TTTHumanPlayer2(String name) {
+	public BogHumanPlayer2(String name) {
 		super(name);
 	}
 
@@ -157,7 +157,7 @@ public class TTTHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 		int[] coord = mapNumberToCoord(val);
 		
 		// send a move action to the game
-		game.sendAction(new TTTMoveAction(this, coord[0], coord[1]));
+		game.sendAction(new BogMoveAction(this, coord[0], coord[1]));
 	}
 	
 	/**
@@ -214,14 +214,14 @@ public class TTTHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 			// if the move is out of turn or otherwise illegal, flash the screen
 			flash(Color.RED, 50);
 		}
-		else if (!(info instanceof TTTState)) {
-			// if it's not a TTTState object, ignore
+		else if (!(info instanceof BogState)) {
+			// if it's not a BogState object, ignore
 			return;
 		}
 		else {
 			// update the state variable, then update the GUI to reflect the updated
 			// state
-			state = (TTTState)info;
+			state = (BogState)info;
 			setButtonLocationsAndColors();
 		}
 	}

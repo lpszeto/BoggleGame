@@ -15,9 +15,9 @@ import edu.up.cs301.game.R;
  * @author Steven R. Vegdahl
  * @version July 2013
  */
-public class TTTMainActivity extends GameMainActivity {
+public class BogMainActivity extends GameMainActivity {
 	//Tag for logging
-	private static final String TAG = "TTTMainActivity";
+	private static final String TAG = "BogMainActivity";
 	public static final int PORT_NUMBER = 5213;
 
 	/**
@@ -32,35 +32,35 @@ public class TTTMainActivity extends GameMainActivity {
 		// yellow-on-blue GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer1(name, R.layout.ttt_human_player1);
+				return new BogHumanPlayer1(name, R.layout.ttt_human_player1);
 			}
 		});
 		
 		// red-on-yellow GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer1(name, R.layout.ttt_human_player1_flipped);
+				return new BogHumanPlayer1(name, R.layout.ttt_human_player1_flipped);
 			}
 		});
 
 		// game of 33
 		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer2(name);
+				return new BogHumanPlayer2(name);
 			}
 		});
 		
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTComputerPlayer1(name);
+				return new BogComputerPlayer1(name);
 			}
 		});
 		
 		// smarter computer player
 		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTComputerPlayer2(name);
+				return new BogComputerPlayer2(name);
 			}
 		});
 
@@ -90,7 +90,7 @@ public class TTTMainActivity extends GameMainActivity {
 	 */
 	@Override
 	public LocalGame createLocalGame() {
-		return new TTTLocalGame();
+		return new BogLogalGame();
 	}
 
 }

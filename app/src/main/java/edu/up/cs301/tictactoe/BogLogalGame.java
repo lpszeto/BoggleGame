@@ -5,18 +5,18 @@ import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 
 /**
- * The TTTLocalGame class for a simple tic-tac-toe game.  Defines and enforces
+ * The BogLogalGame class for a simple tic-tac-toe game.  Defines and enforces
  * the game rules; handles interactions with players.
  * 
  * @author Steven R. Vegdahl 
  * @version July 2013
  */
 
-public class TTTLocalGame extends LocalGame {
+public class BogLogalGame extends LocalGame {
 	//Tag for logging
-	private static final String TAG = "TTTLocalGame";
+	private static final String TAG = "BogLogalGame";
 	// the game's state
-	protected TTTState state;
+	protected BogState state;
 
 	// the marks for player 0 and player 1, respectively
 	private final static char[] mark = {'X','O'};
@@ -26,15 +26,15 @@ public class TTTLocalGame extends LocalGame {
 	protected int moveCount;
 
 	/**
-	 * Constructor for the TTTLocalGame.
+	 * Constructor for the BogLogalGame.
 	 */
-	public TTTLocalGame() {
+	public BogLogalGame() {
 
 		// perform superclass initialization
 		super();
 
-		// create a new, unfilled-in TTTState object
-		state = new TTTState();
+		// create a new, unfilled-in BogState object
+		state = new BogState();
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class TTTLocalGame extends LocalGame {
 	@Override
 	protected void sendUpdatedStateTo(GamePlayer p) {
 		// make a copy of the state, and send it to the player
-		p.sendInfo(new TTTState(state));
+		p.sendInfo(new BogState(state));
 
 	}
 
@@ -149,7 +149,7 @@ public class TTTLocalGame extends LocalGame {
 	protected boolean makeMove(GameAction action) {
 
 		// get the row and column position of the player's move
-		TTTMoveAction tm = (TTTMoveAction) action;
+		BogMoveAction tm = (BogMoveAction) action;
 		int row = tm.getRow();
 		int col = tm.getCol();
 

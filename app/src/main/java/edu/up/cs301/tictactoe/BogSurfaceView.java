@@ -21,7 +21,7 @@ import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
  *
  *
  */
-public class TTTSurfaceView extends FlashSurfaceView {
+public class BogSurfaceView extends FlashSurfaceView {
     //Tag for logging
     private static final String TAG = "TTTSurfaceView";
 
@@ -47,7 +47,7 @@ public class TTTSurfaceView extends FlashSurfaceView {
 	 */
 
     // the game's state
-    protected TTTState state;
+    protected BogState state;
 
     // the offset from the left and top to the beginning of our "middle square"; one
     // of these will always be zero
@@ -63,7 +63,7 @@ public class TTTSurfaceView extends FlashSurfaceView {
      *
      * @param context - a reference to the activity this animation is run under
      */
-    public TTTSurfaceView(Context context) {
+    public BogSurfaceView(Context context) {
         super(context);
         init();
     }// ctor
@@ -75,7 +75,7 @@ public class TTTSurfaceView extends FlashSurfaceView {
      * @param context - a reference to the activity this animation is run under
      * @param attrs   - set of attributes passed from system
      */
-    public TTTSurfaceView(Context context, AttributeSet attrs) {
+    public BogSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }// ctor
@@ -88,7 +88,7 @@ public class TTTSurfaceView extends FlashSurfaceView {
     }// init
 
 
-    public void setState(TTTState state) {
+    public void setState(BogState state) {
         this.state = state;
     }
 

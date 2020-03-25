@@ -10,9 +10,9 @@ import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
  * @author Steven R. Vegdahl
  * @version 2 July 2001
  */
-public class TTTMoveAction extends GameAction {
+public class BogMoveAction extends GameAction {
     //Tag for logging
-    private static final String TAG = "TTTMoveAction";
+    private static final String TAG = "BogMoveAction";
 	private static final long serialVersionUID = -2242980258970485343L;
 	
 	// instance variables: the selected row and column
@@ -20,13 +20,13 @@ public class TTTMoveAction extends GameAction {
     private int col;
 
     /**
-     * Constructor for TTTMoveAction
+     * Constructor for BogMoveAction
      *
      //@param source the player making the move
      * @param row the row of the square selected (0-2)
      * @param col the column of the square selected
      */
-    public TTTMoveAction(GamePlayer player, int row, int col)
+    public BogMoveAction(GamePlayer player, int row, int col)
     {
         // invoke superclass constructor to set the player
         super(player);

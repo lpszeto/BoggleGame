@@ -15,7 +15,7 @@ import android.util.AttributeSet;
  *
  *
  */
-public class TTTSurfaceViewFlipped extends TTTSurfaceView {
+public class BogSurfaceViewFlipped extends BogSurfaceView {
     //Tag for logging
     private static final String TAG = "TTTSurfaceViewFlipped";
     /*
@@ -27,7 +27,7 @@ public class TTTSurfaceViewFlipped extends TTTSurfaceView {
      *
      * @param context - a reference to the activity this animation is run under
      */
-    public TTTSurfaceViewFlipped(Context context) {
+    public BogSurfaceViewFlipped(Context context) {
         super(context);
     }// ctor
 
@@ -38,7 +38,7 @@ public class TTTSurfaceViewFlipped extends TTTSurfaceView {
      * @param context - a reference to the activity this animation is run under
      * @param attrs   - set of attributes passed from system
      */
-    public TTTSurfaceViewFlipped(Context context, AttributeSet attrs) {
+    public BogSurfaceViewFlipped(Context context, AttributeSet attrs) {
         super(context, attrs);
     }// ctor
 
