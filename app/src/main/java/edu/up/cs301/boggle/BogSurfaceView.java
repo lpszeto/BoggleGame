@@ -43,8 +43,8 @@ public class BogSurfaceView extends FlashSurfaceView {
             + LINE_WIDTH_PERCENT; // distance from left (or top) edge of square to the next one
 
     /*
-	 * Instance variables
-	 */
+     * Instance variables
+     */
 
     // the game's state
     protected BogState state;
@@ -339,6 +339,7 @@ public class BogSurfaceView extends FlashSurfaceView {
     private float v(float percent) {
         return vBase + percent * fullSquare / 100;
     }
+
 
 
 }

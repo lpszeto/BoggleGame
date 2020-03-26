@@ -12,15 +12,15 @@ import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
  */
 public class BogMoveAction extends GameAction {
     //Tag for logging
-    private static final String TAG = "BogMoveAction";
-	private static final long serialVersionUID = -2242980258970485343L;
-	
-	// instance variables: the selected row and column
+    private static final String TAG = "TTTMoveAction";
+    private static final long serialVersionUID = -2242980258970485343L;
+
+    // instance variables: the selected row and column
     private int row;
     private int col;
 
     /**
-     * Constructor for BogMoveAction
+     * Constructor for TTTMoveAction
      *
      //@param source the player making the move
      * @param row the row of the square selected (0-2)

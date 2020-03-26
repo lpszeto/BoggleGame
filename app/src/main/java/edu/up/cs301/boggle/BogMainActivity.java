@@ -17,7 +17,7 @@ import edu.up.cs301.game.R;
  */
 public class BogMainActivity extends GameMainActivity {
 	//Tag for logging
-	private static final String TAG = "BogMainActivity";
+	private static final String TAG = "TTTMainActivity";
 	public static final int PORT_NUMBER = 5213;
 
 	/**
@@ -28,14 +28,14 @@ public class BogMainActivity extends GameMainActivity {
 
 		// Define the allowed player types
 		ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
-		
+
 		// yellow-on-blue GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer1(name, R.layout.ttt_human_player1);
 			}
 		});
-		
+
 		// red-on-yellow GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
@@ -49,14 +49,14 @@ public class BogMainActivity extends GameMainActivity {
 				return new BogHumanPlayer2(name);
 			}
 		});
-		
+
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
 				return new BogComputerPlayer1(name);
 			}
 		});
-		
+
 		// smarter computer player
 		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
@@ -73,18 +73,18 @@ public class BogMainActivity extends GameMainActivity {
 
 		// Set the initial information for the remote player
 		defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
-		
+
 		//done!
 		return defaultConfig;
-		
+
 	}//createDefaultConfig
 
 
 	/**
 	 * createLocalGame
-	 * 
+	 *
 	 * Creates a new game that runs on the server tablet,
-	 * 
+	 *
 	 * @return a new, game-specific instance of a sub-class of the LocalGame
 	 *         class.
 	 */

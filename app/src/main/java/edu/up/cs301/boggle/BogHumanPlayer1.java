@@ -23,7 +23,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  */
 public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
     //Tag for logging
-    private static final String TAG = "BogHumanPlayer1";
+    private static final String TAG = "TTTHumanPlayer1";
     // the current activity
     private Activity myActivity;
 
@@ -65,10 +65,10 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.flash(Color.RED, 50);
         }
         else if (!(info instanceof BogState))
-            // if we do not have a BogState, ignore
+            // if we do not have a TTTState, ignore
             return;
         else {
-            state = (BogState)info;
+            state = (BogState) info;
             surfaceView.setState(state);
             surfaceView.invalidate();
             Logger.log(TAG, "receiving");
@@ -87,7 +87,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         activity.setContentView(layoutId);
 
         // set the surfaceView instance variable
-        surfaceView = (BogSurfaceView)myActivity.findViewById(R.id.surfaceView);
+        surfaceView = (BogSurfaceView) myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener","OnTouch");
         surfaceView.setOnTouchListener(this);
         surfaceView.setState(state);

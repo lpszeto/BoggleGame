@@ -19,8 +19,8 @@ public class BogSurfaceViewFlipped extends BogSurfaceView {
     //Tag for logging
     private static final String TAG = "TTTSurfaceViewFlipped";
     /*
-	 * Instance variables
-	 */
+     * Instance variables
+     */
 
     /**
      * Constructor for the TTTSurfaceView class.

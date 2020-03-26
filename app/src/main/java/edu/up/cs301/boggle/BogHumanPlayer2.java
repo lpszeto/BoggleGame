@@ -23,16 +23,16 @@ import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
  */
 public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener {
 	//Tag for logging
-	private static final String TAG = "BogHumanPlayer2";
+	private static final String TAG = "TTTHumanPlayer2";
 	// the activity under which we're running
 	GameMainActivity myActivity = null;
-	
+
 	// the game's state
 	BogState state = null;
-	
+
 	/**
 	 * constuctor
-	 * 
+	 *
 	 * @param name
 	 * 		the player's name
 	 */
@@ -52,7 +52,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 			{R.id.padding14Top, R.id.padding14Bot},
 			{R.id.padding15Top, R.id.padding15Bot},
 	};
-	
+
 	// android ID values for the button objects
 	private static final int[] buttonIndices = {
 			R.id.button7,
@@ -65,16 +65,16 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 			R.id.button14,
 			R.id.button15,
 	};
-	
+
 	// an array to hold our padding objects. It consists of 9 two-element arrays,
 	// each two-element array contains the upper and lower padding objects for
 	// a particular button, which are stored in order from 7 to 15. Element 0, for
 	// example, contains the two padding objects for the '7' button.
 	private LinearLayout[][] buttonPaddings;
-	
+
 	// our 9 button objects, in order from 7 to 15
 	private Button[] numberedButtons;
-	
+
 	/**
 	 * initializes the GUI's button array so that we can access them
 	 * by position
@@ -82,7 +82,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 	private void initializeButtons() {
 		// create the button array
 		numberedButtons = new Button[buttonIndices.length];
-		
+
 		// fill the array using the indices in the buttonIndices array
 		for (int i = 0; i < numberedButtons.length; i++) {
 			numberedButtons[i] =
@@ -95,10 +95,10 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 	 * modify them in order to change the positions of buttons.
 	 */
 	private void initializePaddingObjects() {
-		
+
 		// create the array
 		buttonPaddings = new LinearLayout[paddingIndices.length][];
-		
+
 		// create a 2D array of button-padding object that parallels the
 		// corresponding index-array
 		for (int i = 0; i < buttonPaddings.length; i++) {
@@ -117,25 +117,25 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 	 * knows what their game-position and opponents' names are.
 	 */
 	protected void initAfterReady() {
-		
+
 		// update the title, including the player names
 		myActivity.setTitle("Game of 33: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
-		
+
 		// update the TextFields that contain the players' names
 		updatePlayerNames();
 	}
-	
+
 	/**
 	 * Updates the player-name TextFields
 	 */
 	private void updatePlayerNames() {
 		// if we haven't yet gotten the player names, ignore
 		if (allPlayerNames == null) return;
-		
+
 		// get the two text fields
 		TextView oppName = (TextView)myActivity.findViewById(R.id.opponentName);
 		TextView myName = (TextView)myActivity.findViewById(R.id.thisPlayerName);
-		
+
 		// update them each with the appropriate name, so that the current player
 		// is listed on the bottom.
 		oppName.setText(allPlayerNames[1-playerNum]);
@@ -149,17 +149,17 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 		// get the text from the button, which will denote an
 		// integer in the range 7..15
 		String s = ((Button)v).getText().toString();
-		
+
 		// convert to an integer
 		int val = Integer.parseInt(s);
-		
+
 		// map the integer to a (2D) tic-tac-toe coordinate
 		int[] coord = mapNumberToCoord(val);
-		
+
 		// send a move action to the game
 		game.sendAction(new BogMoveAction(this, coord[0], coord[1]));
 	}
-	
+
 	/**
 	 * sets the current player as the activity's GUI
 	 */
@@ -170,16 +170,16 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 
 		// Load the layout resource for the new configuration
 		activity.setContentView(R.layout.ttt_human_player2);
-		
+
 		// initialize the button-array
 		initializeButtons();
-		
+
 		// intialize the array of padding objects
 		initializePaddingObjects();
-		
+
 		// put the player names into the GUI
 		updatePlayerNames();
-		
+
 		// listen to each of the buttons
 		for (int i = 0; i < numberedButtons.length; i++) {
 			numberedButtons[i].setOnClickListener(this);
@@ -193,7 +193,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 
 	/**
 	 * returns the GUI's top view
-	 * 
+	 *
 	 * @return
 	 * 		the GUI's top view
 	 */
@@ -204,7 +204,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 
 	/**
 	 * Callback method, called when player gets a message
-	 * 
+	 *
 	 * @param info
 	 * 		the message
 	 */
@@ -215,166 +215,166 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 			flash(Color.RED, 50);
 		}
 		else if (!(info instanceof BogState)) {
-			// if it's not a BogState object, ignore
+			// if it's not a TTTState object, ignore
 			return;
 		}
 		else {
 			// update the state variable, then update the GUI to reflect the updated
 			// state
-			state = (BogState)info;
+			state = (BogState) info;
 			setButtonLocationsAndColors();
 		}
 	}
-   
-    // tells the mapping between numbers in the game of 33 and the
-    // corresponding square in the tic-tac-toe game
-    private static int[][] mapping = {
-        {1,0}, // value = 7
-        {2,2}, // value = 8
-        {0,1}, // value = 9
-        {0,2}, // value = 10
-        {1,1}, // value = 11
-        {2,0}, // value = 12
-        {2,1}, // value = 13
-        {0,0}, // value = 14
-        {1,2}, // value = 15
-    };
-    
-    /**
-     * maps a game-of-33 number to the corresponding tic-tac-toe coordinate
-     * 
-     * @param x the number to map
-     * @return  a two-element array of int containing the tic-tac-toe
-     *   coordinates if the number is in the right range; otherwise, null
-     */
-    private static int[] mapNumberToCoord(int x) {
-    
-        // subtract 7 to reflect that the 'mapping' array begins with the
-        // value for 7
-        int idx = x-7;
-        
-        // if we're out of range return null
-        if (idx < 0 || idx >= mapping.length) return null;
-        
-        // number is in range: return corresponding tic-tac-toe coordinate
-        return mapping[idx];
-    }
-    
-    // objects for setting the weight of a LinearLayout to either 0 or 1
-    private static LinearLayout.LayoutParams pad0 = new LinearLayout.LayoutParams(0, 0, 0);
-    private static LinearLayout.LayoutParams pad1 = new LinearLayout.LayoutParams(0, 0, 1);
-    
-    /**
-     * sets the location and the color for each of the buttons
-     */
+
+	// tells the mapping between numbers in the game of 33 and the
+	// corresponding square in the tic-tac-toe game
+	private static int[][] mapping = {
+			{1,0}, // value = 7
+			{2,2}, // value = 8
+			{0,1}, // value = 9
+			{0,2}, // value = 10
+			{1,1}, // value = 11
+			{2,0}, // value = 12
+			{2,1}, // value = 13
+			{0,0}, // value = 14
+			{1,2}, // value = 15
+	};
+
+	/**
+	 * maps a game-of-33 number to the corresponding tic-tac-toe coordinate
+	 *
+	 * @param x the number to map
+	 * @return  a two-element array of int containing the tic-tac-toe
+	 *   coordinates if the number is in the right range; otherwise, null
+	 */
+	private static int[] mapNumberToCoord(int x) {
+
+		// subtract 7 to reflect that the 'mapping' array begins with the
+		// value for 7
+		int idx = x-7;
+
+		// if we're out of range return null
+		if (idx < 0 || idx >= mapping.length) return null;
+
+		// number is in range: return corresponding tic-tac-toe coordinate
+		return mapping[idx];
+	}
+
+	// objects for setting the weight of a LinearLayout to either 0 or 1
+	private static LinearLayout.LayoutParams pad0 = new LinearLayout.LayoutParams(0, 0, 0);
+	private static LinearLayout.LayoutParams pad1 = new LinearLayout.LayoutParams(0, 0, 1);
+
+	/**
+	 * sets the location and the color for each of the buttons
+	 */
 	private void setButtonLocationsAndColors() {
 		boolean gameIsOver = true;
 		for (int i = 7; i <= 15; i++) {
 			setButtonPositionAndColor(i, gameIsOver);
 		}
 	}
-    
+
 	/**
 	 * sets the location and color for the given button
-	 * 
+	 *
 	 * @param buttonNumber
 	 * 		the number on the button (7-15) that we want to handle
 	 */
-    private void setButtonPositionAndColor(int buttonNumber, boolean gameIsOver) {
-    	// if there is not yet state, or if the number is out of range,
-    	// ignore
-    	if (state == null) return;
-    	if (buttonNumber < 7 || buttonNumber > 15) return;
-    	
-    	// find the value of the piece (X, O or blank) by mapping
-    	// the button number to the tic-tac-toe coordinate
-    	int[] coord = mapNumberToCoord(buttonNumber);
-    	char piece = state.getPiece(coord[0], coord[1]);
-    	
-    	// get the value of my piece and of my opponent's piece,
-    	// based on whether I am player 0 or player 1
-    	char myPiece = "XO".charAt(playerNum);
-    	char oppPiece = "XO".charAt(1-playerNum);
-    	
-    	// fetch the array containing the pair of padding widgets
-    	// for the current number; also get the Button widget
-    	LinearLayout[] paddings = buttonPaddings[buttonNumber-7];
-    	Button button = numberedButtons[buttonNumber-7];
-    	
-    	// if we're looking at my piece:
-    	// - move the button down on the screen
-    	// - set button to white-on-blue
-    	// if we're looking at my opponent's piece
-    	// - move the button up on the screen
-    	// - set button to white-on-red
-    	// otherwise
-    	// - center the button vertically on the screen
-    	// - set the button to black-on-gray
-    	if (piece == myPiece) {
-    		// give the padding above the weight 1, and the
-    		// padding above the weight 0, which pushes the
-    		// button down on the screen
-    		paddings[0].setLayoutParams(pad1);
-    		paddings[1].setLayoutParams(pad0);
-    		// set the button's text and background colors
+	private void setButtonPositionAndColor(int buttonNumber, boolean gameIsOver) {
+		// if there is not yet state, or if the number is out of range,
+		// ignore
+		if (state == null) return;
+		if (buttonNumber < 7 || buttonNumber > 15) return;
+
+		// find the value of the piece (X, O or blank) by mapping
+		// the button number to the tic-tac-toe coordinate
+		int[] coord = mapNumberToCoord(buttonNumber);
+		char piece = state.getPiece(coord[0], coord[1]);
+
+		// get the value of my piece and of my opponent's piece,
+		// based on whether I am player 0 or player 1
+		char myPiece = "XO".charAt(playerNum);
+		char oppPiece = "XO".charAt(1-playerNum);
+
+		// fetch the array containing the pair of padding widgets
+		// for the current number; also get the Button widget
+		LinearLayout[] paddings = buttonPaddings[buttonNumber-7];
+		Button button = numberedButtons[buttonNumber-7];
+
+		// if we're looking at my piece:
+		// - move the button down on the screen
+		// - set button to white-on-blue
+		// if we're looking at my opponent's piece
+		// - move the button up on the screen
+		// - set button to white-on-red
+		// otherwise
+		// - center the button vertically on the screen
+		// - set the button to black-on-gray
+		if (piece == myPiece) {
+			// give the padding above the weight 1, and the
+			// padding above the weight 0, which pushes the
+			// button down on the screen
+			paddings[0].setLayoutParams(pad1);
+			paddings[1].setLayoutParams(pad0);
+			// set the button's text and background colors
 			button.setBackgroundColor(Color.BLUE);
-    		button.setTextColor(Color.WHITE);
-    	}
-    	else if (piece == oppPiece) {
-    		// give the padding above the weight 1, and the
-    		// padding above the weight 0, which pushes the
-    		// button down on the screen
-    		paddings[0].setLayoutParams(pad0);
-    		paddings[1].setLayoutParams(pad1);
-    		// set the button's text and background colors
-    		button.setBackgroundColor(Color.RED);
-    		button.setTextColor(Color.WHITE);
-    	}
-    	else {
-    		// set both the above and below padding-weights
-    		// to 1, which will center the button vertically
-    		paddings[0].setLayoutParams(pad1);
-    		paddings[1].setLayoutParams(pad1);
-    		// set the button's text and background colors
-    		button.setBackgroundColor(Color.GRAY);
-    		button.setTextColor(Color.BLACK);
-    	}
+			button.setTextColor(Color.WHITE);
+		}
+		else if (piece == oppPiece) {
+			// give the padding above the weight 1, and the
+			// padding above the weight 0, which pushes the
+			// button down on the screen
+			paddings[0].setLayoutParams(pad0);
+			paddings[1].setLayoutParams(pad1);
+			// set the button's text and background colors
+			button.setBackgroundColor(Color.RED);
+			button.setTextColor(Color.WHITE);
+		}
+		else {
+			// set both the above and below padding-weights
+			// to 1, which will center the button vertically
+			paddings[0].setLayoutParams(pad1);
+			paddings[1].setLayoutParams(pad1);
+			// set the button's text and background colors
+			button.setBackgroundColor(Color.GRAY);
+			button.setTextColor(Color.BLACK);
+		}
 		colorWinnerButtons();
 
-			button.setEnabled(state.getWhoseMove() == playerNum);
-    }
-    
-    /**
-     * gets player-number that has selected the corresponding number
-     * 
-     * @param number
-     * 		the piece number
-     * @return
-     * 		the player number (0 or 1) that selected that piece, or -1
-     * 		if the piece has not been selected
-     */
-    private int playerWhoOwnsPiece(int number) {
-    	if (state == null) {
-    		// if we don't yet have state, no one owns anything
-    		return -1;
-    	}
-    	
-    	// map the player number to the corresponding tic-tac-toe coordinate
-    	int[] coord = mapNumberToCoord(number);
-    	
-    	// return -1 (no one owns piece) if the number was not in range
-    	if (coord == null) {
-    		return -1;
-    	}
-    	
-    	// return 0 if the piece is an 'X', 1 if the piece is an 'O'; otherwise -1
-    	return "XO".indexOf(state.getPiece(coord[0], coord[1]));
-    	
-    }
+		button.setEnabled(state.getWhoseMove() == playerNum);
+	}
 
-/**
- *  colors a set of number-buttons, if any, that constitute a "win"
- */
+	/**
+	 * gets player-number that has selected the corresponding number
+	 *
+	 * @param number
+	 * 		the piece number
+	 * @return
+	 * 		the player number (0 or 1) that selected that piece, or -1
+	 * 		if the piece has not been selected
+	 */
+	private int playerWhoOwnsPiece(int number) {
+		if (state == null) {
+			// if we don't yet have state, no one owns anything
+			return -1;
+		}
+
+		// map the player number to the corresponding tic-tac-toe coordinate
+		int[] coord = mapNumberToCoord(number);
+
+		// return -1 (no one owns piece) if the number was not in range
+		if (coord == null) {
+			return -1;
+		}
+
+		// return 0 if the piece is an 'X', 1 if the piece is an 'O'; otherwise -1
+		return "XO".indexOf(state.getPiece(coord[0], coord[1]));
+
+	}
+
+	/**
+	 *  colors a set of number-buttons, if any, that constitute a "win"
+	 */
 	protected void colorWinnerButtons() {
 		// go through all combinations of three buttons,
 		// highlighting the given triple if:
@@ -405,7 +405,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 			}
 		}
 	}
-    
+
 //    /**
 //     * callback-method, called when the game is over. The effect
 //     * here is that if there is a winning combination, that those

@@ -14,7 +14,7 @@ import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 
 public class BogLogalGame extends LocalGame {
 	//Tag for logging
-	private static final String TAG = "BogLogalGame";
+	private static final String TAG = "TTTLocalGame";
 	// the game's state
 	protected BogState state;
 
@@ -26,21 +26,21 @@ public class BogLogalGame extends LocalGame {
 	protected int moveCount;
 
 	/**
-	 * Constructor for the BogLogalGame.
+	 * Constructor for the TTTLocalGame.
 	 */
 	public BogLogalGame() {
 
 		// perform superclass initialization
 		super();
 
-		// create a new, unfilled-in BogState object
+		// create a new, unfilled-in TTTState object
 		state = new BogState();
 	}
 
 	/**
 	 * Check if the game is over. It is over, return a string that tells
 	 * who the winner(s), if any, are. If the game is not over, return null;
-	 * 
+	 *
 	 * @return
 	 * 		a message that tells who has won the game, or null if the
 	 * 		game is not over
@@ -113,7 +113,7 @@ public class BogLogalGame extends LocalGame {
 	 * a GameInfo object to the player. If the game is not a perfect-information game
 	 * this method should remove any information from the game that the player is not
 	 * allowed to know.
-	 * 
+	 *
 	 * @param p
 	 * 			the player to notify
 	 */
@@ -126,8 +126,8 @@ public class BogLogalGame extends LocalGame {
 
 	/**
 	 * Tell whether the given player is allowed to make a move at the
-	 * present point in the game. 
-	 * 
+	 * present point in the game.
+	 *
 	 * @param playerIdx
 	 * 		the player's player-number (ID)
 	 * @return
@@ -139,7 +139,7 @@ public class BogLogalGame extends LocalGame {
 
 	/**
 	 * Makes a move on behalf of a player.
-	 * 
+	 *
 	 * @param action
 	 * 			The move that the player has sent to the game
 	 * @return
@@ -172,7 +172,7 @@ public class BogLogalGame extends LocalGame {
 
 		// bump the move count
 		moveCount++;
-		
+
 		// return true, indicating the it was a legal move
 		return true;
 	}
