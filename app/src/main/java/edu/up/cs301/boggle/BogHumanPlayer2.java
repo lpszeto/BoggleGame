@@ -184,7 +184,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 		for (int i = 0; i < numberedButtons.length; i++) {
 			numberedButtons[i].setOnClickListener(this);
 		}
-
+//test
 		// if we have state, update the GUI based on the state
 		if (state != null) {
 			receiveInfo(state);
