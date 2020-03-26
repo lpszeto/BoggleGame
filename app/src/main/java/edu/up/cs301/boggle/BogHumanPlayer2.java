@@ -23,7 +23,7 @@ import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
  */
 public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener {
 	//Tag for logging
-	private static final String TAG = "TTTHumanPlayer2";
+	private static final String TAG = "BogHumanPlayer2";
 	// the activity under which we're running
 	GameMainActivity myActivity = null;
 

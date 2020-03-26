@@ -1,5 +1,8 @@
 package edu.up.cs301.boggle;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 
@@ -13,29 +16,42 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
  */
 public class BogState extends GameState {
     //Tag for logging
-    private static final String TAG = "TTTState";
+    private static final String TAG = "BogState";
     private static final long serialVersionUID = 7552321013488624386L;
 
     ///////////////////////////////////////////////////
     // ************** instance variables ************
     ///////////////////////////////////////////////////
 
-    // the 3x3 array of char that represents the X's and O's on the board
+    // the 4x4 array of char that represents the letters on the board
     private char[][] board;
+
+    public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
 
     // an int that tells whose move it is
     private int playerToMove;
 
+    //Wordlist for player1
+    ArrayList<String> player1Words = new ArrayList<String>();
+
+    //Wordlist for player2
+    ArrayList<String> player2Words = new ArrayList<String>();
+
+    //Scores
+    private int player1Score = 0;
+    private int player2Score = 0;
+
     /**
-     * Constructor for objects of class TTTState
+     * Constructor for objects of class BogState
      */
     public BogState()
     {
+        Random ran = new Random();
         // initialize the state to be a brand new game
-        board = new char[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                board[i][j] = ' ';
+        board = new char[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                board[i][j] = alphabet[ran.nextInt(alphabet.length)];
             }
         }
 
@@ -44,18 +60,18 @@ public class BogState extends GameState {
     }// constructor
 
     /**
-     * Copy constructor for class TTTState
+     * Copy constructor for class BogState
      *
      * @param original
-     * 		the TTTState object that we want to clong
+     * 		the BogState object that we want to clong
      */
     public BogState(BogState original)
     {
-        // create a new 3x3 array, and copy the values from
+        // create a new 4x4 array, and copy the values from
         // the original
-        board = new char[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        board = new char[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
                 board[i][j] = original.board[i][j];
             }
         }
