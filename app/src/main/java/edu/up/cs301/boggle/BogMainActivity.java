@@ -32,14 +32,14 @@ public class BogMainActivity extends GameMainActivity {
 		// yellow-on-blue GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
 			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer1(name, R.layout.ttt_human_player1);
+				return new BogHumanPlayer1(name, R.layout.bog_human_player1);
 			}
 		});
 
 		// red-on-yellow GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer1(name, R.layout.ttt_human_player1_flipped);
+				return new BogHumanPlayer1(name, R.layout.bog_human_player1_flipped);
 			}
 		});
 
@@ -65,7 +65,7 @@ public class BogMainActivity extends GameMainActivity {
 		});
 
 		// Create a game configuration class for Tic-tac-toe
-		GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Tic-Tac-Toe", PORT_NUMBER);
+		GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Boggle", PORT_NUMBER);
 
 		// Add the default players
 		defaultConfig.addPlayer("Human", 0); // yellow-on-blue GUI

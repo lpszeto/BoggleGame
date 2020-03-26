@@ -169,7 +169,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 		myActivity = activity;
 
 		// Load the layout resource for the new configuration
-		activity.setContentView(R.layout.ttt_human_player2);
+		activity.setContentView(R.layout.bog_human_player2);
 
 		// initialize the button-array
 		initializeButtons();

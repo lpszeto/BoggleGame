@@ -23,7 +23,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  */
 public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
     //Tag for logging
-    private static final String TAG = "TTTHumanPlayer1";
+    private static final String TAG = "BogHumanPlayer1";
     // the current activity
     private Activity myActivity;
 

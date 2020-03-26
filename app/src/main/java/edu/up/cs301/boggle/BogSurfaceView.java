@@ -23,7 +23,7 @@ import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
  */
 public class BogSurfaceView extends FlashSurfaceView {
     //Tag for logging
-    private static final String TAG = "TTTSurfaceView";
+    private static final String TAG = "BogSurfaceView";
 
     // some constants, which are percentages with respect to the minimum
     // of the height and the width. All drawing will be done in the "middle
@@ -59,7 +59,7 @@ public class BogSurfaceView extends FlashSurfaceView {
     protected float fullSquare;
 
     /**
-     * Constructor for the TTTSurfaceView class.
+     * Constructor for the BogSurfaceView class.
      *
      * @param context - a reference to the activity this animation is run under
      */
