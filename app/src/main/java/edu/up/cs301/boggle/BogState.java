@@ -173,5 +173,13 @@ public class BogState extends GameState {
     public int getPlayer0Score() {return player0Score;}
 
     public int getPlayer1Score() {return player1Score;}
+    public void shuffle(){
+        for (int i = 0; i < 4; i++) {
+            Random ran = new Random();
+            for (int j = 0; j < 4; j++) {
+                board[i][j] = alphabet[ran.nextInt(alphabet.length)];
+            }
+        }
+    }
 
 }
