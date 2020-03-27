@@ -1,5 +1,8 @@
 package edu.up.cs301.boggle;
 
+import android.os.CountDownTimer;
+import android.util.Log;
+
 import edu.up.cs301.game.GameFramework.GamePlayer;
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
@@ -14,7 +17,7 @@ import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 
 public class BogLogalGame extends LocalGame {
 	//Tag for logging
-	private static final String TAG = "TTTLocalGame";
+	private static final String TAG = "BogLocalGame";
 	// the game's state
 	protected BogState state;
 
@@ -25,15 +28,17 @@ public class BogLogalGame extends LocalGame {
 	// determine whether the game is over
 	protected int moveCount;
 
+	protected CountDownTimer countDownTimer;
+
 	/**
-	 * Constructor for the TTTLocalGame.
+	 * Constructor for the BogLocalGame.
 	 */
 	public BogLogalGame() {
 
 		// perform superclass initialization
 		super();
 
-		// create a new, unfilled-in TTTState object
+		// create a new, shuffled BogState object
 		state = new BogState();
 	}
 
@@ -48,64 +53,20 @@ public class BogLogalGame extends LocalGame {
 	@Override
 	protected String checkIfGameOver() {
 
-		// the idea is that we simultaneously look at a row, column and
-		// a diagonal, using the variables 'rowToken', 'colToken' and
-		// 'diagToken'; we do this three times so that we get all three
-		// rows, all three columns, and both diagonals.  (The way the
-		// math works out, one of the diagonal tests tests the middle
-		// column.)  The respective variables get set to ' ' unless
-		// all characters in the line that have currently been seen are
-		// identical; in this case the variable contains that character
+		if (state.gameOver) {
+            if (state.getPlayer0Score() >= state.getPlayer1Score()) {
+                int gameWinner = 0;
+                return playerNames[gameWinner]+" is the winner.";
+            }
+            else {
+                int gameWinner = 1;
+                return playerNames[gameWinner]+" is the winner.";
+            }
+        }
+        else {
+            return null; //  game not over
+        }
 
-		// the character that will eventually contain an 'X' or 'O' if we
-		// find a winner
-		char resultChar = ' ';
-
-		// to all three lines in the current group
-		for (int i = 0; i < 3; i++) {
-			// get the initial character in each line
-			char rowToken = state.getPiece(i,0);
-			char colToken = state.getPiece(0,i);;
-			char diagToken = state.getPiece(0,i);
-			// determine the direction that the diagonal moves
-			int diagDelta = 1-i;
-			// look for matches for each of the three positions in each
-			// of the current lines; set the corresponding variable to ' '
-			// if a mismatch is found
-			for (int j = 1; j < 3; j++) {
-				if (state.getPiece(i,j) != rowToken) rowToken = ' ';
-				if (state.getPiece(j,i) != colToken) colToken = ' ';
-				if (state.getPiece(j, i+(diagDelta*j)) != diagToken) diagToken = ' ';
-			}
-
-			////////////////////////////////////////////////////////////
-			// At this point, if any of our three variables is non-blank
-			// then we have found a winner.
-			////////////////////////////////////////////////////////////
-
-			// if we find a winner, indicate such by setting 'resultChar'
-			// to the winning mark.
-			if (rowToken != ' ') resultChar = rowToken;
-			else if (colToken != ' ') resultChar = colToken;
-			else if (diagToken != ' ') resultChar = diagToken;
-		}
-
-		// if resultChar is blank, we found no winner, so return null,
-		// unless the board is filled up. In that case, it's a cat's game.
-		if (resultChar == ' ') {
-			if  (moveCount >= 9) {
-				// no winner, but all 9 spots have been filled
-				return "It's a cat's game.";
-			}
-			else {
-				return null; // no winner, but game not over
-			}
-		}
-
-		// if we get here, then we've found a winner, so return the 0/1
-		// value that corresponds to that mark; then return a message
-		int gameWinner = resultChar == mark[0] ? 0 : 1;
-		return playerNames[gameWinner]+" is the winner.";
 	}
 
 	/**

@@ -109,7 +109,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * knows what their game-position and opponents' names are.
      */
     protected void initAfterReady() {
-        myActivity.setTitle("Tic-Tac-Toe: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+        myActivity.setTitle("Boggle" +allPlayerNames[0]+" vs. "+allPlayerNames[1]);
     }
 
     /**

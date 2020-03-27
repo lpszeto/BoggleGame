@@ -1,5 +1,8 @@
 package edu.up.cs301.boggle;
 
+import android.os.CountDownTimer;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -32,14 +35,20 @@ public class BogState extends GameState {
     private int playerToMove;
 
     //Wordlist for player1
-    ArrayList<String> player1Words = new ArrayList<String>();
+    ArrayList<String> player0Words = new ArrayList<String>();
 
     //Wordlist for player2
-    ArrayList<String> player2Words = new ArrayList<String>();
+    ArrayList<String> player1Words = new ArrayList<String>();
 
     //Scores
+    private int player0Score = 0;
     private int player1Score = 0;
-    private int player2Score = 0;
+
+    protected CountDownTimer countDownTimer;
+    protected int minutesLeft = 3;
+    protected int secondsLeft = 0;
+    boolean gameOver = false;
+
 
     /**
      * Constructor for objects of class BogState
@@ -54,6 +63,29 @@ public class BogState extends GameState {
                 board[i][j] = alphabet[ran.nextInt(alphabet.length)];
             }
         }
+
+        //start game clock
+        countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
+            @Override
+            public void onTick(long l000) {
+                Log.i("secondsLeft","" + secondsLeft);
+                Log.i("minutesLeft","" + minutesLeft);
+                if (secondsLeft == 0) {
+                    secondsLeft = 59;
+                    minutesLeft--;
+                }
+                else {
+                    secondsLeft--;
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i("TIMER", "DONE!");
+                gameOver = true;
+                player0Score++; //TODO DELETE THIS!!! (Temporary fix to test BogLocalGame.checkIfGameOver())
+            }
+        }.start();
 
         // make it player 0's move
         playerToMove = 0;
@@ -91,6 +123,7 @@ public class BogState extends GameState {
      * 		the piece at the given square; ' ' if no piece there;
      * 		'?' if it is an illegal square
      */
+
     public char getPiece(int row, int col) {
         // if we're out of bounds or anything, return '?';
         if (board == null || row < 0 || col < 0) return '?';
@@ -136,5 +169,9 @@ public class BogState extends GameState {
     public void setWhoseMove(int id) {
         playerToMove = id;
     }
+
+    public int getPlayer0Score() {return player0Score;}
+
+    public int getPlayer1Score() {return player1Score;}
 
 }
