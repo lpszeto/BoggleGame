@@ -10,7 +10,7 @@ import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
 
 /**
- * Contains the state of a Tic-Tac-Toe game.  Sent by the game when
+ * Contains the state of a Boggle game.  Sent by the game when
  * a player wants to enquire about the state of the game.  (E.g., to display
  * it, or to help figure out its next move.)
  * 
@@ -153,7 +153,7 @@ public class BogState extends GameState {
     }
 
     /**
-     * Tells whose move it is.
+     * Tells whose move it is.(TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
      *
      * @return the index (0 or 1) of the player whose move it is.
      */
@@ -162,7 +162,7 @@ public class BogState extends GameState {
     }
 
     /**
-     * set whose move it is
+     * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
      * @param id
      * 		the player we want to set as to whose move it is
      */

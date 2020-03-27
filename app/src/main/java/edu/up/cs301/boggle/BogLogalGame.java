@@ -41,7 +41,9 @@ public class BogLogalGame extends LocalGame {
 		// create a new, shuffled BogState object
 		state = new BogState();
 	}
-
+	public int scores(int player){
+		return (player == 0)? state.getPlayer0Score() : state.getPlayer1Score();
+	}
 	/**
 	 * Check if the game is over. It is over, return a string that tells
 	 * who the winner(s), if any, are. If the game is not over, return null;
