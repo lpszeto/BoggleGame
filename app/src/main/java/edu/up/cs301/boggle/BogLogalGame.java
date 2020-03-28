@@ -39,7 +39,7 @@ public class BogLogalGame extends LocalGame {
 		super();
 
 		// create a new, shuffled BogState object
-		state = new BogState();
+		state = new BogState();// 
 	}
 	public int scores(int player){
 		return (player == 0)? state.getPlayer0Score() : state.getPlayer1Score();
