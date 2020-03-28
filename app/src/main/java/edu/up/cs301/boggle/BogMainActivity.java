@@ -30,21 +30,21 @@ public class BogMainActivity extends GameMainActivity {
 		ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
 		// yellow-on-blue GUI
-		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
+		playerTypes.add(new GamePlayerType("Local Human Player 1") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer1(name, R.layout.bog_human_player1);
 			}
 		});
 
-		// red-on-yellow GUI
-		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
+		// red-on-yellow GUI (TEMPORARY SINCE WE ARE UNSURE OF FLIPPING THE SCREEN)
+		/*playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer1(name, R.layout.bog_human_player1_flipped);
 			}
-		});
+		});*/
 
 		// game of 33
-		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
+		playerTypes.add(new GamePlayerType("Local Human Player 2") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer2(name);
 			}
