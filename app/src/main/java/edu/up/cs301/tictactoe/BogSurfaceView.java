@@ -25,6 +25,38 @@ public class BogSurfaceView extends FlashSurfaceView {
     //Tag for logging
     private static final String TAG = "TTTSurfaceView";
 
+    //We want to create a surface view with 7 major components
+    //each component has a set height and width percentage.
+
+    //component 1 & 2: total wins from player 1 and player 2
+    private int PlayerOneWins = 0;
+    private int PlayerTwoWins = 0;
+    private final static float PLAYER_RUNNING_WINS_WIDTH = 35/2;
+    private final static float PLAYER_RUNNING_WINS_HEIGHT = 17;
+
+    //component 3: wordbank
+    private final static float WORD_BANK_WIDTH_PERCENT = 35;
+    private final static float WORD_BANK_HEIGHT_PERCENT = 65;
+
+    //component 4: timer
+    private final static float TIMER_WIDTH_PERCENT = 65;
+    private final static float TIMER_HEIGHT_PERCENT = 17;
+
+    //component 5: Boggle board
+    private final static float BOG_SQUARE_SIZE_PERCENT = 65/4;
+    private final static float BOG_BORDER_PERCENT = 5;
+    private final static float BOG_WIDTH_PERCENT = 65;
+    private final static float BOG_HEIGHT_PERCENT = 65;
+    private final static float BOG_LINE_WIDTH_PERCENT = 1;
+
+    //component 6: progress bank
+    private final static float PROGRESS_BANK_WIDTH_PERCENT = 65;
+    private final static float PROGRESS_BANK_HEIGHT_PERCENT = 20;
+
+    //component 7: running total
+    private final static float RUNNING_TOTAL_WIDTH_PERCENT = 35;
+    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = 20;
+
     // some constants, which are percentages with respect to the minimum
     // of the height and the width. All drawing will be done in the "middle
     // square".
@@ -59,7 +91,7 @@ public class BogSurfaceView extends FlashSurfaceView {
     protected float fullSquare;
 
     /**
-     * Constructor for the TTTSurfaceView class.
+     * Constructor for the BogSurfaceView class.
      *
      * @param context - a reference to the activity this animation is run under
      */
@@ -120,33 +152,72 @@ public class BogSurfaceView extends FlashSurfaceView {
         // update the variables that relate
         // to the dimensions of the animation surface
         updateDimensions(g);
+        int width = g.getWidth();
+        int height = g.getHeight();
 
-        // paint the TTT-board's horizontal and vertical lines
         Paint p = new Paint();
         p.setColor(foregroundColor());
-        for (int i = 0; i <= 1; i++) {
-            float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
-                    + (i * SQUARE_DELTA_PERCENT);
-            float variable2 = variable1 + LINE_WIDTH_PERCENT;
-            float fixed1 = BORDER_PERCENT;
-            float fixed2 = 100 - BORDER_PERCENT;
-            g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
-            g.drawRect(h(fixed1), v(variable1), h(fixed2), v(variable2), p);
+
+        //paint the Boggle board
+        for(int i = 0; i <= 3; i ++){
+                float left = (width * (i + 1));
+                float right = (BOG_BORDER_PERCENT * width) + (width * (i + 1));
+                float top =(2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height);
+                float bottom = top + (BOG_HEIGHT_PERCENT * height);
+                g.drawRect(left, top, right, bottom, p);
         }
 
-        // if we don't have any state, there's nothing more to draw, so return
-        if (state == null) {
-            return;
+        for(int x = 0; x <= 3; x++){
+            float left = BOG_BORDER_PERCENT;
+            float right = (BOG_BORDER_PERCENT * width) + (BOG_WIDTH_PERCENT * width);
+            float top = (2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) +
+                    (BOG_SQUARE_SIZE_PERCENT * (height * (x + 1)));
+            float bottom = top - (BOG_LINE_WIDTH_PERCENT * x);
+            g.drawRect(left, top, right,bottom, p);
         }
 
-        // for each square that has an X or O, draw it on the appropriate
-        // place on the canvas
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                char result = state.getPiece(row, col); // get piece
-                drawSymbol(g, result, col, row);
-            }
-        }
+        //paint the timer
+        double timeLeft  = 3.00;
+        double percentOfTime = timeLeft/3.00;
+
+        //draws the outline of the timer
+        float left = (BOG_BORDER_PERCENT * width);
+        float right = left + (TIMER_WIDTH_PERCENT * width);
+        float top = (BOG_BORDER_PERCENT * height);
+        float bottom = top + (TIMER_HEIGHT_PERCENT * height);
+        g.drawRect(left, top, right,bottom, p);
+
+        //Paint the word bank
+        right = width -(BOG_BORDER_PERCENT * width);
+        left = width - right - (WORD_BANK_WIDTH_PERCENT * width);
+        top  = (2 * BOG_BORDER_PERCENT * height) + (PROGRESS_BANK_HEIGHT_PERCENT * height);
+        bottom = top + (WORD_BANK_HEIGHT_PERCENT * height);
+        g.drawRect(left, top, right, bottom, p);
+
+        //Paint the players' running wins
+        float top1 = (BOG_BORDER_PERCENT * height);
+        float bottom1 = top1 + (PLAYER_RUNNING_WINS_HEIGHT * height);
+        float right2 = (BOG_BORDER_PERCENT * width);
+        float left2 = right2 + (PLAYER_RUNNING_WINS_WIDTH);
+        float right1 = left2;
+        float left1 = right1 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        g.drawRect(left1, top1, right1, bottom1, p);
+        g.drawRect(left2, top1, right2, bottom1, p);
+
+        //Paint the current running total
+        bottom = (BOG_BORDER_PERCENT * height);
+        top = height - bottom -(RUNNING_TOTAL_HEIGHT_PERCENT * height);
+        right = (BOG_BORDER_PERCENT * width);
+        left = width - right - (RUNNING_TOTAL_WIDTH_PERCENT * width);
+        g.drawRect(left, top, right, bottom, p);
+
+        //paint progress bar below
+        bottom = height - (BOG_BORDER_PERCENT * height);
+        top = height - bottom -(PROGRESS_BANK_HEIGHT_PERCENT * height);
+        left = (BOG_BORDER_PERCENT * width);
+        right = left + (PROGRESS_BANK_WIDTH_PERCENT * width);
+        g.drawRect(left, top, right, bottom, p);
+
     }
 
     /**
