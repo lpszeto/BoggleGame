@@ -23,7 +23,7 @@ public class DictionaryTrie {
         if(node.children.size() == 0) {
             Log.i("Children: ", "NONE");
             if(!node.isWord) {
-                Log.i("ERROR!!!!", "isWord SHOULD HAVE BEEN SET TO TRUE!!!!");
+//                Log.i("ERROR!!!!", "isWord SHOULD HAVE BEEN SET TO TRUE!!!!");
             }
         }
         else { //the node has children...

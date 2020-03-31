@@ -34,6 +34,21 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	public BogComputerPlayer2(String name) {
 		// invoke superclass constructor
 		super(name);
+
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~My Stuff~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		String[] wordBank = {"alpha", "all", "allowance", "zygote", "allowed","alpine"};
+
+		DictionaryTrie dictTrie = new DictionaryTrie();
+		dictTrie.initializeTop();
+
+		for (int i = 0; i<wordBank.length; i++ ) {
+			dictTrie.addWord(wordBank[i]);
+		}
+
+		for (int i = 0; i < dictTrie.top.size(); i++) {
+			dictTrie.printSubTries(dictTrie.top.get(i));
+		}
+
 	}// constructor
 
 	/**
