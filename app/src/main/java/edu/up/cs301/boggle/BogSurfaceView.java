@@ -1,4 +1,4 @@
-package edu.up.cs301.tictactoe;
+package edu.up.cs301.boggle;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -23,7 +23,7 @@ import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
  */
 public class BogSurfaceView extends FlashSurfaceView {
     //Tag for logging
-    private static final String TAG = "TTTSurfaceView";
+    private static final String TAG = "BogSurfaceView";
 
     //We want to create a surface view with 7 major components
     //each component has a set height and width percentage.
@@ -75,8 +75,8 @@ public class BogSurfaceView extends FlashSurfaceView {
             + LINE_WIDTH_PERCENT; // distance from left (or top) edge of square to the next one
 
     /*
-	 * Instance variables
-	 */
+     * Instance variables
+     */
 
     // the game's state
     protected BogState state;
@@ -410,6 +410,7 @@ public class BogSurfaceView extends FlashSurfaceView {
     private float v(float percent) {
         return vBase + percent * fullSquare / 100;
     }
+
 
 
 }

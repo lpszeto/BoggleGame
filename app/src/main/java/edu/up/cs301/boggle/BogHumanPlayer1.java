@@ -1,4 +1,4 @@
-package edu.up.cs301.tictactoe;
+package edu.up.cs301.boggle;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -65,10 +65,10 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.flash(Color.RED, 50);
         }
         else if (!(info instanceof BogState))
-            // if we do not have a BogState, ignore
+            // if we do not have a TTTState, ignore
             return;
         else {
-            state = (BogState)info;
+            state = (BogState) info;
             surfaceView.setState(state);
             surfaceView.invalidate();
             Logger.log(TAG, "receiving");
@@ -87,7 +87,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         activity.setContentView(layoutId);
 
         // set the surfaceView instance variable
-        surfaceView = (BogSurfaceView)myActivity.findViewById(R.id.surfaceView);
+        surfaceView = (BogSurfaceView) myActivity.findViewById(R.id.surfaceView);
         Logger.log("set listener","OnTouch");
         surfaceView.setOnTouchListener(this);
         surfaceView.setState(state);
@@ -109,7 +109,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * knows what their game-position and opponents' names are.
      */
     protected void initAfterReady() {
-        myActivity.setTitle("Tic-Tac-Toe: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+        myActivity.setTitle("Boggle" +allPlayerNames[0]+" vs. "+allPlayerNames[1]);
     }
 
     /**

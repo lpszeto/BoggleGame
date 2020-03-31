@@ -1,10 +1,10 @@
-package edu.up.cs301.tictactoe;
+package edu.up.cs301.boggle;
 
 import edu.up.cs301.game.GameFramework.GamePlayer;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 
 /**
- * A game-move object that a tic-tac-toe player sends to the game to make
+ * A game-move object that a boggle player sends to the game to make
  * a move.
  * 
  * @author Steven R. Vegdahl
@@ -13,9 +13,9 @@ import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 public class BogMoveAction extends GameAction {
     //Tag for logging
     private static final String TAG = "BogMoveAction";
-	private static final long serialVersionUID = -2242980258970485343L;
-	
-	// instance variables: the selected row and column
+    private static final long serialVersionUID = -2242980258970485343L;
+
+    // instance variables: the selected row and column
     private int row;
     private int col;
 
@@ -23,7 +23,7 @@ public class BogMoveAction extends GameAction {
      * Constructor for BogMoveAction
      *
      //@param source the player making the move
-     * @param row the row of the square selected (0-2)
+     * @param row the row of the square selected (0-3)
      * @param col the column of the square selected
      */
     public BogMoveAction(GamePlayer player, int row, int col)
@@ -32,8 +32,8 @@ public class BogMoveAction extends GameAction {
         super(player);
 
         // set the row and column as passed to us
-        this.row = Math.max(0, Math.min(2, row));
-        this.col = Math.max(0, Math.min(2, col));
+        this.row = Math.max(0, Math.min(3, row));
+        this.col = Math.max(0, Math.min(3, col));
     }
 
     /**

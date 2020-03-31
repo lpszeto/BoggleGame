@@ -1,4 +1,4 @@
-package edu.up.cs301.tictactoe;
+package edu.up.cs301.boggle;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -17,13 +17,13 @@ import android.util.AttributeSet;
  */
 public class BogSurfaceViewFlipped extends BogSurfaceView {
     //Tag for logging
-    private static final String TAG = "TTTSurfaceViewFlipped";
+    private static final String TAG = "BogSurfaceViewFlipped";
     /*
-	 * Instance variables
-	 */
+     * Instance variables
+     */
 
     /**
-     * Constructor for the TTTSurfaceView class.
+     * Constructor for the BogSurfaceView class.
      *
      * @param context - a reference to the activity this animation is run under
      */

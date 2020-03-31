@@ -1,4 +1,4 @@
-package edu.up.cs301.tictactoe;
+package edu.up.cs301.boggle;
 
 import edu.up.cs301.game.GameFramework.GameComputerPlayer;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
@@ -17,7 +17,7 @@ import android.graphics.Point;
  */
 public class BogComputerPlayer2 extends GameComputerPlayer {
 	//Tag for logging
-	private static final String TAG = "BogComputerPlayer2";
+	private static final String TAG = "TTTComputerPlayer2";
 	/**
 	 * instance variable that tells which piece am I playing ('X' or 'O').
 	 * This is set once the player finds out which player they are, in the
@@ -27,7 +27,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 
 	/**
 	 * constructor for a computer player
-	 * 
+	 *
 	 * @param name
 	 * 		the player's name
 	 */
@@ -48,17 +48,17 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	/**
 	 * Called when the player receives a game-state (or other info) from the
 	 * game.
-	 * 
+	 *
 	 * @param info
 	 * 		the message from the game
 	 */
 	@Override
 	protected void receiveInfo(GameInfo info) {
 
-		// if it's not a BogState message, ignore it; otherwise
+		// if it's not a TTTState message, ignore it; otherwise
 		// cast it
 		if (!(info instanceof BogState)) return;
-		BogState myState = (BogState)info;
+		BogState myState = (BogState) info;
 
 		// if it's not our move, ignore it
 		if (myState.getWhoseMove() != this.playerNum) return;
@@ -85,7 +85,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		}
 
 		// otherwise, make a move that is randomly selected from the
-		// blank squares ...        
+		// blank squares ...
 
 		// count the spaces
 		int spaceCount = 0;
@@ -116,7 +116,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 
 	/**
 	 * finds a winning move for a player
-	 * 
+	 *
 	 * @param state  the state of the game
 	 * @param thePiece  the piece we're trying to place ('X' or 'O') for a
 	 *   win
@@ -161,12 +161,12 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	/**
 	 * examines a particular row, column or diagonal to see if a move there
 	 * would cause a given player to win.  <p>
-	 * 
+	 *
 	 * We can examine row by specifying rowDelta=0 and colDelta=1.  We can
 	 * examine a column by specifying rowDelta=1 and colDelta=0.  We can
 	 * examine a diagonal by specifying rowDelta=1 and colDelta=-1 or
 	 * vice versa.
-	 * 
+	 *
 	 * @param state  the state of the game
 	 * @param thePiece  the piece that we would place to achieve the win
 	 * @param rowStart the row-position of first square in the row/col
@@ -182,7 +182,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	 */
 	// helper method to find a winning move
 	private Point helpFindWin(BogState state, char thePiece, int rowStart,
-                              int colStart, int rowDelta, int colDelta) {
+							  int colStart, int rowDelta, int colDelta) {
 
 		// our starting position
 		int row = rowStart;
@@ -228,5 +228,4 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 			return null;
 		}
 	}// helpFindWin
-
 }

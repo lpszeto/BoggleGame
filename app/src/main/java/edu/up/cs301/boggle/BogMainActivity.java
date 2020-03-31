@@ -1,4 +1,4 @@
-package edu.up.cs301.tictactoe;
+package edu.up.cs301.boggle;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import edu.up.cs301.game.R;
  */
 public class BogMainActivity extends GameMainActivity {
 	//Tag for logging
-	private static final String TAG = "BogMainActivity";
+	private static final String TAG = "TTTMainActivity";
 	public static final int PORT_NUMBER = 5213;
 
 	/**
@@ -28,35 +28,35 @@ public class BogMainActivity extends GameMainActivity {
 
 		// Define the allowed player types
 		ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
-		
+
 		// yellow-on-blue GUI
-		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
+		playerTypes.add(new GamePlayerType("Local Human Player 1") {
 			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer1(name, R.layout.ttt_human_player1);
-			}
-		});
-		
-		// red-on-yellow GUI
-		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
-			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer1(name, R.layout.ttt_human_player1_flipped);
+				return new BogHumanPlayer1(name, R.layout.bog_human_player1);
 			}
 		});
 
+		// red-on-yellow GUI (TEMPORARY SINCE WE ARE UNSURE OF FLIPPING THE SCREEN)
+		/*playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
+			public GamePlayer createPlayer(String name) {
+				return new BogHumanPlayer1(name, R.layout.bog_human_player1_flipped);
+			}
+		});*/
+
 		// game of 33
-		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
+		playerTypes.add(new GamePlayerType("Local Human Player 2") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer2(name);
 			}
 		});
-		
+
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
 				return new BogComputerPlayer1(name);
 			}
 		});
-		
+
 		// smarter computer player
 		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
@@ -65,7 +65,7 @@ public class BogMainActivity extends GameMainActivity {
 		});
 
 		// Create a game configuration class for Tic-tac-toe
-		GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Tic-Tac-Toe", PORT_NUMBER);
+		GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Boggle", PORT_NUMBER);
 
 		// Add the default players
 		defaultConfig.addPlayer("Human", 0); // yellow-on-blue GUI
@@ -73,18 +73,18 @@ public class BogMainActivity extends GameMainActivity {
 
 		// Set the initial information for the remote player
 		defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
-		
+
 		//done!
 		return defaultConfig;
-		
+
 	}//createDefaultConfig
 
 
 	/**
 	 * createLocalGame
-	 * 
+	 *
 	 * Creates a new game that runs on the server tablet,
-	 * 
+	 *
 	 * @return a new, game-specific instance of a sub-class of the LocalGame
 	 *         class.
 	 */
