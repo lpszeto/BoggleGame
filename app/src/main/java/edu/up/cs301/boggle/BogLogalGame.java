@@ -40,6 +40,27 @@ public class BogLogalGame extends LocalGame {
 
 		// create a new, shuffled BogState object
 		state = new BogState();
+		//start game clock
+		countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
+			@Override
+			public void onTick(long l000) {
+				Log.i("secondsLeft","" + state.secondsLeft);
+				Log.i("minutesLeft","" + state.minutesLeft);
+				if (state.secondsLeft == 0) {
+					state.secondsLeft = 59;
+					state.minutesLeft--;
+				}
+				else {
+					state.secondsLeft--;
+				}
+			}
+
+			@Override
+			public void onFinish() {
+				Log.i("TIMER", "DONE!");
+				state.gameOver = true;
+			}
+		}.start();
 	}
 	public int scores(int player){
 		return (player == 0)? state.getPlayer0Score() : state.getPlayer1Score();

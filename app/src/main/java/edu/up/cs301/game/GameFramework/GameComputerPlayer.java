@@ -1,5 +1,8 @@
 package edu.up.cs301.game.GameFramework;
 
+import edu.up.cs301.boggle.DictionaryTrie;
+import edu.up.cs301.boggle.TrieNode;
+
 import edu.up.cs301.game.GameFramework.actionMessage.GameOverAckAction;
 import edu.up.cs301.game.GameFramework.actionMessage.MyNameIsAction;
 import edu.up.cs301.game.GameFramework.actionMessage.ReadyAction;
@@ -12,6 +15,8 @@ import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.GameFramework.utilities.MessageBox;
 import edu.up.cs301.game.GameFramework.utilities.Tickable;
+
+
 
 import android.os.Handler;
 import android.os.Looper;
@@ -180,6 +185,20 @@ public abstract class GameComputerPlayer implements GamePlayer, Tickable {
 
             // if game is over, do nothing
             if (gameOver) return;
+
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~My Stuff~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            String[] wordBank = {"alpha", "all", "allowance", "zygote", "allowed","alpine"};
+
+            DictionaryTrie dictTrie = new DictionaryTrie();
+            dictTrie.initializeTop();
+
+            for (int i = 0; i<wordBank.length; i++ ) {
+                dictTrie.addWord(wordBank[i]);
+            }
+
+            for (int i = 0; i < dictTrie.top.size(); i++) {
+                dictTrie.printSubTries(dictTrie.top.get(i));
+            }
 
             // if it's a GameInfo object, process it
             if (data instanceof GameInfo) { // ignore non GameInfo objects

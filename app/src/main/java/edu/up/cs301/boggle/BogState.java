@@ -64,29 +64,6 @@ public class BogState extends GameState {
             }
         }
 
-        //start game clock
-        countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
-            @Override
-            public void onTick(long l000) {
-                Log.i("secondsLeft","" + secondsLeft);
-                Log.i("minutesLeft","" + minutesLeft);
-                if (secondsLeft == 0) {
-                    secondsLeft = 59;
-                    minutesLeft--;
-                }
-                else {
-                    secondsLeft--;
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                Log.i("TIMER", "DONE!");
-                gameOver = true;
-                player0Score++; //TODO DELETE THIS!!! (Temporary fix to test BogLocalGame.checkIfGameOver())
-            }
-        }.start();
-
         // make it player 0's move
         playerToMove = 0;
     }// constructor
