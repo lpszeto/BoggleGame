@@ -1,0 +1,1 @@
+wordList.txt is adapted from http://www-personal.umich.edu/~jlawler/wordlist

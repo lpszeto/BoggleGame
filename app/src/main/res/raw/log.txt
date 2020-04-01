@@ -1,0 +1,8 @@
+The following webpages were referenced:
+
+https://stackoverflow.com/questions/5034442/indexes-of-all-occurrences-of-character-in-a-string
+https://stackoverflow.com/questions/8894258/fastest-way-to-iterate-over-all-the-chars-in-a-string
+https://www.java67.com/2013/02/10-examples-of-hashmap-in-java-programming-tutorial.html
+https://www.tutorialspoint.com/java/util/arrays_fill_boolean.htm
+https://stackoverflow.com/questions/3501126/how-to-draw-a-filled-triangle-in-android-canvas
+https://developer.android.com/reference/android/graphics/Path

@@ -55,7 +55,7 @@ public class BogComputerPlayer1 extends GameComputerPlayer
         // we'll end up here again (and possibly again, and again). At some point,
         // we'll end up randomly pick a move that is legal.
         Logger.log("BogComputer", "Sending move");
-        game.sendAction(new BogMoveAction(this, yVal, xVal, endOfWord)); //TODO make slightly smarter end of word decisions...
+        game.sendAction(new BogMoveAction(this, yVal, xVal, endOfWord));
 
     }
 }
