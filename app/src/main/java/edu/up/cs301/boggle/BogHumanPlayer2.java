@@ -157,7 +157,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 		int[] coord = mapNumberToCoord(val);
 
 		// send a move action to the game
-		game.sendAction(new BogMoveAction(this, coord[0], coord[1]));
+		game.sendAction(new BogMoveAction(this, coord[0], coord[1], false)); //TODO make true when the player RELEASES their finger.
 	}
 
 	/**
@@ -341,7 +341,7 @@ public class BogHumanPlayer2 extends GameHumanPlayer implements OnClickListener 
 		}
 		colorWinnerButtons();
 
-		button.setEnabled(state.getWhoseMove() == playerNum);
+//		button.setEnabled(state.getWhoseMove() == playerNum);
 	}
 
 	/**

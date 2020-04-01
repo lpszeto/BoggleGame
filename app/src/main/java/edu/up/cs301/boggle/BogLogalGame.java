@@ -118,7 +118,10 @@ public class BogLogalGame extends LocalGame {
 	 * 		true iff the player is allowed to move
 	 */
 	protected boolean canMove(int playerIdx) {
-		return playerIdx == state.getWhoseMove();
+		if(state.gameOver){
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -136,26 +139,34 @@ public class BogLogalGame extends LocalGame {
 		BogMoveAction tm = (BogMoveAction) action;
 		int row = tm.getRow();
 		int col = tm.getCol();
+		boolean makesWord = tm.getEndofWord();
 
 		// get the 0/1 id of our player
 		int playerId = getPlayerIdx(tm.getPlayer());
 
-		// if that space is not blank, indicate an illegal move
-		if (state.getPiece(row, col) != ' ') {
-			return false;
+		// if the piece has anything except a lowercase letter, indicate an illegal move
+		for(int i = 0; i < 26; i++) {
+			if (state.getPiece(row, col) == state.alphabet[i]) {
+				break;
+			}
+			if (i==25) {
+				return false;
+			}
 		}
 
-		// get the 0/1 id of the player whose move it is
-		int whoseMove = state.getWhoseMove();
+		state.addPiece(row, col, playerId);
 
-		// place the player's piece on the selected square
-		state.setPiece(row, col, mark[playerId]);
-
-		// make it the other player's turn
-		state.setWhoseMove(1-whoseMove);
+		// if the piece is not the last letter in a word, then
+		// check if the word is in the dictionary
+		//
+		if (makesWord) { //TODO implement checkWord
+//			state.checkWord(playerId); // check if in the dictionary, if so, add to the word to that player's wordlist, and add points.
+		}
+//		// make it the other player's turn
+//		state.setWhoseMove(1-whoseMove);
 
 		// bump the move count
-		moveCount++;
+//		moveCount++;
 
 		// return true, indicating the it was a legal move
 		return true;

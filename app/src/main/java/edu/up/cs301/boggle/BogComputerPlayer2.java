@@ -75,7 +75,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		if (!(info instanceof BogState)) return;
 		BogState myState = (BogState) info;
 
-		
+
 
 		// if it's not our move, ignore it
 //		if (myState.getWhoseMove() != this.playerNum) return;

@@ -18,6 +18,7 @@ public class BogMoveAction extends GameAction {
     // instance variables: the selected row and column
     private int row;
     private int col;
+    private boolean endOfWord;
 
     /**
      * Constructor for BogMoveAction
@@ -26,7 +27,7 @@ public class BogMoveAction extends GameAction {
      * @param row the row of the square selected (0-3)
      * @param col the column of the square selected
      */
-    public BogMoveAction(GamePlayer player, int row, int col)
+    public BogMoveAction(GamePlayer player, int row, int col, boolean endOfWord)
     {
         // invoke superclass constructor to set the player
         super(player);
@@ -34,6 +35,7 @@ public class BogMoveAction extends GameAction {
         // set the row and column as passed to us
         this.row = Math.max(0, Math.min(3, row));
         this.col = Math.max(0, Math.min(3, col));
+        this.endOfWord = endOfWord;
     }
 
     /**
@@ -50,4 +52,10 @@ public class BogMoveAction extends GameAction {
      */
     public int getCol() { return col; }
 
+    /**
+     * get the object's end of word
+     *
+     * @return the column selected
+     */
+    public boolean getEndofWord() {return endOfWord;}
 }

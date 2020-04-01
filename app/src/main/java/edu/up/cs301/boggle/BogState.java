@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
@@ -32,13 +33,17 @@ public class BogState extends GameState {
     public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
 
     // an int that tells whose move it is
-    private int playerToMove;
+    //private int playerToMove;
+
+    private String player0NewWord = "";
+
+    private String player1NewWord = "";
+
+    //Wordlist for player0
+    Vector<String> player0Words = new Vector<String>();
 
     //Wordlist for player1
-    ArrayList<String> player0Words = new ArrayList<String>();
-
-    //Wordlist for player2
-    ArrayList<String> player1Words = new ArrayList<String>();
+    Vector<String> player1Words = new Vector<String>();
 
     //Scores
     private int player0Score = 0;
@@ -55,6 +60,7 @@ public class BogState extends GameState {
      */
     public BogState()
     {
+
         Random ran = new Random();
         // initialize the state to be a brand new game
         board = new char[4][4];
@@ -65,7 +71,7 @@ public class BogState extends GameState {
         }
 
         // make it player 0's move
-        playerToMove = 0;
+//        playerToMove = 0;
     }// constructor
 
     /**
@@ -86,7 +92,7 @@ public class BogState extends GameState {
         }
 
         // copy the player-to-move information
-        playerToMove = original.playerToMove;
+ //       playerToMove = original.playerToMove;
     }
 
     /**
@@ -117,35 +123,42 @@ public class BogState extends GameState {
      * 		the row being queried
      * @param
      * 		col the column being queried
-     * @param
-     * 		piece the piece to place
+    // * @param
+   //  * 		piece the piece to place
      */
-    public void setPiece(int row, int col, char piece) {
+    public void addPiece(int row, int col, int playerId) {
         // if we're out of bounds or anything, return;
         if (board == null || row < 0 || col < 0) return;
         if (row >= board.length || col >= board[row].length) return;
+        char piece = board[row][col];
+        // add the character that is in the proper position to the current word in the wordlist
+        if(playerId==0)
+        {
+         player0NewWord = player0NewWord + piece;
+        }
+        else {
+            player1NewWord = player1NewWord + piece;
+        }
 
-        // return the character that is in the proper position
-        board[row][col] = piece;
     }
 
-    /**
-     * Tells whose move it is.(TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
-     *
-     * @return the index (0 or 1) of the player whose move it is.
-     */
-    public int getWhoseMove() {
-        return playerToMove;
-    }
-
-    /**
-     * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
-     * @param id
-     * 		the player we want to set as to whose move it is
-     */
-    public void setWhoseMove(int id) {
-        playerToMove = id;
-    }
+//    /**
+//     * Tells whose move it is.(TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
+//     *
+//     * @return the index (0 or 1) of the player whose move it is.
+//     */
+//    public int getWhoseMove() {
+//        return playerToMove;
+//    }
+//
+//    /**
+//     * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
+//     * @param id
+//     * 		the player we want to set as to whose move it is
+//     */
+//    public void setWhoseMove(int id) {
+//        playerToMove = id;
+//    }
 
     public int getPlayer0Score() {return player0Score;}
 
