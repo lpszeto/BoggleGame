@@ -1,8 +1,16 @@
 package edu.up.cs301.boggle;
 
 import android.util.Log;
-
 import java.util.Vector;
+
+/*
+* Dictionary Check class
+*
+* Author: Team Boggle
+* Version: 1 April 2020
+*
+* */
+
 
 public class DictionaryTrie {
 
