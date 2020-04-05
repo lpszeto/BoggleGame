@@ -1,5 +1,6 @@
 package edu.up.cs301.boggle;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -32,6 +33,8 @@ public class BogState extends GameState {
 
     public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
 
+    public DictionaryTrie dictionaryTrie = new DictionaryTrie();
+
     // an int that tells whose move it is
     //private int playerToMove;
 
@@ -58,9 +61,8 @@ public class BogState extends GameState {
     /**
      * Constructor for objects of class BogState
      */
-    public BogState()
+    public BogState(Context context)
     {
-
         Random ran = new Random();
         // initialize the state to be a brand new game
         board = new char[4][4];
@@ -68,6 +70,13 @@ public class BogState extends GameState {
             for (int j = 0; j < 4; j++) {
                 board[i][j] = alphabet[ran.nextInt(alphabet.length)];
             }
+        }
+        dictionaryTrie.initializeTop();
+        dictionaryTrie.readWordsFromFile(context);
+        dictionaryTrie.initializeEnglishDictionaryTrie();
+
+        for (int i = 0; i < dictionaryTrie.top.size(); i++) {
+            dictionaryTrie.printWordsInTrie(dictionaryTrie.top.get(i));
         }
 
         // make it player 0's move

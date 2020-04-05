@@ -45,7 +45,6 @@ public class BogComputerPlayer1 extends GameComputerPlayer
         Random ran = new Random();
         boolean endOfWord = ran.nextBoolean();
 
-
         // delay for a second to make opponent think we're thinking
         sleep(1);
 

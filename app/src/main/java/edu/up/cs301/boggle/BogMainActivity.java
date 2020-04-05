@@ -1,5 +1,7 @@
 package edu.up.cs301.boggle;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -17,7 +19,7 @@ import edu.up.cs301.game.R;
  */
 public class BogMainActivity extends GameMainActivity {
 	//Tag for logging
-	private static final String TAG = "TTTMainActivity";
+	private static final String TAG = "BogMainActivity";
 	public static final int PORT_NUMBER = 5213;
 
 	/**
@@ -90,7 +92,7 @@ public class BogMainActivity extends GameMainActivity {
 	 */
 	@Override
 	public LocalGame createLocalGame() {
-		return new BogLogalGame();
+		return new BogLogalGame(this);
 	}
 
 }

@@ -1,5 +1,6 @@
 package edu.up.cs301.boggle;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -33,13 +34,13 @@ public class BogLogalGame extends LocalGame {
 	/**
 	 * Constructor for the BogLocalGame.
 	 */
-	public BogLogalGame() {
+	public BogLogalGame(Context context) {
 
 		// perform superclass initialization
 		super();
 
 		// create a new, shuffled BogState object
-		state = new BogState();
+		state = new BogState(context);
 		//start game clock
 		countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
 			@Override

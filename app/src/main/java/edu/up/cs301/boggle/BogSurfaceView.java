@@ -119,7 +119,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         setBackgroundColor(backgroundColor());
     }// init
 
-
+    //This is the only place in the whole game where the state has access to the resources folder.
     public void setState(BogState state) {
         this.state = state;
     }

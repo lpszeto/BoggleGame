@@ -4,6 +4,7 @@ import edu.up.cs301.game.GameFramework.GameComputerPlayer;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
 
+import android.content.Context;
 import android.graphics.Point;
 
 /**
@@ -17,7 +18,7 @@ import android.graphics.Point;
  */
 public class BogComputerPlayer2 extends GameComputerPlayer {
 	//Tag for logging
-	private static final String TAG = "TTTComputerPlayer2";
+	private static final String TAG = "BogComputerPlayer2";
 	/**
 	 * instance variable that tells which piece am I playing ('X' or 'O').
 	 * This is set once the player finds out which player they are, in the
@@ -36,18 +37,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		super(name);
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~My Stuff~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		String[] wordBank = {"alpha", "all", "allowance", "zygote", "allowed","alpine"};
 
-		DictionaryTrie dictTrie = new DictionaryTrie();
-		dictTrie.initializeTop();
-
-		for (int i = 0; i<wordBank.length; i++ ) {
-			dictTrie.addWord(wordBank[i]);
-		}
-
-		for (int i = 0; i < dictTrie.top.size(); i++) {
-			dictTrie.printSubTries(dictTrie.top.get(i));
-		}
 
 	}// constructor
 
@@ -70,7 +60,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	@Override
 	protected void receiveInfo(GameInfo info) {
 
-		// if it's not a TTTState message, ignore it; otherwise
+		// if it's not a BogState message, ignore it; otherwise
 		// cast it
 		if (!(info instanceof BogState)) return;
 		BogState myState = (BogState) info;
