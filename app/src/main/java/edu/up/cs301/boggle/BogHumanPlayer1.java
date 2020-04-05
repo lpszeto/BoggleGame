@@ -136,7 +136,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (p == null) {
             surfaceView.flash(Color.RED, 50);
         } else {
-            BogMoveAction action = new BogMoveAction(this, p.y, p.x, false); //TODO when players RELEASE their finger, this must be set to true.
+            BogMoveAction action = new BogMoveAction(this, p.y, p.x, false); //TODO when players RELEASE their finger, set endOfWord to true
             Logger.log("onTouch", "Human player sending TTTMA ...");
             game.sendAction(action);
             surfaceView.invalidate();

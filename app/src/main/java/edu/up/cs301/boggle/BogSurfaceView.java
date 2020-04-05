@@ -254,7 +254,7 @@ public class BogSurfaceView extends FlashSurfaceView {
                     tempBoard[x][y] = state.getBoard()[x][y];
                 }
             }
-            
+
         }
         Paint p = new Paint();
         p.setColor(foregroundColor());

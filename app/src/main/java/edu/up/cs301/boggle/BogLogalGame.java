@@ -23,7 +23,7 @@ public class BogLogalGame extends LocalGame {
 	protected BogState state;
 
 	// the marks for player 0 and player 1, respectively
-	private final static char[] mark = {'X','O'};
+	private final static char[] mark = {'X', 'O'};
 
 	// the number of moves that have been played so far, used to
 	// determine whether the game is over
@@ -45,13 +45,12 @@ public class BogLogalGame extends LocalGame {
 		countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
 			@Override
 			public void onTick(long l000) {
-				Log.i("secondsLeft","" + state.secondsLeft);
-				Log.i("minutesLeft","" + state.minutesLeft);
+				Log.i("secondsLeft", "" + state.secondsLeft);
+				Log.i("minutesLeft", "" + state.minutesLeft);
 				if (state.secondsLeft == 0) {
 					state.secondsLeft = 59;
 					state.minutesLeft--;
-				}
-				else {
+				} else {
 					state.secondsLeft--;
 				}
 			}
@@ -61,6 +60,7 @@ public class BogLogalGame extends LocalGame {
 				Log.i("TIMER", "DONE!");
 				state.gameOver = true;
 			}
+
 		}.start();
 	}
 	public int scores(int player){
@@ -157,14 +157,15 @@ public class BogLogalGame extends LocalGame {
 
 		state.addPiece(row, col, playerId);
 
-		// if the piece is not the last letter in a word, then
-		// check if the word is in the dictionary
-		//
-		if (makesWord) { //TODO implement checkWord
-//			state.checkWord(playerId); // check if in the dictionary, if so, add to the word to that player's wordlist, and add points.
+		// if the piece is the last letter in a word, then
+		// check if the word is in the dictionary and tally points accordingly!
+		if (makesWord && state.dictionaryTrie.searchDictionary(state.getPlayerNewWord(playerId))) { //TODO implement checkWord
+			state.scoreWord(playerId); //also checks if the word is already in the list. Only adds the word and the associated points if the word is not already in the list.
 		}
-//		// make it the other player's turn
-//		state.setWhoseMove(1-whoseMove);
+
+		if(makesWord) {
+			state.resetPlayerNewWord(playerId); //prepares for the player to enter a new word
+		}
 
 		// bump the move count
 //		moveCount++;
