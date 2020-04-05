@@ -32,30 +32,30 @@ public class BogSurfaceView extends FlashSurfaceView {
     private int PlayerOneWins = 0;
     private int PlayerTwoWins = 0;
     private final static float PLAYER_RUNNING_WINS_WIDTH = 35/2;
-    private final static float PLAYER_RUNNING_WINS_HEIGHT = 17;
+    private final static float PLAYER_RUNNING_WINS_HEIGHT = .17f;
 
     //component 3: wordbank
-    private final static float WORD_BANK_WIDTH_PERCENT = 35;
-    private final static float WORD_BANK_HEIGHT_PERCENT = 65;
+    private final static float WORD_BANK_WIDTH_PERCENT = .35f;
+    private final static float WORD_BANK_HEIGHT_PERCENT = .65f;
 
     //component 4: timer
-    private final static float TIMER_WIDTH_PERCENT = 65;
-    private final static float TIMER_HEIGHT_PERCENT = 17;
+    private final static float TIMER_WIDTH_PERCENT = .65f;
+    private final static float TIMER_HEIGHT_PERCENT = .17f;
 
     //component 5: Boggle board
     private final static float BOG_SQUARE_SIZE_PERCENT = 65/4;
-    private final static float BOG_BORDER_PERCENT = 5;
-    private final static float BOG_WIDTH_PERCENT = 65;
-    private final static float BOG_HEIGHT_PERCENT = 65;
-    private final static float BOG_LINE_WIDTH_PERCENT = 1;
+    private final static float BOG_BORDER_PERCENT = .5f;
+    private final static float BOG_WIDTH_PERCENT = .65f;
+    private final static float BOG_HEIGHT_PERCENT = .65f;
+    private final static float BOG_LINE_WIDTH_PERCENT = .1f;
 
     //component 6: progress bank
-    private final static float PROGRESS_BANK_WIDTH_PERCENT = 65;
-    private final static float PROGRESS_BANK_HEIGHT_PERCENT = 20;
+    private final static float PROGRESS_BANK_WIDTH_PERCENT = .65f;
+    private final static float PROGRESS_BANK_HEIGHT_PERCENT = .20f;
 
     //component 7: running total
-    private final static float RUNNING_TOTAL_WIDTH_PERCENT = 35;
-    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = 20;
+    private final static float RUNNING_TOTAL_WIDTH_PERCENT = .35f;
+    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = .20f;
 
     // some constants, which are percentages with respect to the minimum
     // of the height and the width. All drawing will be done in the "middle
@@ -219,6 +219,14 @@ public class BogSurfaceView extends FlashSurfaceView {
         g.drawRect(left, top, right, bottom, p);
 
     }
+
+    private void fillBoard(Canvas g){
+       char[][] tempBoard = state.getBoard();
+
+       for(int x = 0; x < tempBoard.length; x ++){
+          // for(int y = 0; y < tempBoard[].length; y ++){
+           }
+       }
 
     /**
      * update the instance variables that relate to the drawing surface
@@ -410,7 +418,5 @@ public class BogSurfaceView extends FlashSurfaceView {
     private float v(float percent) {
         return vBase + percent * fullSquare / 100;
     }
-
-
 
 }

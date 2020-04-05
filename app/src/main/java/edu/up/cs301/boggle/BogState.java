@@ -161,6 +161,10 @@ public class BogState extends GameState {
         return playerToMove;
     }
 
+    public char[][] getBoard() {
+        return board;
+    }
+
     /**
      * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
      * @param id
