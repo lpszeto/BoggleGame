@@ -119,7 +119,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         setBackgroundColor(backgroundColor());
     }// init
 
-    //This is the only place in the whole game where the state has access to the resources folder.
+
     public void setState(BogState state) {
         this.state = state;
     }
@@ -176,10 +176,21 @@ public class BogSurfaceView extends FlashSurfaceView {
             g.drawRect(left, top, right,bottom, p);
         }
 
+        int percentOfMinutes;
+        int percentOfSeconds;
+
         //paint the timer
         double timeLeft  = 3.00;
-        int percentOfMinutes= state.minutesLeft/3;
-        int percentOfSeconds = state.secondsLeft/60;
+        if (state ==null) {
+            percentOfMinutes= 1;
+            percentOfSeconds = 1;
+        }
+        else {
+            percentOfMinutes= state.minutesLeft/3;
+            percentOfSeconds = state.secondsLeft/60;
+        }
+
+
 
         //draws the outline of the timer
         float left = (BOG_BORDER_PERCENT * width);
@@ -226,15 +237,28 @@ public class BogSurfaceView extends FlashSurfaceView {
     }
 
     private void fillBoard(Canvas g){
-       char[][] tempBoard = state.getBoard();
+        char[][] tempBoard = new char[4][4];
+        if (state == null) {
+            //if null, load blank board
+            for(int i = 0; i < tempBoard[0].length; i++) {
+                for (int j = 0; j < tempBoard[i].length; j++) {
+                    tempBoard[i][j] = ' ';
+                }
+            }
+        }
+        else {
+            //prepare to draw the board indicated in the gamestate.
+            tempBoard = state.getBoard();;
+            for(int x = 0; x < tempBoard.length; x ++){
+                for(int y = 0; y < tempBoard.length; y++){
+                    tempBoard[x][y] = state.getBoard()[x][y];
+                }
+            }
+            
+        }
         Paint p = new Paint();
         p.setColor(foregroundColor());
 
-       for(int x = 0; x < tempBoard.length; x ++){
-           for(int y = 0; y < tempBoard.length; y++){
-               tempBoard[x][y] = state.getBoard()[x][y];
-           }
-       }
 
        for(int x = 0; x < tempBoard.length; x ++){
           for(int y = 0; y < tempBoard.length; y ++){
