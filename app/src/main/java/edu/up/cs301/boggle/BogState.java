@@ -1,10 +1,12 @@
 package edu.up.cs301.boggle;
 
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Vector;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
@@ -31,14 +33,20 @@ public class BogState extends GameState {
 
     public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
 
+    public DictionaryTrie dictionaryTrie = new DictionaryTrie();
+
     // an int that tells whose move it is
-    private int playerToMove;
+    //private int playerToMove;
+
+    private String player0NewWord = "";
+
+    private String player1NewWord = "";
+
+    //Wordlist for player0
+    Vector<String> player0Words = new Vector<String>();
 
     //Wordlist for player1
-    ArrayList<String> player0Words = new ArrayList<String>();
-
-    //Wordlist for player2
-    ArrayList<String> player1Words = new ArrayList<String>();
+    Vector<String> player1Words = new Vector<String>();
 
     //Scores
     private int player0Score = 0;
@@ -53,7 +61,7 @@ public class BogState extends GameState {
     /**
      * Constructor for objects of class BogState
      */
-    public BogState()
+    public BogState(Context context)
     {
         Random ran = new Random();
         // initialize the state to be a brand new game
@@ -63,32 +71,16 @@ public class BogState extends GameState {
                 board[i][j] = alphabet[ran.nextInt(alphabet.length)];
             }
         }
+        dictionaryTrie.initializeTop();
+        dictionaryTrie.readWordsFromFile(context);
+        dictionaryTrie.initializeEnglishDictionaryTrie();
 
-        //start game clock
-        countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
-            @Override
-            public void onTick(long l000) {
-                Log.i("secondsLeft","" + secondsLeft);
-                Log.i("minutesLeft","" + minutesLeft);
-                if (secondsLeft == 0) {
-                    secondsLeft = 59;
-                    minutesLeft--;
-                }
-                else {
-                    secondsLeft--;
-                }
-            }
-
-            @Override
-            public void onFinish() {
-                Log.i("TIMER", "DONE!");
-                gameOver = true;
-                player0Score++; //TODO DELETE THIS!!! (Temporary fix to test BogLocalGame.checkIfGameOver())
-            }
-        }.start();
+        for (int i = 0; i < dictionaryTrie.top.size(); i++) {
+            dictionaryTrie.printWordsInTrie(dictionaryTrie.top.get(i));
+        }
 
         // make it player 0's move
-        playerToMove = 0;
+//        playerToMove = 0;
     }// constructor
 
     /**
@@ -109,7 +101,7 @@ public class BogState extends GameState {
         }
 
         // copy the player-to-move information
-        playerToMove = original.playerToMove;
+ //       playerToMove = original.playerToMove;
     }
 
     /**
@@ -140,27 +132,42 @@ public class BogState extends GameState {
      * 		the row being queried
      * @param
      * 		col the column being queried
-     * @param
-     * 		piece the piece to place
+    // * @param
+   //  * 		piece the piece to place
      */
-    public void setPiece(int row, int col, char piece) {
+    public void addPiece(int row, int col, int playerId) {
         // if we're out of bounds or anything, return;
         if (board == null || row < 0 || col < 0) return;
         if (row >= board.length || col >= board[row].length) return;
+        char piece = board[row][col];
+        // add the character that is in the proper position to the current word in the wordlist
+        if(playerId==0)
+        {
+         player0NewWord = player0NewWord + piece;
+        }
+        else {
+            player1NewWord = player1NewWord + piece;
+        }
 
-        // return the character that is in the proper position
-        board[row][col] = piece;
     }
 
-    /**
-     * Tells whose move it is.(TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
-     *
-     * @return the index (0 or 1) of the player whose move it is.
-     */
-    public int getWhoseMove() {
-        return playerToMove;
-    }
-
+//    /**
+//     * Tells whose move it is.(TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
+//     *
+//     * @return the index (0 or 1) of the player whose move it is.
+//     */
+//    public int getWhoseMove() {
+//        return playerToMove;
+//    }
+//
+//    /**
+//     * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
+//     * @param id
+//     * 		the player we want to set as to whose move it is
+//     */
+//    public void setWhoseMove(int id) {
+//        playerToMove = id;
+//    }
     public char[][] getBoard() {
         return board;
     }
@@ -170,9 +177,9 @@ public class BogState extends GameState {
      * @param id
      * 		the player we want to set as to whose move it is
      */
-    public void setWhoseMove(int id) {
-        playerToMove = id;
-    }
+    //public void setWhoseMove(int id) {
+    //    playerToMove = id;
+    //}
 
     public int getPlayer0Score() {return player0Score;}
 

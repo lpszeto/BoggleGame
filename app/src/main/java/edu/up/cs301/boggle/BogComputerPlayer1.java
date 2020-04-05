@@ -1,5 +1,7 @@
 package edu.up.cs301.boggle;
 
+import java.util.Random;
+
 import edu.up.cs301.game.GameFramework.GameComputerPlayer;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
@@ -39,6 +41,10 @@ public class BogComputerPlayer1 extends GameComputerPlayer
         int xVal = (int)(3*Math.random());
         int yVal = (int)(3*Math.random());
 
+        //randomly choose word length
+        Random ran = new Random();
+        boolean endOfWord = ran.nextBoolean();
+
         // delay for a second to make opponent think we're thinking
         sleep(1);
 
@@ -48,7 +54,7 @@ public class BogComputerPlayer1 extends GameComputerPlayer
         // we'll end up here again (and possibly again, and again). At some point,
         // we'll end up randomly pick a move that is legal.
         Logger.log("BogComputer", "Sending move");
-        game.sendAction(new BogMoveAction(this, yVal, xVal));
+        game.sendAction(new BogMoveAction(this, yVal, xVal, endOfWord));
 
     }
 }

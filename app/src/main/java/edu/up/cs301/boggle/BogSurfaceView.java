@@ -119,7 +119,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         setBackgroundColor(backgroundColor());
     }// init
 
-
+    //This is the only place in the whole game where the state has access to the resources folder.
     public void setState(BogState state) {
         this.state = state;
     }
@@ -178,7 +178,8 @@ public class BogSurfaceView extends FlashSurfaceView {
 
         //paint the timer
         double timeLeft  = 3.00;
-        double percentOfTime = timeLeft/3.00;
+        int percentOfMinutes= state.minutesLeft/3;
+        int percentOfSeconds = state.secondsLeft/60;
 
         //draws the outline of the timer
         float left = (BOG_BORDER_PERCENT * width);
@@ -186,6 +187,10 @@ public class BogSurfaceView extends FlashSurfaceView {
         float top = (BOG_BORDER_PERCENT * height);
         float bottom = top + (TIMER_HEIGHT_PERCENT * height);
         g.drawRect(left, top, right,bottom, p);
+
+        //draws the time left within the timer
+        right = left + ((percentOfMinutes + percentOfSeconds) * (TIMER_WIDTH_PERCENT * width));
+        g.drawRect(left, top, right, bottom, p);
 
         //Paint the word bank
         right = width -(BOG_BORDER_PERCENT * width);
@@ -222,10 +227,24 @@ public class BogSurfaceView extends FlashSurfaceView {
 
     private void fillBoard(Canvas g){
        char[][] tempBoard = state.getBoard();
+        Paint p = new Paint();
+        p.setColor(foregroundColor());
 
        for(int x = 0; x < tempBoard.length; x ++){
-          // for(int y = 0; y < tempBoard[].length; y ++){
+           for(int y = 0; y < tempBoard.length; y++){
+               tempBoard[x][y] = state.getBoard()[x][y];
            }
+       }
+
+       for(int x = 0; x < tempBoard.length; x ++){
+          for(int y = 0; y < tempBoard.length; y ++){
+              float top = (TIMER_HEIGHT_PERCENT * g.getHeight()) + (2 * BOG_BORDER_PERCENT * g.getHeight() +
+                      (x * BOG_SQUARE_SIZE_PERCENT * g.getHeight()));
+              float left = (BOG_BORDER_PERCENT * g.getWidth()) + (y * BOG_SQUARE_SIZE_PERCENT * g.getWidth());
+              g.drawText("" + tempBoard[x][y], top, left, p );
+           }
+       }
+
        }
 
     /**
