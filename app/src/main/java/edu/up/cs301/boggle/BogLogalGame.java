@@ -40,27 +40,6 @@ public class BogLogalGame extends LocalGame {
 
 		// create a new, shuffled BogState object
 		state = new BogState();
-		//start game clock
-		countDownTimer = new CountDownTimer(180000, 1000) { //3min timer with ticks every second.
-			@Override
-			public void onTick(long l000) {
-				Log.i("secondsLeft","" + state.secondsLeft);
-				Log.i("minutesLeft","" + state.minutesLeft);
-				if (state.secondsLeft == 0) {
-					state.secondsLeft = 59;
-					state.minutesLeft--;
-				}
-				else {
-					state.secondsLeft--;
-				}
-			}
-
-			@Override
-			public void onFinish() {
-				Log.i("TIMER", "DONE!");
-				state.gameOver = true;
-			}
-		}.start();
 	}
 	public int scores(int player){
 		return (player == 0)? state.getPlayer0Score() : state.getPlayer1Score();
@@ -118,10 +97,7 @@ public class BogLogalGame extends LocalGame {
 	 * 		true iff the player is allowed to move
 	 */
 	protected boolean canMove(int playerIdx) {
-		if(state.gameOver){
-			return false;
-		}
-		return true;
+		return playerIdx == state.getWhoseMove();
 	}
 
 	/**
@@ -139,34 +115,26 @@ public class BogLogalGame extends LocalGame {
 		BogMoveAction tm = (BogMoveAction) action;
 		int row = tm.getRow();
 		int col = tm.getCol();
-		boolean makesWord = tm.getEndofWord();
 
 		// get the 0/1 id of our player
 		int playerId = getPlayerIdx(tm.getPlayer());
 
-		// if the piece has anything except a lowercase letter, indicate an illegal move
-		for(int i = 0; i < 26; i++) {
-			if (state.getPiece(row, col) == state.alphabet[i]) {
-				break;
-			}
-			if (i==25) {
-				return false;
-			}
+		// if that space is not blank, indicate an illegal move
+		if (state.getPiece(row, col) != ' ') {
+			return false;
 		}
 
-		state.addPiece(row, col, playerId);
+		// get the 0/1 id of the player whose move it is
+		int whoseMove = state.getWhoseMove();
 
-		// if the piece is not the last letter in a word, then
-		// check if the word is in the dictionary
-		//
-		if (makesWord) { //TODO implement checkWord
-//			state.checkWord(playerId); // check if in the dictionary, if so, add to the word to that player's wordlist, and add points.
-		}
-//		// make it the other player's turn
-//		state.setWhoseMove(1-whoseMove);
+		// place the player's piece on the selected square
+		state.setPiece(row, col, mark[playerId]);
+
+		// make it the other player's turn
+		state.setWhoseMove(1-whoseMove);
 
 		// bump the move count
-//		moveCount++;
+		moveCount++;
 
 		// return true, indicating the it was a legal move
 		return true;
