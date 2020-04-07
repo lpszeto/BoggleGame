@@ -15,7 +15,7 @@ public class TrieNode {
     }
 
 //    public TrieNode getParent(){return parent;}
-//    public Vector getChildren(){return children;}
+//    public Vector getChildren(){return children;} 
 //    public char getLetter() {return letter;}
 }
 

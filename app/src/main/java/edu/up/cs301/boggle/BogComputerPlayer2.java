@@ -6,6 +6,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 
 /**
  * A computerized tic-tac-toe player that recognizes an immediate win
@@ -25,6 +26,8 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	 * 'initAfterReady' method.
 	 */
 	protected char piece;
+	protected DictionaryTrie vocabulary;
+	protected GuessTrie guessTrie;
 
 	/**
 	 * constructor for a computer player
@@ -37,6 +40,10 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		super(name);
 
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~My Stuff~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		//generate guessTrie based on the boggle board.
+		//iterate through it comparing against the dictionary as we go...
+		//if the word is in the dictionary, make a series of moves in order to guess that word
+		//continue iterating through the guessTrie.
 
 
 	}// constructor
@@ -75,7 +82,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 //		Point win = findWin(myState, piece);
 //		if (win != null) {
 //			Logger.log("TTTComputer", "sending action");
-//			game.sendAction(new BogMoveAction(this, win.y, win.x));
+//			game.sendAction(new BogMoveAction(this, ));
 //		}
 	}
 }

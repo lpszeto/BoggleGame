@@ -17,9 +17,7 @@ import edu.up.cs301.game.R;
 public class DictionaryTrie {
 
     public String [] words;
-    public String word = new String();
-    public boolean [] letters;
-    int idx = 0;
+ //   public String word = new String();
 
     public char [] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 
@@ -28,12 +26,6 @@ public class DictionaryTrie {
     public void readWordsFromFile(Context context) {
         if (words == null) {
             words = readWordsFromResourceFile(context);
-            Random ran = new Random();
-            idx = ran.nextInt(words.length);
-            word = words[idx];
-//            Log.i("Secret word is: ", word);
-            letters = new boolean[word.length()];
-            Arrays.fill(letters, false);
         }
     }
 
@@ -49,6 +41,38 @@ public class DictionaryTrie {
             top.add( new TrieNode(alphabet[i], false));
         }
     }
+
+    public boolean searchDictionary(String word) {
+        char[] chars = word.toCharArray();
+        TrieNode nodePointer;
+        int child;
+        for (child = 0; child < top.size(); child++) {
+            if (top.get(child).letter == chars[0]) {
+                break;
+            }
+            if (child == top.size() - 1) {
+                return false; //first character not in top level of dictionary...
+            }
+        }
+        nodePointer = top.get(child);
+
+        for (int i = 1; i < chars.length; i++) {
+            for (child = 0; child < nodePointer.children.size(); child++) {
+                if (nodePointer.children.get(child).letter == chars[i]) { //this char is in the dictionary!
+                    nodePointer = nodePointer.children.get(child);
+                    break; //return to outer loop, and continue iterating through the word...
+                }
+                if (child == nodePointer.children.size() - 1) {
+                    return false; //this is NOT a word in our dictionary!
+                }
+            }
+            if (i == chars.length - 1 && nodePointer.isWord) {
+                Log.i("searchDictionary(" + word + ")", "FOUND THE WORD!!!!");
+                return true; //WE FOUND THE WORD!!!
+            }
+        }
+
+    return false;}
 
     public void printSubTries(TrieNode node) {
         Log.i("node.letter = ", "" + node.letter);

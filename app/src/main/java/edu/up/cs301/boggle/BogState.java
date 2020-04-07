@@ -104,6 +104,60 @@ public class BogState extends GameState {
  //       playerToMove = original.playerToMove;
     }
 
+
+    //player's newWord is assumed to be in the dictionary
+    //Time to add the word to the player's wordlist (if not already there),
+    //and score the word according to the Boggle scoring system.
+    //If the word is already in the list, do nothing.
+
+    public void scoreWord(int playerId) {
+        String possibleWord = getPlayerNewWord(playerId);
+        //check if already in that player's wordlist...
+        Vector<String> playerWordList;
+
+        if(playerId==0) {
+            playerWordList = player0Words;
+        }
+        else {
+            playerWordList = player1Words;
+        }
+
+        for (int i = 0; i < playerWordList.size(); i++) {
+            if (playerWordList.get(i) == possibleWord) {
+                return; // Word is already in the list!!!
+            }
+        }
+        //word was not on the list already. Add it!!!
+        playerWordList.add(possibleWord);
+
+        if(possibleWord.length() <= 4 && possibleWord.length() >= 3) {
+            setPlayerPlayerScore(playerId, 1);
+        }
+        else if(possibleWord.length() == 5) {
+            setPlayerPlayerScore(playerId, 2);
+        }
+        else if(possibleWord.length() == 6) {
+            setPlayerPlayerScore(playerId, 3);
+        }
+        else if(possibleWord.length() == 7) {
+            setPlayerPlayerScore(playerId,4);
+        }
+        else if (possibleWord.length() > 7 && possibleWord.length() <= 16) {
+            setPlayerPlayerScore(playerId, 11);
+        }
+
+        return;
+    }
+
+    //helper method
+    private void setPlayerPlayerScore(int playerId, int increment) {
+        if(playerId == 0) {
+            player0Score += increment;
+        }
+        else {
+            player1Score += increment;
+        }
+    }
     /**
      * Find out which piece is on a square
      *
@@ -181,7 +235,26 @@ public class BogState extends GameState {
     //    playerToMove = id;
     //}
 
+    public String getPlayerNewWord(int playerId) {
+        if(playerId == 0) {
+            return player0NewWord;
+        }
+        else {
+            return player1NewWord;
+        }
+    }
+
+    public void resetPlayerNewWord(int playerId) {
+        if(playerId == 0) {
+            player0NewWord = "";
+        }
+        else {
+            player1NewWord = "";
+        }
+    }
+
     public int getPlayer0Score() {return player0Score;}
+
 
     public int getPlayer1Score() {return player1Score;}
     public void shuffle(){
