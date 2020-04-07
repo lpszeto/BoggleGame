@@ -11,9 +11,5 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
-    <edu.up.cs301.game.GameFramework.animation.AnimationSurface
-        android:id="@+id/animationSurface"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </RelativeLayout>

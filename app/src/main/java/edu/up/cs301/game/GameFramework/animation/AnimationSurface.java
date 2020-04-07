@@ -3,8 +3,10 @@ package edu.up.cs301.game.GameFramework.animation;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -79,7 +81,7 @@ public class AnimationSurface extends SurfaceView implements OnTouchListener {
         }
     }// init
 
-    /**
+    /**sz
      * Starts the animation
      */
     private void startAnimation() {
@@ -91,6 +93,8 @@ public class AnimationSurface extends SurfaceView implements OnTouchListener {
 
         // Initialize the background color paint as instructed by the animator
         backgroundPaint.setColor(animator.backgroundColor());
+        Log.i("Color of the background:", "" + backgroundPaint.getColor());
+
     }
 
     /**
