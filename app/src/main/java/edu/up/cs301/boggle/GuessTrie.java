@@ -9,6 +9,7 @@ public class GuessTrie extends DictionaryTrie {
     char [][] board;
     DictionaryTrie vocabulary;
     public Vector<String> guessWords = new Vector<String>();
+    public Vector<TrieNode> wordNodes = new Vector<TrieNode>();
 
 
 
@@ -61,12 +62,14 @@ public class GuessTrie extends DictionaryTrie {
                     node.children.add(new TrieNode(board[newCoords[0]][newCoords[1]], true, newCoords[0], newCoords[1]));
                     node.children.get(node.children.size() - 1).parent = node;
                     guessWords.add(guess);
+                    wordNodes.add(node.children.get(node.children.size() - 1));
                     return;
                 }
                 else if(vocabCheck == 3) { //The node parents-based string is a word itself, and it is also the root of other words!!!!!!!!!!!!!!!!!!!!!!!
                     node.children.add(new TrieNode(board[newCoords[0]][newCoords[1]], true, newCoords[0], newCoords[1]));
                     node.children.get(node.children.size() - 1).parent = node;
                     guessWords.add(guess);
+                    wordNodes.add(node.children.get(node.children.size() - 1));
                     loadValidNeighbors(node.children.get(node.children.size() - 1)); //RECURSE!!!!!!!!!!!!!!!!!!
                 }
                 else { //should never get here, but if we do, respond gracefully...
@@ -132,5 +135,16 @@ public class GuessTrie extends DictionaryTrie {
         }
     return guess;
     }
+
+    public void findWordNodes(TrieNode node) {
+        if (node.isWord) {
+            wordNodes.add(node);
+        }
+        for (int i = 0; i < node.children.size(); i++) {
+            findWordNodes(node.children.get(i)); //Recurse!!!!!!
+        }
+        return;
+    }
+
 
 }
