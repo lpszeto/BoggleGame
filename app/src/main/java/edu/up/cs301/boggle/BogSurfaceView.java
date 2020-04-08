@@ -231,8 +231,10 @@ public class BogSurfaceView extends FlashSurfaceView {
         if(state != null) {
             if (state.getPlayer0Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
-                    for (int i = 0; i < state.getPlayer0Words().size(); i++) {
-                        g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top + (50 * i) + 50, d);
+                g.drawText("" + state.getPlayer0Score(), left + 20, top + 50, d);
+
+                for (int i = 0; i < state.getPlayer0Words().size(); i++) {
+                        g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top + (50 * i) + 100, d);
                     }
                // }
             }
@@ -244,8 +246,9 @@ public class BogSurfaceView extends FlashSurfaceView {
         if(state != null) {
             if (state.getPlayer1Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
+                g.drawText("" + state.getPlayer1Score(), left + 350, top + 50, d);
                 for (int i = 0; i < state.getPlayer1Words().size(); i++) {
-                    g.drawText(state.getPlayer1Words().elementAt(i), left + 350, top + (40 * i) + 50, red);
+                    g.drawText(state.getPlayer1Words().elementAt(i), left + 350, top + (40 * i) + 800, red);
                 }
                 // }
             }
