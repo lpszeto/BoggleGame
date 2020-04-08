@@ -220,16 +220,16 @@ public class BogSurfaceView extends FlashSurfaceView {
         g.drawRect(left, top, right, bottom, p);
         g.drawText("WORD BANK", left + 20, top - 10,d);
 
-
+/*
         //writes all guessed words
-        if(state.getPlayer0Words().get(0) != null) {
+        if(state.getPlayer0Words().elementAt(0) != null) {
             for (int i = 0; i < state.getPlayer0Words().size(); i++) {
                 g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top - (10 * i), d);
             }
         }
         else{
             Log.i("Word state is: ", "null");
-        }
+        }*/
 
         //Paint the players' running wins
         top = (BOG_BORDER_PERCENT * height);

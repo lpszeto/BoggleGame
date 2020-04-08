@@ -114,6 +114,7 @@ public class BogState extends GameState {
         secondsLeft = original.secondsLeft;
         gameOver = original.gameOver;
 
+
         // copy the player-to-move information
  //       playerToMove = original.playerToMove;
     }

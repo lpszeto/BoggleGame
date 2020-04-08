@@ -3,8 +3,10 @@ package edu.up.cs301.boggle;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 
 import edu.up.cs301.game.GameFramework.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -21,7 +23,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  * @author Steven R. Vegdahl
  * @version September 2016
  */
-public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
+public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener{
     //Tag for logging
     private static final String TAG = "BogHumanPlayer1";
     // the current activity
@@ -35,6 +37,8 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     // the ID for the layout to use
     private int layoutId;
+
+    private Button submissionButton;
 
     /**
      * constructor
@@ -91,6 +95,10 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         Logger.log("set listener","OnTouch");
         surfaceView.setOnTouchListener(this);
         surfaceView.setState(state);
+
+        submissionButton = (Button) myActivity.findViewById(R.id.submissionButton);
+        Log.i("set listener", "Submission button");
+        submissionButton.setOnClickListener(this);
     }
 
     /**
@@ -149,6 +157,13 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // register that we have handled the event
         return true;
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        String newWord = state.getPlayerNewWord(0);
+
+       // for(int )
     }
 
 

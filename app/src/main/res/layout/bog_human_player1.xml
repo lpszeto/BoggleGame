@@ -10,6 +10,13 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
+<Button
+        android:id="@+id/submissionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text = "Submit word"
+        android:textColor="@color/black"
+        android:textSize="60sp"/>
 
 
 </RelativeLayout>
