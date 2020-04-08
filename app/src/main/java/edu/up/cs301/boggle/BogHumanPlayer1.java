@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.game.GameFramework.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.R;
@@ -43,6 +45,9 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private Button submissionButton;
 
     private ArrayList<Point> wordPoints = new ArrayList<Point>();
+
+    //
+    private String tempWord;
 
     /**
      * constructor
@@ -136,9 +141,6 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         boolean moving = false;
 
-        // ignore if not an "up" event
-        if (event.getAction() != MotionEvent.ACTION_UP){ moving = true;}
-
         // get the x and y coordinates of the touch-location;
         // convert them to square coordinates (where both
         // values are in the range 0..2)
@@ -150,11 +152,10 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // the screen; otherwise, create and send an action to
         // the game
         if (p == null) {
-            surfaceView.flash(Color.RED, 50);
+            surfaceView.flash(Color.RED, 300);
         } else {
-            BogMoveAction action = new BogMoveAction(this, p.y, p.x, moving);
+            wordPoints.add(p);
             Logger.log("onTouch", "Boggle swipe made");
-            game.sendAction(action);
             surfaceView.invalidate();
         }
 
