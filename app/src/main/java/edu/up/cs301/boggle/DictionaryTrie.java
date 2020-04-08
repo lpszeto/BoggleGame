@@ -21,7 +21,7 @@ public class DictionaryTrie {
 
     public char [] alphabet = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 
-    public Vector<TrieNode> top = new Vector<TrieNode>(26); //TODO MAKE THIS PRIVATE!!!
+    public Vector<TrieNode> top = new Vector<TrieNode>(26);
 
     public void readWordsFromFile(Context context) {
         if (words == null) {

@@ -2,11 +2,14 @@ package edu.up.cs301.boggle;
 
 import android.util.Log;
 
+import java.util.Vector;
+
 public class GuessTrie extends DictionaryTrie {
 
     char [][] board;
-    TrieNode [][] trieBoard = new TrieNode[4][4];
     DictionaryTrie vocabulary;
+    public Vector<String> guessWords = new Vector<String>();
+
 
 
     GuessTrie(char [][] newBoard, DictionaryTrie dictionary) {
@@ -21,7 +24,6 @@ public class GuessTrie extends DictionaryTrie {
                 //                trieBoard[x][y] = new TrieNode(board[x][y], false);
             }
         }
-        printSubTries(top.get(2)); //Test
     }
 
     //loads the valid neighbors of the given node at the given coordinates on the board
@@ -58,11 +60,13 @@ public class GuessTrie extends DictionaryTrie {
                     //return, since there cannot be other neighbors that finish the word.
                     node.children.add(new TrieNode(board[newCoords[0]][newCoords[1]], true, newCoords[0], newCoords[1]));
                     node.children.get(node.children.size() - 1).parent = node;
+                    guessWords.add(guess);
                     return;
                 }
                 else if(vocabCheck == 3) { //The node parents-based string is a word itself, and it is also the root of other words!!!!!!!!!!!!!!!!!!!!!!!
                     node.children.add(new TrieNode(board[newCoords[0]][newCoords[1]], true, newCoords[0], newCoords[1]));
                     node.children.get(node.children.size() - 1).parent = node;
+                    guessWords.add(guess);
                     loadValidNeighbors(node.children.get(node.children.size() - 1)); //RECURSE!!!!!!!!!!!!!!!!!!
                 }
                 else { //should never get here, but if we do, respond gracefully...
