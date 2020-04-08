@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.game.GameFramework.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.R;
@@ -39,6 +41,8 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     private int layoutId;
 
     private Button submissionButton;
+
+    private ArrayList<Point> wordPoints = new ArrayList<Point>();
 
     /**
      * constructor
@@ -163,7 +167,20 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     public void onClick(View view) {
         String newWord = state.getPlayerNewWord(0);
 
-       // for(int )
+        for(int i = 0; i < wordPoints.size() ; i++){
+            boolean end = false;
+            if(i == wordPoints.size() - 1){end = true;}
+
+            int x = wordPoints.get(i).x;
+            int y = wordPoints.get(i).y;
+            Point p = surfaceView.mapPixelToSquare(x,y);
+            BogMoveAction action = new BogMoveAction(this, p.y, p.x, end);
+            Logger.log("onTouch", "Boggle swipe made");
+            game.sendAction(action);
+
+            surfaceView.invalidate();
+        }
+
     }
 
 
