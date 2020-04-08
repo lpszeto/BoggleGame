@@ -121,8 +121,12 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * 		the motion event that was detected
      */
     public boolean onTouch(View v, MotionEvent event) {
+
+        boolean moving = false;
+
         // ignore if not an "up" event
-        if (event.getAction() != MotionEvent.ACTION_UP) return true;
+        if (event.getAction() != MotionEvent.ACTION_UP){ moving = true;}
+
         // get the x and y coordinates of the touch-location;
         // convert them to square coordinates (where both
         // values are in the range 0..2)
@@ -136,8 +140,8 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (p == null) {
             surfaceView.flash(Color.RED, 50);
         } else {
-            BogMoveAction action = new BogMoveAction(this, p.y, p.x, false); //TODO when players RELEASE their finger, set endOfWord to true
-            Logger.log("onTouch", "Human player sending TTTMA ...");
+            BogMoveAction action = new BogMoveAction(this, p.y, p.x, moving);
+            Logger.log("onTouch", "Boggle swipe made");
             game.sendAction(action);
             surfaceView.invalidate();
         }

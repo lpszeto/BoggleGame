@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
+import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 
 /**
  * A SurfaceView which allows which an animation to be drawn on it by a
@@ -56,6 +57,7 @@ public class BogSurfaceView extends FlashSurfaceView {
     //component 7: running total
     private final static float RUNNING_TOTAL_WIDTH_PERCENT = .2f;
     private final static float RUNNING_TOTAL_HEIGHT_PERCENT = .1f;
+
 
     // some constants, which are percentages with respect to the minimum
     // of the height and the width. All drawing will be done in the "middle
@@ -207,6 +209,8 @@ public class BogSurfaceView extends FlashSurfaceView {
         right = left + ((percentOfMinutes + percentOfSeconds) * (TIMER_WIDTH_PERCENT * width));
         g.drawRect(left, top, right, bottom, d);
 
+       // g.drawText(state.minutesLeft + ": " + state.secondsLeft, left + 20, bottom, p );
+
         //Paint the word bank
         left = (2* BOG_BORDER_PERCENT * width) + (BOG_WIDTH_PERCENT * width);
         right = left + (WORD_BANK_WIDTH_PERCENT * width);
@@ -214,6 +218,12 @@ public class BogSurfaceView extends FlashSurfaceView {
         bottom = top + (WORD_BANK_HEIGHT_PERCENT * height);
         g.drawRect(left, top, right, bottom, p);
         g.drawText("WORD BANK", left + 20, top - 10,d);
+
+
+        //writes all guessed words
+        //for(int i = 0; i < state.getPlayer0Words().size(); i++){
+         //   g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top - (10 * i), d);
+        //}
 
         //Paint the players' running wins
         top = (BOG_BORDER_PERCENT * height);
@@ -418,6 +428,22 @@ public class BogSurfaceView extends FlashSurfaceView {
      */
     public Point mapPixelToSquare(int x, int y) {
 
+        for( int i = 0; i < 3; i++){
+            for(int j = 0; j < 3; j++){
+
+            float left = (BOG_BORDER_PERCENT * getWidth()) + ( i * BOG_SQUARE_SIZE_PERCENT * getWidth());
+                float right = left + ( BOG_SQUARE_SIZE_PERCENT * getWidth());
+                float top = (2 * BOG_BORDER_PERCENT * getHeight()) + (TIMER_HEIGHT_PERCENT * getHeight()) +
+                        (y* BOG_SQUARE_SIZE_PERCENT * getHeight());
+                float bottom = top + ( BOG_SQUARE_SIZE_PERCENT * getHeight());
+                if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
+                    return new Point(i, j);
+                }
+            }
+        }
+        return null;
+
+        /*
         // loop through each square and see if we get a "hit"; if so, return
         // the corresponding Point in "square" coordinates
         for (int i = 0; i < 3; i++) {
@@ -435,7 +461,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         }
 
         // no match: return null
-        return null;
+        return null;*/
     }
 
     /**
