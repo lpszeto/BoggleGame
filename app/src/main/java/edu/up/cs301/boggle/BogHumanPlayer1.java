@@ -154,9 +154,16 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (p == null) {
             surfaceView.flash(Color.RED, 300);
         } else {
+
+            //Can't use the same cell twice...
+
+            for(int i = 0; i < wordPoints.size(); i++) {
+                if(p.x == wordPoints.get(i).x && p.y == wordPoints.get(i).y){
+                    return true;
+                }
+            }
             wordPoints.add(p);
             Logger.log("onTouch", "Boggle swipe made");
-            surfaceView.invalidate();
         }
 
         // register that we have handled the event
@@ -174,8 +181,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
             int x = wordPoints.get(i).x;
             int y = wordPoints.get(i).y;
-            Point p = surfaceView.mapPixelToSquare(x,y);
-            BogMoveAction action = new BogMoveAction(this, p.y, p.x, end);
+            BogMoveAction action = new BogMoveAction(this, y, x, end);
             Logger.log("onTouch", "Boggle swipe made");
             game.sendAction(action);
 
