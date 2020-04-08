@@ -8,6 +8,8 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
 
+import java.util.Vector;
+
 /**
  * A computerized tic-tac-toe player that recognizes an immediate win
  * or loss, and plays appropriately.  If there is not an immediate win
@@ -27,7 +29,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	 */
 	protected char piece;
 	protected DictionaryTrie vocabulary;
-	protected GuessTrie guessTrie;
+	private GuessTrie guessTrie;
 	protected boolean gotInfo = false;
 
 	/**
@@ -81,11 +83,35 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		char [][] board = {{'a', 'x', 'a', 'l'}, {'z', 's', 'y', 'l'}, {'k', 's', 'u', 't'}, {'i', 'u', 'e', 'n'}};
 
 		if(myState.dictionaryTrie.top.size() >= 1) {
-			guessTrie = new GuessTrie(board, myState.dictionaryTrie);
+			guessTrie = new GuessTrie(myState.getBoard(), myState.dictionaryTrie); //TODO: use this!!!
+			//guessTrie = new GuessTrie(board, myState.dictionaryTrie);
+
 			for(int i = 0; i < guessTrie.top.size(); i++) {
 				guessTrie.printWordsInTrie(guessTrie.top.get(i));
 			}
-			//guessTrie = new GuessTrie(myState.getBoard()); TODO: use this!!!
+
+			for(TrieNode node : guessTrie.wordNodes) {
+				Vector<TrieNode> parentBasedWord = new Vector<TrieNode>();
+				TrieNode dummyNode = node;
+				String test = guessTrie.makeStringFromParents(node);
+				Log.i("guessWord: ", test);
+				while (true) {
+					parentBasedWord.add(dummyNode);
+					if (dummyNode.parent == null) {
+						break;
+					} else {
+						dummyNode = dummyNode.parent;
+					}
+				}
+				for (int i = parentBasedWord.size() - 1; i >= 0; i--) {
+					boolean end = false;
+					if(i == 0) {
+						end = true;
+					}
+					game.sendAction(new BogMoveAction(this, parentBasedWord.get(i).coords[0], parentBasedWord.get(i).coords[1], end));
+				}
+			}
+
 		}
 
 		// if it's not our move, ignore it

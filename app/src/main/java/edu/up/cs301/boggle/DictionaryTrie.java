@@ -127,6 +127,7 @@ public class DictionaryTrie {
         for (int i = 0; i < node.children.size(); i++) {
             printWordsInTrie(node.children.get(i)); //Recurse!!!!!!
         }
+        return;
     }
 
     public void addWord(String word) { //breaks a string into chars and then adds to the trie. Smartly...
