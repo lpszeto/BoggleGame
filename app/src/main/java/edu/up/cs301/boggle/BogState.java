@@ -136,7 +136,7 @@ public class BogState extends GameState {
         }
 
         for (int i = 0; i < playerWordList.size(); i++) {
-            if (playerWordList.get(i).equals(possibleWord)) {
+            if (playerWordList.get(i).equals(possibleWord)) { //Bug fix; needed to be .equals()
                 return; // Word is already in the list!!!
             }
         }
