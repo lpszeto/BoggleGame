@@ -228,7 +228,7 @@ public class BogSurfaceView extends FlashSurfaceView {
             if (state.getPlayer0Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
                     for (int i = 0; i < state.getPlayer0Words().size(); i++) {
-                        g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top - (10 * i), d);
+                        g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top + (50 * i) + 50, d);
                     }
                // }
             }
