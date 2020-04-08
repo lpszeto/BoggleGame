@@ -31,31 +31,31 @@ public class BogSurfaceView extends FlashSurfaceView {
     //component 1 & 2: total wins from player 1 and player 2
     private int PlayerOneWins = 0;
     private int PlayerTwoWins = 0;
-    private final static float PLAYER_RUNNING_WINS_WIDTH = 35/2;
-    private final static float PLAYER_RUNNING_WINS_HEIGHT = .17f;
+    private final static float PLAYER_RUNNING_WINS_WIDTH = .1f;
+    private final static float PLAYER_RUNNING_WINS_HEIGHT = .1f;
 
     //component 3: wordbank
-    private final static float WORD_BANK_WIDTH_PERCENT = .35f;
-    private final static float WORD_BANK_HEIGHT_PERCENT = .65f;
+    private final static float WORD_BANK_WIDTH_PERCENT = .2f;
+    private final static float WORD_BANK_HEIGHT_PERCENT = .6f;
 
     //component 4: timer
     private final static float TIMER_WIDTH_PERCENT = .65f;
-    private final static float TIMER_HEIGHT_PERCENT = .17f;
+    private final static float TIMER_HEIGHT_PERCENT = .1f;
 
     //component 5: Boggle board
-    private final static float BOG_SQUARE_SIZE_PERCENT = .65f/.04f;
+    private final static float BOG_SQUARE_SIZE_PERCENT = .15f;
     private final static float BOG_BORDER_PERCENT = .05f;
-    private final static float BOG_WIDTH_PERCENT = .65f;
-    private final static float BOG_HEIGHT_PERCENT = .65f;
+    private final static float BOG_WIDTH_PERCENT = .6f;
+    private final static float BOG_HEIGHT_PERCENT = .6f;
     private final static float BOG_LINE_WIDTH_PERCENT = .01f;
 
     //component 6: progress bank
     private final static float PROGRESS_BANK_WIDTH_PERCENT = .65f;
-    private final static float PROGRESS_BANK_HEIGHT_PERCENT = .20f;
+    private final static float PROGRESS_BANK_HEIGHT_PERCENT = .1f;
 
     //component 7: running total
-    private final static float RUNNING_TOTAL_WIDTH_PERCENT = .35f;
-    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = .20f;
+    private final static float RUNNING_TOTAL_WIDTH_PERCENT = .2f;
+    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = .1f;
 
     // some constants, which are percentages with respect to the minimum
     // of the height and the width. All drawing will be done in the "middle
@@ -164,24 +164,21 @@ public class BogSurfaceView extends FlashSurfaceView {
 
         Paint d = new Paint();
         d.setColor(detailColor());
+        d.setTextSize((float)75);
 
-        //paint the Boggle board
-        for(int i = 0; i <= 3; i ++){
-                float left = width -  (BOG_BORDER_PERCENT * width);
-                float right = left + (BOG_SQUARE_SIZE_PERCENT * width * (i + 1));
-                float top = height - ((2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height));
-                float bottom = top + (BOG_HEIGHT_PERCENT * height);
+        //paints the Boggle Board
+        for(int x = 0; x < 4; x++){
+            for(int y = 0; y < 4; y++){
+                float left = (BOG_BORDER_PERCENT * width) + ( y * BOG_SQUARE_SIZE_PERCENT * width);
+                float right = left + ( BOG_SQUARE_SIZE_PERCENT * width);
+                float top = (2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) +
+                        (x* BOG_SQUARE_SIZE_PERCENT * height);
+                float bottom = top + ( BOG_SQUARE_SIZE_PERCENT * height);
                 g.drawRect(left, top, right, bottom, p);
+              //  g.drawText("" + state.getPiece(x, y), x + 20, y + 20, d);
+            }
         }
 
-        for(int x = 0; x <= 3; x++){
-            float left = width - (BOG_BORDER_PERCENT * width);
-            float right = width - (BOG_WIDTH_PERCENT * width);
-            float top = (2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) +
-                    (BOG_SQUARE_SIZE_PERCENT * (height * (x + 1)));
-            float bottom = top - (BOG_LINE_WIDTH_PERCENT * x);
-            g.drawRect(left, top, right,bottom, p);
-        }
 
         fillBoard(g);
 
@@ -195,11 +192,9 @@ public class BogSurfaceView extends FlashSurfaceView {
             percentOfSeconds = 1;
         }
         else {
-            percentOfMinutes= state.minutesLeft/3;
+            percentOfMinutes= (state.minutesLeft * 60)/3600;
             percentOfSeconds = state.secondsLeft/60;
         }
-
-
 
         //draws the outline of the timer
         float left = (BOG_BORDER_PERCENT * width);
@@ -213,38 +208,36 @@ public class BogSurfaceView extends FlashSurfaceView {
         g.drawRect(left, top, right, bottom, d);
 
         //Paint the word bank
-        right = width -(BOG_BORDER_PERCENT * width);
-        left = right - (WORD_BANK_WIDTH_PERCENT * width);
+        left = (2* BOG_BORDER_PERCENT * width) + (BOG_WIDTH_PERCENT * width);
+        right = left + (WORD_BANK_WIDTH_PERCENT * width);
         top  = (2 * BOG_BORDER_PERCENT * height) + (PROGRESS_BANK_HEIGHT_PERCENT * height);
         bottom = top + (WORD_BANK_HEIGHT_PERCENT * height);
         g.drawRect(left, top, right, bottom, p);
         g.drawText("WORD BANK", left + 20, top - 10,d);
 
         //Paint the players' running wins
-        float top1 = (BOG_BORDER_PERCENT * height);
-        float bottom1 = top1 + (PLAYER_RUNNING_WINS_HEIGHT * height);
-        float right2 = (BOG_BORDER_PERCENT * width);
-        float left2 = right2 + (PLAYER_RUNNING_WINS_WIDTH);
-        float right1 = left2;
-        float left1 = right1 + (PLAYER_RUNNING_WINS_WIDTH * width);
-        g.drawRect(left1, top1, right1, bottom1, p);
-        g.drawRect(left2, top1, right2, bottom1, p);
+        top = (BOG_BORDER_PERCENT * height);
+        bottom = top + (PLAYER_RUNNING_WINS_HEIGHT * height);
+        float left1 = (2 * BOG_BORDER_PERCENT * width) + (TIMER_WIDTH_PERCENT * width);
+        float right1 = left1 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        float left2 = right1;
+        float right2 = left2 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        g.drawRect(left1, top, right1, bottom, p);
+        g.drawRect(left2, top, right2, bottom, p);
 
         //Paint the current running total
-        bottom = (BOG_BORDER_PERCENT * height);
-        top = height - bottom -(RUNNING_TOTAL_HEIGHT_PERCENT * height);
-        right = (BOG_BORDER_PERCENT * width);
-        left = width - right - (RUNNING_TOTAL_WIDTH_PERCENT * width);
+        top = (3 * BOG_BORDER_PERCENT * height) + (WORD_BANK_HEIGHT_PERCENT * height) + (PLAYER_RUNNING_WINS_HEIGHT * height);
+        bottom = top + (RUNNING_TOTAL_HEIGHT_PERCENT * height);
+        left = (2 * BOG_BORDER_PERCENT * width) + (PROGRESS_BANK_WIDTH_PERCENT * width);
+        right = left + (RUNNING_TOTAL_WIDTH_PERCENT * width);
         g.drawRect(left, top, right, bottom, p);
 
         //paint progress bar below
-        bottom = height - (BOG_BORDER_PERCENT * height);
-        top = height - bottom -(PROGRESS_BANK_HEIGHT_PERCENT * height);
+        top = (3 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) + (BOG_HEIGHT_PERCENT * height);
+        bottom = top + (PROGRESS_BANK_HEIGHT_PERCENT * height);
         left = (BOG_BORDER_PERCENT * width);
         right = left + (PROGRESS_BANK_WIDTH_PERCENT * width);
         g.drawRect(left, top, right, bottom, p);
-
-
 
     }
 
@@ -260,24 +253,19 @@ public class BogSurfaceView extends FlashSurfaceView {
         }
         else {
             //prepare to draw the board indicated in the gamestate.
-            tempBoard = state.getBoard();;
-            for(int x = 0; x < tempBoard.length; x ++){
-                for(int y = 0; y < tempBoard.length; y++){
-                    tempBoard[x][y] = state.getBoard()[x][y];
-                }
-            }
+            tempBoard = state.getBoard();
 
         }
         Paint p = new Paint();
         p.setColor(foregroundColor());
+        p.setTextSize((float)200);
 
-
-       for(int x = 0; x < tempBoard.length; x ++){
-          for(int y = 0; y < tempBoard.length; y ++){
-              float top = (TIMER_HEIGHT_PERCENT * g.getHeight()) + (2 * BOG_BORDER_PERCENT * g.getHeight() +
-                      (x * BOG_SQUARE_SIZE_PERCENT * g.getHeight()));
-              float left = (BOG_BORDER_PERCENT * g.getWidth()) + (y * BOG_SQUARE_SIZE_PERCENT * g.getWidth());
-              g.drawText("" + tempBoard[x][y], top, left, p );
+       for(int x = 0; x < 4; x ++){
+          for(int y = 0; y < 4; y ++){
+              float top = 20 + (BOG_SQUARE_SIZE_PERCENT * getHeight() / 2) + (TIMER_HEIGHT_PERCENT * getHeight()) + (2 * BOG_BORDER_PERCENT * getHeight() +
+                      (x * BOG_SQUARE_SIZE_PERCENT * getHeight()));
+              float left = 30 + (BOG_BORDER_PERCENT * getWidth()) + (y * BOG_SQUARE_SIZE_PERCENT * getWidth());
+              g.drawText("" + tempBoard[x][y], left,top, p );
            }
        }
 
