@@ -266,6 +266,9 @@ public class BogState extends GameState {
         }
     }
 
+    public Vector<String> getPlayer0Words(){return player0Words;}
+    public Vector<String> getPlayer1Words() { return player1Words;}
+
     public int getPlayer0Score() {return player0Score;}
 
 
