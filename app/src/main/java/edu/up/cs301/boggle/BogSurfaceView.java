@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
 import edu.up.cs301.game.GameFramework.utilities.GameTimer;
@@ -221,9 +222,14 @@ public class BogSurfaceView extends FlashSurfaceView {
 
 
         //writes all guessed words
-        //for(int i = 0; i < state.getPlayer0Words().size(); i++){
-         //   g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top - (10 * i), d);
-        //}
+        if(state.getPlayer0Words().get(0) != null) {
+            for (int i = 0; i < state.getPlayer0Words().size(); i++) {
+                g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top - (10 * i), d);
+            }
+        }
+        else{
+            Log.i("Word state is: ", "null");
+        }
 
         //Paint the players' running wins
         top = (BOG_BORDER_PERCENT * height);
@@ -428,15 +434,15 @@ public class BogSurfaceView extends FlashSurfaceView {
      */
     public Point mapPixelToSquare(int x, int y) {
 
-        for( int i = 0; i < 3; i++){
-            for(int j = 0; j < 3; j++){
+        for( int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
 
             float left = (BOG_BORDER_PERCENT * getWidth()) + ( i * BOG_SQUARE_SIZE_PERCENT * getWidth());
                 float right = left + ( BOG_SQUARE_SIZE_PERCENT * getWidth());
                 float top = (2 * BOG_BORDER_PERCENT * getHeight()) + (TIMER_HEIGHT_PERCENT * getHeight()) +
-                        (y* BOG_SQUARE_SIZE_PERCENT * getHeight());
+                        (j * BOG_SQUARE_SIZE_PERCENT * getHeight());
                 float bottom = top + ( BOG_SQUARE_SIZE_PERCENT * getHeight());
-                if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
+                if ((x > left) && (x < right) && (y > top) && (y < bottom)) {
                     return new Point(i, j);
                 }
             }

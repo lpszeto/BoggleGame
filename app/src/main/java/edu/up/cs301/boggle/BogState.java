@@ -56,6 +56,7 @@ public class BogState extends GameState {
     protected int minutesLeft = 3;
     protected int secondsLeft = 0;
     boolean gameOver = false;
+    boolean isHuman = false;
 
 
     /**

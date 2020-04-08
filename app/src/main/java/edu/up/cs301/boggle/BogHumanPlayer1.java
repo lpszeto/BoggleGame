@@ -65,7 +65,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.flash(Color.RED, 50);
         }
         else if (!(info instanceof BogState))
-            // if we do not have a TTTState, ignore
+            // if we do not have a BogState, ignore
             return;
         else {
             state = (BogState) info;
