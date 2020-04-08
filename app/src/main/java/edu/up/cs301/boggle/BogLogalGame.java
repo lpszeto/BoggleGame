@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
 
+import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GamePlayer;
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
@@ -34,7 +35,7 @@ public class BogLogalGame extends LocalGame {
 	/**
 	 * Constructor for the BogLocalGame.
 	 */
-	public BogLogalGame(Context context) {
+	public BogLogalGame(final Context context) {
 
 		// perform superclass initialization
 		super();
@@ -53,6 +54,9 @@ public class BogLogalGame extends LocalGame {
 				} else {
 					state.secondsLeft--;
 				}
+				for (GamePlayer p : players) { //send an updated state object every second to each player.
+					sendUpdatedStateTo(p);
+				}
 			}
 
 			@Override
@@ -62,6 +66,7 @@ public class BogLogalGame extends LocalGame {
 			}
 
 		}.start();
+
 	}
 	public int scores(int player){
 		return (player == 0)? state.getPlayer0Score() : state.getPlayer1Score();
@@ -159,7 +164,9 @@ public class BogLogalGame extends LocalGame {
 
 		// if the piece is the last letter in a word, then
 		// check if the word is in the dictionary and tally points accordingly!
-		if (makesWord && state.dictionaryTrie.searchDictionary(state.getPlayerNewWord(playerId))) { //TODO implement checkWord
+		// searching the dictionary returns 2 or 3 if the word inputted is a word from the word_list resource file.
+		//
+		if (makesWord && (state.dictionaryTrie.searchDictionary(state.getPlayerNewWord(playerId))) >= 2) { //TODO implement checkWord
 			state.scoreWord(playerId); //also checks if the word is already in the list. Only adds the word and the associated points if the word is not already in the list.
 		}
 

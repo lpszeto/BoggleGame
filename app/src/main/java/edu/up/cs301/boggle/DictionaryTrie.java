@@ -42,7 +42,8 @@ public class DictionaryTrie {
         }
     }
 
-    public boolean searchDictionary(String word) {
+    public int searchDictionary(String word) {
+
         char[] chars = word.toCharArray();
         TrieNode nodePointer;
         int child;
@@ -51,10 +52,14 @@ public class DictionaryTrie {
                 break;
             }
             if (child == top.size() - 1) {
-                return false; //first character not in top level of dictionary...
+                return 0; //first character not in top level of dictionary...
             }
         }
         nodePointer = top.get(child);
+
+        if(chars.length == 1) {
+            return 1; //A single character that made it through the above checks is always a prefix to a word, but not a word itself.
+        }
 
         for (int i = 1; i < chars.length; i++) {
             for (child = 0; child < nodePointer.children.size(); child++) {
@@ -63,16 +68,26 @@ public class DictionaryTrie {
                     break; //return to outer loop, and continue iterating through the word...
                 }
                 if (child == nodePointer.children.size() - 1) {
-                    return false; //this is NOT a word in our dictionary!
+                    return 0; //this is NOT a word in our dictionary!
                 }
             }
-            if (i == chars.length - 1 && nodePointer.isWord) {
-                Log.i("searchDictionary(" + word + ")", "FOUND THE WORD!!!!");
-                return true; //WE FOUND THE WORD!!!
+            if (i == chars.length - 1 && nodePointer.isWord) { //we have read in all the chars, and the pointer is pointing to a valid word in the trie!
+                if (nodePointer.children.size() > 0) {
+                    Log.i("searchDictionary(" + word + ")", "FOUND WORD SUCCESS, AND WORD IS ROOT OF OTHERS!!!!");
+                    return 3; //WE Found a valid, complete word that is also the root of other words!!!!!!!!!!!!!!!!
+                }
+                else {
+                    Log.i("searchDictionary(" + word + ")", "FOUND WORD SUCCESS, but word is not root of others.");
+                    return 2; //WE FOUND A WORD, not a root of others though!
+                }
+
+            }
+            else if (i == chars.length - 1){
+                return 1; //inputted word is not in the english dictionary, but it is a PREFIX of at least one other word!
             }
         }
-
-    return false;}
+        return 0;
+    }
 
     public void printSubTries(TrieNode node) {
         Log.i("node.letter = ", "" + node.letter);

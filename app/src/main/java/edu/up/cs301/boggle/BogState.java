@@ -43,10 +43,10 @@ public class BogState extends GameState {
     private String player1NewWord = "";
 
     //Wordlist for player0
-    Vector<String> player0Words = new Vector<String>();
+    private Vector<String> player0Words = new Vector<String>();
 
     //Wordlist for player1
-    Vector<String> player1Words = new Vector<String>();
+    private Vector<String> player1Words = new Vector<String>();
 
     //Scores
     private int player0Score = 0;
@@ -75,9 +75,9 @@ public class BogState extends GameState {
         dictionaryTrie.readWordsFromFile(context);
         dictionaryTrie.initializeEnglishDictionaryTrie();
 
-        for (int i = 0; i < dictionaryTrie.top.size(); i++) {
-            dictionaryTrie.printWordsInTrie(dictionaryTrie.top.get(i));
-        }
+//        for (int i = 0; i < dictionaryTrie.top.size(); i++) {
+//            dictionaryTrie.printWordsInTrie(dictionaryTrie.top.get(i));
+//        }
 
         // make it player 0's move
 //        playerToMove = 0;
@@ -99,6 +99,19 @@ public class BogState extends GameState {
                 board[i][j] = original.board[i][j];
             }
         }
+        dictionaryTrie = original.dictionaryTrie;
+        player0NewWord = original.player0NewWord;
+        player1NewWord = original.player1NewWord;
+        //Wordlist for player0
+        player0Words = original.player0Words;
+        //Wordlist for player1
+        player1Words = original.player1Words;
+        //Scores
+        player0Score = original.player0Score;
+        player1Score = original.player1Score;
+        minutesLeft = original.minutesLeft;
+        secondsLeft = original.secondsLeft;
+        gameOver = original.gameOver;
 
         // copy the player-to-move information
  //       playerToMove = original.playerToMove;

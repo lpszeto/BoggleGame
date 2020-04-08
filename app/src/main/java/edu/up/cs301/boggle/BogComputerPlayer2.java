@@ -28,6 +28,7 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	protected char piece;
 	protected DictionaryTrie vocabulary;
 	protected GuessTrie guessTrie;
+	protected boolean gotInfo = false;
 
 	/**
 	 * constructor for a computer player
@@ -70,9 +71,22 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		// if it's not a BogState message, ignore it; otherwise
 		// cast it
 		if (!(info instanceof BogState)) return;
+
+		if(gotInfo) {
+			return;
+		}
+		gotInfo = true;
 		BogState myState = (BogState) info;
 
+		char [][] board = {{'a', 'x', 'a', 'l'}, {'z', 's', 'y', 'l'}, {'k', 's', 'u', 't'}, {'i', 'u', 'e', 'n'}};
 
+		if(myState.dictionaryTrie.top.size() >= 1) {
+			guessTrie = new GuessTrie(board, myState.dictionaryTrie);
+			for(int i = 0; i < guessTrie.top.size(); i++) {
+				guessTrie.printWordsInTrie(guessTrie.top.get(i));
+			}
+			//guessTrie = new GuessTrie(myState.getBoard()); TODO: use this!!!
+		}
 
 		// if it's not our move, ignore it
 //		if (myState.getWhoseMove() != this.playerNum) return;
