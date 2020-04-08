@@ -11,6 +11,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import edu.up.cs301.game.GameFramework.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -177,10 +178,12 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
         for(int i = 0; i < wordPoints.size() ; i++){
             boolean end = false;
-            if(i == wordPoints.size() - 1){end = true;}
-
             int x = wordPoints.get(i).x;
             int y = wordPoints.get(i).y;
+            if(i == wordPoints.size() - 1){
+                end = true;
+                wordPoints = new ArrayList<>();
+            }
             BogMoveAction action = new BogMoveAction(this, y, x, end);
             Logger.log("onTouch", "Boggle swipe made");
             game.sendAction(action);
