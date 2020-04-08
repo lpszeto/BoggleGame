@@ -171,6 +171,10 @@ public class BogSurfaceView extends FlashSurfaceView {
         d.setColor(detailColor());
         d.setTextSize((float)75);
 
+        Paint red = new Paint();
+        red.setColor(Color.RED);
+        red.setTextSize(50);
+
         //paints the Boggle Board
         for(int x = 0; x < 4; x++){
             for(int y = 0; y < 4; y++){
@@ -236,6 +240,20 @@ public class BogSurfaceView extends FlashSurfaceView {
                 Log.i("Word state is: ", "null");
             }
         }
+
+        if(state != null) {
+            if (state.getPlayer1Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                for (int i = 0; i < state.getPlayer1Words().size(); i++) {
+                    g.drawText(state.getPlayer1Words().elementAt(i), left + 350, top + (40 * i) + 50, red);
+                }
+                // }
+            }
+            else {
+                Log.i("Word state is: ", "null");
+            }
+        }
+
 
         //Paint the players' running wins
         top = (BOG_BORDER_PERCENT * height);
