@@ -3,8 +3,15 @@ package edu.up.cs301.boggle;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
+
+import java.util.ArrayList;
+import java.util.Vector;
 
 import edu.up.cs301.game.GameFramework.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -21,7 +28,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  * @author Steven R. Vegdahl
  * @version September 2016
  */
-public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
+public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener{
     //Tag for logging
     private static final String TAG = "BogHumanPlayer1";
     // the current activity
@@ -35,6 +42,13 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     // the ID for the layout to use
     private int layoutId;
+
+    private Button submissionButton;
+
+    private ArrayList<Point> wordPoints = new ArrayList<Point>();
+
+    //
+    private String tempWord;
 
     /**
      * constructor
@@ -65,7 +79,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.flash(Color.RED, 50);
         }
         else if (!(info instanceof BogState))
-            // if we do not have a TTTState, ignore
+            // if we do not have a BogState, ignore
             return;
         else {
             state = (BogState) info;
@@ -91,6 +105,10 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         Logger.log("set listener","OnTouch");
         surfaceView.setOnTouchListener(this);
         surfaceView.setState(state);
+
+        submissionButton = (Button) myActivity.findViewById(R.id.submissionButton);
+        Log.i("set listener", "Submission button");
+        submissionButton.setOnClickListener(this);
     }
 
     /**
@@ -121,8 +139,9 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * 		the motion event that was detected
      */
     public boolean onTouch(View v, MotionEvent event) {
-        // ignore if not an "up" event
-        if (event.getAction() != MotionEvent.ACTION_UP) return true;
+
+        boolean moving = false;
+
         // get the x and y coordinates of the touch-location;
         // convert them to square coordinates (where both
         // values are in the range 0..2)
@@ -134,16 +153,43 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // the screen; otherwise, create and send an action to
         // the game
         if (p == null) {
-            surfaceView.flash(Color.RED, 50);
+            surfaceView.flash(Color.RED, 300);
         } else {
-            BogMoveAction action = new BogMoveAction(this, p.y, p.x, false); //TODO when players RELEASE their finger, set endOfWord to true
-            Logger.log("onTouch", "Human player sending TTTMA ...");
-            game.sendAction(action);
-            surfaceView.invalidate();
+
+            //Can't use the same cell twice...
+
+            for(int i = 0; i < wordPoints.size(); i++) {
+                if(p.x == wordPoints.get(i).x && p.y == wordPoints.get(i).y){
+                    return true;
+                }
+            }
+            wordPoints.add(p);
+            Logger.log("onTouch", "Boggle swipe made");
         }
 
         // register that we have handled the event
         return true;
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        String newWord = state.getPlayerNewWord(0);
+
+        for(int i = 0; i < wordPoints.size() ; i++){
+            boolean end = false;
+            int x = wordPoints.get(i).x;
+            int y = wordPoints.get(i).y;
+            if(i == wordPoints.size() - 1){
+                end = true;
+                wordPoints = new ArrayList<>();
+            }
+            BogMoveAction action = new BogMoveAction(this, y, x, end);
+            Logger.log("onTouch", "Boggle swipe made");
+            game.sendAction(action);
+
+            surfaceView.invalidate();
+        }
 
     }
 

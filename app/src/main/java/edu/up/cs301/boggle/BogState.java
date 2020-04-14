@@ -1,6 +1,7 @@
 package edu.up.cs301.boggle;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -39,9 +40,11 @@ public class BogState extends GameState {
     //private int playerToMove;
 
     private String player0NewWord = "";
+    private Vector<Point> player0WordCoords = new Vector<Point>();
+
 
     private String player1NewWord = "";
-
+    private Vector<Point> player1WordCoords = new Vector<Point>();
     //Wordlist for player0
     private Vector<String> player0Words = new Vector<String>();
 
@@ -56,6 +59,7 @@ public class BogState extends GameState {
     protected int minutesLeft = 3;
     protected int secondsLeft = 0;
     boolean gameOver = false;
+    boolean isHuman = false;
 
 
     /**
@@ -113,6 +117,7 @@ public class BogState extends GameState {
         secondsLeft = original.secondsLeft;
         gameOver = original.gameOver;
 
+
         // copy the player-to-move information
  //       playerToMove = original.playerToMove;
     }
@@ -133,10 +138,11 @@ public class BogState extends GameState {
         }
         else {
             playerWordList = player1Words;
+
         }
 
         for (int i = 0; i < playerWordList.size(); i++) {
-            if (playerWordList.get(i) == possibleWord) {
+            if (playerWordList.get(i).equals(possibleWord)) { //Bug fix; needed to be .equals()
                 return; // Word is already in the list!!!
             }
         }
@@ -206,47 +212,41 @@ public class BogState extends GameState {
         // if we're out of bounds or anything, return;
         if (board == null || row < 0 || col < 0) return;
         if (row >= board.length || col >= board[row].length) return;
+        Vector<Point> playerWordCoords;
+
+        if(playerId==0) {
+            playerWordCoords = player0WordCoords;
+        }
+        else {
+            playerWordCoords = player1WordCoords;
+
+        }
+        //Can't use the same cell twice...
+
+            for (int j = 0; j < playerWordCoords.size(); j++) {
+                if (row == playerWordCoords.get(j).x && col == playerWordCoords.get(j).y) {
+                    return;
+                }
+            }
+
+
         char piece = board[row][col];
         // add the character that is in the proper position to the current word in the wordlist
         if(playerId==0)
         {
          player0NewWord = player0NewWord + piece;
+         player0WordCoords.add(new Point(row, col));
         }
         else {
             player1NewWord = player1NewWord + piece;
+            player1WordCoords.add(new Point(row, col));
         }
 
     }
 
-//    /**
-//     * Tells whose move it is.(TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
-//     *
-//     * @return the index (0 or 1) of the player whose move it is.
-//     */
-//    public int getWhoseMove() {
-//        return playerToMove;
-//    }
-//
-//    /**
-//     * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
-//     * @param id
-//     * 		the player we want to set as to whose move it is
-//     */
-//    public void setWhoseMove(int id) {
-//        playerToMove = id;
-//    }
     public char[][] getBoard() {
         return board;
     }
-
-    /**
-     * set whose move it is (TEMPORARY SINCE ITS TECHNICALLY A ONE PLAYER GAME)
-     * @param id
-     * 		the player we want to set as to whose move it is
-     */
-    //public void setWhoseMove(int id) {
-    //    playerToMove = id;
-    //}
 
     public String getPlayerNewWord(int playerId) {
         if(playerId == 0) {
@@ -260,11 +260,17 @@ public class BogState extends GameState {
     public void resetPlayerNewWord(int playerId) {
         if(playerId == 0) {
             player0NewWord = "";
+            player0WordCoords = new Vector<Point>();
         }
         else {
             player1NewWord = "";
+            player1WordCoords = new Vector<Point>();
+
         }
     }
+
+    public Vector<String> getPlayer0Words(){return player0Words;}
+    public Vector<String> getPlayer1Words() { return player1Words;}
 
     public int getPlayer0Score() {return player0Score;}
 
