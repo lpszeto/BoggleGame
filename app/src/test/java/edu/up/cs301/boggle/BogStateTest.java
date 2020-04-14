@@ -30,6 +30,8 @@ public class BogStateTest {
     @Test
     public void setWhoseMove() {
         BogState test = new BogState();
+        test.setWhoseMove(1);
+        assertEquals(1,test.getWhoseMove());
     }
 
     @Test
