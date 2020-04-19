@@ -93,6 +93,8 @@ public class BogSurfaceView extends FlashSurfaceView {
     // size
     protected float fullSquare;
 
+    protected String playerWord = "";
+
     /**
      * Constructor for the BogSurfaceView class.
      *
@@ -145,6 +147,14 @@ public class BogSurfaceView extends FlashSurfaceView {
 
     public int detailColor() { return Color.GREEN;}
 
+    public void addCharToWord(char c) {
+        playerWord = playerWord + c;
+    }
+
+    public void resetPlayerWord() {
+        playerWord = "";
+    }
+
     /**
      * callback method, called whenever it's time to redraw
      * frame
@@ -153,8 +163,6 @@ public class BogSurfaceView extends FlashSurfaceView {
      * 		the canvas to draw on
      */
     public void onDraw(Canvas g) {
-
-
 
         g.drawColor(backgroundColor());
         // update the variables that relate
@@ -169,7 +177,7 @@ public class BogSurfaceView extends FlashSurfaceView {
 
         Paint d = new Paint();
         d.setColor(detailColor());
-        d.setTextSize((float)75);
+        d.setTextSize((float)50);
 
         Paint red = new Paint();
         red.setColor(Color.RED);
@@ -188,24 +196,22 @@ public class BogSurfaceView extends FlashSurfaceView {
             }
         }
 
-
+        int totalSecondsLeft;
+        int factor;
         fillBoard(g);
 
-        int percentOfMinutes;
-        int percentOfSeconds;
-
         //paint the timer
-        double timeLeft  = 3.00;
-        if (state ==null) {
-            percentOfMinutes= 1;
-            percentOfSeconds = 1;
+        if (state == null) {
+            totalSecondsLeft = 180;
+            factor = 0;
         }
         else {
-            percentOfMinutes= (state.minutesLeft * 60)/3600;
-            percentOfSeconds = state.secondsLeft/60;
+            totalSecondsLeft = 60*state.minutesLeft + state.secondsLeft;
+            factor = 180 - totalSecondsLeft;
         }
 
         //draws the outline of the timer
+        //float left = (BOG_BORDER_PERCENT * width);
         float left = (BOG_BORDER_PERCENT * width);
         float right = left + (TIMER_WIDTH_PERCENT * width);
         float top = (BOG_BORDER_PERCENT * height);
@@ -213,8 +219,20 @@ public class BogSurfaceView extends FlashSurfaceView {
         g.drawRect(left, top, right,bottom, p);
 
         //draws the time left within the timer
-        right = left + ((percentOfMinutes + percentOfSeconds) * (TIMER_WIDTH_PERCENT * width));
-        g.drawRect(left, top, right, bottom, d);
+        right = left + (factor * (TIMER_WIDTH_PERCENT * width) / 180);
+        g.drawRect(left, top, right, bottom, red);
+
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                if(state.secondsLeft < 10) {
+                    g.drawText(+state.minutesLeft + ":0" + state.secondsLeft, left + 20, top + 70, d);
+                }
+                else {
+                    g.drawText(+state.minutesLeft + ":" + state.secondsLeft, left + 20, top + 70, d);
+                }
+            }
+        }
 
        // g.drawText(state.minutesLeft + ": " + state.secondsLeft, left + 20, bottom, p );
 
@@ -224,18 +242,17 @@ public class BogSurfaceView extends FlashSurfaceView {
         top  = (2 * BOG_BORDER_PERCENT * height) + (PROGRESS_BANK_HEIGHT_PERCENT * height);
         bottom = top + (WORD_BANK_HEIGHT_PERCENT * height);
         g.drawRect(left, top, right, bottom, p);
-        g.drawText("WORD BANK", left + 20, top - 10,d);
+        g.drawText("WORD BANK", left + 20, top - 10, d);
 
 
 //        writes all guessed words
         if(state != null) {
             if (state.getPlayer0Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
-                g.drawText( + state.getPlayer0Score()+"=P1score", left + 20, top + 50, d);
-
+                //g.drawText( + state.getPlayer0Score()+"=P0score", left + 20, top + 50, d);
                 for (int i = 0; i < state.getPlayer0Words().size(); i++) {
                         g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top + (50 * i) + 100, d);
-                    }
+                }
                // }
             }
             else {
@@ -246,7 +263,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         if(state != null) {
             if (state.getPlayer1Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
-                g.drawText("P0score=" + state.getPlayer1Score(), left + 350, top + 50, red);
+                g.drawText("P1=" + state.getPlayer1Score(), left + 350, top + 50, red);
                 for (int i = 0; i < state.getPlayer1Words().size(); i++) {
                     g.drawText(state.getPlayer1Words().elementAt(i), left + 350, top + (40 * i) + 80, red);
                 }
@@ -268,12 +285,18 @@ public class BogSurfaceView extends FlashSurfaceView {
         g.drawRect(left1, top, right1, bottom, p);
         g.drawRect(left2, top, right2, bottom, p);
 
-        //Paint the current running total
+        //Paint the current running total; bottom right hand corner
         top = (3 * BOG_BORDER_PERCENT * height) + (WORD_BANK_HEIGHT_PERCENT * height) + (PLAYER_RUNNING_WINS_HEIGHT * height);
         bottom = top + (RUNNING_TOTAL_HEIGHT_PERCENT * height);
         left = (2 * BOG_BORDER_PERCENT * width) + (PROGRESS_BANK_WIDTH_PERCENT * width);
         right = left + (RUNNING_TOTAL_WIDTH_PERCENT * width);
         g.drawRect(left, top, right, bottom, p);
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                g.drawText(+state.getPlayer0Score() + "", left + 20, top + 50, d);
+            }
+        }
 
         //paint progress bar below
         top = (3 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) + (BOG_HEIGHT_PERCENT * height);
@@ -281,7 +304,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         left = (BOG_BORDER_PERCENT * width);
         right = left + (PROGRESS_BANK_WIDTH_PERCENT * width);
         g.drawRect(left, top, right, bottom, p);
-
+        g.drawText(playerWord, left + 20, top + 70, d); //todo check top spacing...
     }
 
     private void fillBoard(Canvas g){
@@ -475,6 +498,7 @@ public class BogSurfaceView extends FlashSurfaceView {
             }
         }
         return null;
+
 
         /*
         // loop through each square and see if we get a "hit"; if so, return

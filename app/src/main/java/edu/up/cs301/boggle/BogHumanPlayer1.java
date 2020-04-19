@@ -21,6 +21,8 @@ import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
 import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
 
+import static java.lang.StrictMath.abs;
+
 /**
  * A GUI that allows a human to play tic-tac-toe. Moves are made by clicking
  * regions on a canvas
@@ -163,7 +165,21 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                     return true;
                 }
             }
+
+            //Must be a valid neighbor...
+            if(wordPoints.size() > 0) {
+                if (abs(p.x - wordPoints.get(wordPoints.size() - 1).x) > 1) {
+                    return true;
+                }
+
+                if (abs(p.y - wordPoints.get(wordPoints.size() - 1).y) > 1) {
+                    return true;
+                }
+            }
+
             wordPoints.add(p);
+            char c = state.getBoard()[p.y][p.x];
+            surfaceView.addCharToWord(c);
             Logger.log("onTouch", "Boggle swipe made");
         }
 
@@ -187,7 +203,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             BogMoveAction action = new BogMoveAction(this, y, x, end);
             Logger.log("onTouch", "Boggle swipe made");
             game.sendAction(action);
-
+            surfaceView.resetPlayerWord();
             surfaceView.invalidate();
         }
 

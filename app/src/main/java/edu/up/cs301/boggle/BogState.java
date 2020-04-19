@@ -11,6 +11,8 @@ import java.util.Vector;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 
+import static java.lang.StrictMath.abs;
+
 
 /**
  * Contains the state of a Boggle game.  Sent by the game when
@@ -227,8 +229,18 @@ public class BogState extends GameState {
                 if (row == playerWordCoords.get(j).x && col == playerWordCoords.get(j).y) {
                     return;
                 }
+            } //TODO ENFORCE MUST BE A NEIGHBOR OF THE LAST CELL
+
+        //Must be a valid neighbor...
+        if (playerWordCoords.size() > 0) {
+            if (abs(row - playerWordCoords.get(playerWordCoords.size() - 1).x) > 1) {
+                return;
             }
 
+            if (abs(col - playerWordCoords.get(playerWordCoords.size() - 1).y) > 1) {
+                return;
+            }
+        }
 
         char piece = board[row][col];
         // add the character that is in the proper position to the current word in the wordlist
@@ -269,8 +281,11 @@ public class BogState extends GameState {
         }
     }
 
-    public Vector<String> getPlayer0Words(){return player0Words;}
-    public Vector<String> getPlayer1Words() { return player1Words;}
+    public Vector<String> getPlayer0Words() {return player0Words;}
+    public Vector<String> getPlayer1Words() {return player1Words;}
+
+    public String getplayer0NewWord() {return player0NewWord;}
+    public String getPlayer1NewWord() {return player1NewWord;}
 
     public int getPlayer0Score() {return player0Score;}
 
