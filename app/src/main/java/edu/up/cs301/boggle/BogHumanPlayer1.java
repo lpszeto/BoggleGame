@@ -47,6 +47,8 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private Button submissionButton;
 
+    private Button backspaceButton;
+
     private ArrayList<Point> wordPoints = new ArrayList<Point>();
 
     //
@@ -111,6 +113,10 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         submissionButton = (Button) myActivity.findViewById(R.id.submissionButton);
         Log.i("set listener", "Submission button");
         submissionButton.setOnClickListener(this);
+
+        backspaceButton = (Button) myActivity.findViewById(R.id.backspaceButton);
+        Log.i("set listener", "Backspace button");
+        backspaceButton.setOnClickListener(this);
     }
 
     /**
@@ -190,21 +196,28 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     @Override
     public void onClick(View view) {
-        String newWord = state.getPlayerNewWord(0);
 
-        for(int i = 0; i < wordPoints.size() ; i++){
-            boolean end = false;
-            int x = wordPoints.get(i).x;
-            int y = wordPoints.get(i).y;
-            if(i == wordPoints.size() - 1){
-                end = true;
-                wordPoints = new ArrayList<>();
+        if(view.getId() == (R.id.submissionButton)) {
+            for (int i = 0; i < wordPoints.size(); i++) {
+                boolean end = false;
+                int x = wordPoints.get(i).x;
+                int y = wordPoints.get(i).y;
+                if (i == wordPoints.size() - 1) {
+                    end = true;
+                    wordPoints = new ArrayList<>();
+                }
+                BogMoveAction action = new BogMoveAction(this, y, x, end);
+                Logger.log("onTouch", "Boggle swipe made");
+                game.sendAction(action);
+                surfaceView.resetPlayerWord();
+                surfaceView.invalidate();
             }
-            BogMoveAction action = new BogMoveAction(this, y, x, end);
-            Logger.log("onTouch", "Boggle swipe made");
-            game.sendAction(action);
-            surfaceView.resetPlayerWord();
-            surfaceView.invalidate();
+        }
+        if (view.getId() == R.id.backspaceButton) {
+            if ((surfaceView.playerWord != null) && (surfaceView.playerWord.length() > 0) && (wordPoints.size() > 0)) {
+                wordPoints.remove(wordPoints.size() - 1);
+                surfaceView.playerWord = surfaceView.playerWord.substring(0, surfaceView.playerWord.length() - 1);
+            }
         }
 
     }

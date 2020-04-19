@@ -175,6 +175,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         p.setColor(foregroundColor());
         p.setStyle(Paint.Style.STROKE);
 
+
         Paint d = new Paint();
         d.setColor(detailColor());
         d.setTextSize((float)50);
@@ -301,10 +302,10 @@ public class BogSurfaceView extends FlashSurfaceView {
         //paint progress bar below
         top = (3 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) + (BOG_HEIGHT_PERCENT * height);
         bottom = top + (PROGRESS_BANK_HEIGHT_PERCENT * height);
-        left = (BOG_BORDER_PERCENT * width);
-        right = left + (PROGRESS_BANK_WIDTH_PERCENT * width);
+        left = ((BOG_BORDER_PERCENT + BOG_SQUARE_SIZE_PERCENT) * width);
+        right = left + (PROGRESS_BANK_WIDTH_PERCENT - BOG_SQUARE_SIZE_PERCENT) * width;
         g.drawRect(left, top, right, bottom, p);
-        g.drawText(playerWord, left + 20, top + 70, d); //todo check top spacing...
+        g.drawText(playerWord, left + 20, top + 70, d);
     }
 
     private void fillBoard(Canvas g){
@@ -324,14 +325,14 @@ public class BogSurfaceView extends FlashSurfaceView {
         }
         Paint p = new Paint();
         p.setColor(foregroundColor());
-        p.setTextSize((float)200);
+        p.setTextSize((float)130);
 
        for(int x = 0; x < 4; x ++){
           for(int y = 0; y < 4; y ++){
               float top = 20 + (BOG_SQUARE_SIZE_PERCENT * getHeight() / 2) + (TIMER_HEIGHT_PERCENT * getHeight()) + (2 * BOG_BORDER_PERCENT * getHeight() +
                       (x * BOG_SQUARE_SIZE_PERCENT * getHeight()));
               float left = 30 + (BOG_BORDER_PERCENT * getWidth()) + (y * BOG_SQUARE_SIZE_PERCENT * getWidth());
-              g.drawText("" + tempBoard[x][y], left,top, p );
+              g.drawText("" + tempBoard[x][y], left, top, p);
            }
        }
 
