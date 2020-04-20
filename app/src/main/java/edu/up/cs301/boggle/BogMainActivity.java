@@ -60,7 +60,7 @@ public class BogMainActivity extends GameMainActivity {
 		});
 
 		// Create a game configuration class for Tic-tac-toe
-		GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Boggle", PORT_NUMBER);
+		GameConfig defaultConfig = new GameConfig(playerTypes, 1,2, "Boggle", PORT_NUMBER);
 
 		// Add the default players
 		defaultConfig.addPlayer("Human", 0); // yellow-on-blue GUI
