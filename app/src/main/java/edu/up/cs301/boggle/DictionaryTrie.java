@@ -208,6 +208,8 @@ public class DictionaryTrie {
             for (;;) {
                 String line = br.readLine();
                 if (line == null) break;
+                if(line.length() < 3) continue;
+                if(line.length() > 16) continue;
                 lines.add(line.trim());
             }
             br.close();
