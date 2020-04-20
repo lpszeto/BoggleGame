@@ -45,13 +45,6 @@ public class BogMainActivity extends GameMainActivity {
 			}
 		});*/
 
-		// game of 33
-		playerTypes.add(new GamePlayerType("Local Human Player 2") {
-			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer2(name);
-			}
-		});
-
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
