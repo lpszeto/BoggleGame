@@ -54,8 +54,13 @@ public class BogLogalGame extends LocalGame {
 				} else {
 					state.secondsLeft--;
 				}
+				int i = 0;
 				for (GamePlayer p : players) { //send an updated state object every second to each player.
+					if(p.requiresGui()) {
+						state.localGuiPlayerId = i;
+					}
 					sendUpdatedStateTo(p);
+					i++;
 				}
 			}
 

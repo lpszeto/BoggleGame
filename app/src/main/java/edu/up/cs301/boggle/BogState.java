@@ -41,27 +41,32 @@ public class BogState extends GameState {
     // an int that tells whose move it is
     //private int playerToMove;
 
+    //Wordlist variables for player0
     private String player0NewWord = "";
     private Vector<Point> player0WordCoords = new Vector<Point>();
-
-
-    private String player1NewWord = "";
-    private Vector<Point> player1WordCoords = new Vector<Point>();
-    //Wordlist for player0
     private Vector<String> player0Words = new Vector<String>();
 
-    //Wordlist for player1
+    //Wordlist variables for player1
     private Vector<String> player1Words = new Vector<String>();
+    private String player1NewWord = "";
+    private Vector<Point> player1WordCoords = new Vector<Point>();
+
 
     //Scores
     private int player0Score = 0;
+    private int player0Wins = 0;
     private int player1Score = 0;
+    private int player1Wins = 0;
 
+    //Timing
     protected CountDownTimer countDownTimer;
     protected int minutesLeft = 3;
     protected int secondsLeft = 0;
     boolean gameOver = false;
     boolean isHuman = false;
+
+    //GUI Info
+    int localGuiPlayerId;
 
 
     /**
@@ -283,6 +288,9 @@ public class BogState extends GameState {
 
     public Vector<String> getPlayer0Words() {return player0Words;}
     public Vector<String> getPlayer1Words() {return player1Words;}
+
+    public int getPlayer0Wins() {return player0Wins;};
+    public int getPlayer1Wins() {return player1Wins;}
 
     public String getplayer0NewWord() {return player0NewWord;}
     public String getPlayer1NewWord() {return player1NewWord;}
