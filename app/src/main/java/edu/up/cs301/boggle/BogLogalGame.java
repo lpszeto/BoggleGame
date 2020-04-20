@@ -63,6 +63,9 @@ public class BogLogalGame extends LocalGame {
 			public void onFinish() {
 				Log.i("TIMER", "DONE!");
 				state.secondsLeft--;
+                for (GamePlayer p : players) { //send an updated state object every second to each player.
+                    sendUpdatedStateTo(p);
+                }
 				state.gameOver = true;
 			}
 
