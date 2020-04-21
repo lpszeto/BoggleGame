@@ -59,10 +59,9 @@ public class BogState extends GameState {
     private int player1Wins = 0;
 
     //Timing
-    protected CountDownTimer countDownTimer;
-    protected int minutesLeft = 3;
-    protected int secondsLeft = 0;
-    boolean gameOver = false;
+    protected int minutesLeft = 0;
+    protected int secondsLeft = 5;
+    public boolean gameOver;
     boolean isHuman = false;
 
     //GUI Info
