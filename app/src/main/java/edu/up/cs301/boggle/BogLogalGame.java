@@ -8,14 +8,15 @@ import edu.up.cs301.game.GameFramework.Game;
 import edu.up.cs301.game.GameFramework.GamePlayer;
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
+import edu.up.cs301.game.GameFramework.actionMessage.TimerAction;
 import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
 
 /**
  * The BogLogalGame class for a simple tic-tac-toe game.  Defines and enforces
  * the game rules; handles interactions with players.
- * 
- * @author Steven R. Vegdahl 
+ *
+ * @author Steven R. Vegdahl
  * @version July 2013
  */
 
@@ -46,50 +47,33 @@ public class BogLogalGame extends LocalGame {
 		state = new BogState(context);
 		//start game clock
 		gameTimer = super.getTimer();
-		gameTimer.setInterval(5000);
+		gameTimer.setInterval(1000);
 		gameTimer.start();
-		if(gameTimer.getTicks() >= 5000){
-			state.gameOver = true;
-		}
-		countDownTimer = new CountDownTimer(5000, 1000) { //3min timer with ticks every second.
-			@Override
-			public void onTick(long l000) {
-				Log.i("secondsLeft", "" + state.secondsLeft);
-				Log.i("minutesLeft", "" + state.minutesLeft);
-				if (state.secondsLeft <= 0) {
-					state.secondsLeft = 59;
-					state.minutesLeft--;
-				} else {
-					state.secondsLeft--;
-				}
-				int i = 0;
-				for (GamePlayer p : players) { //send an updated state object every second to each player.
-					if(p.requiresGui()) {
-						state.localGuiPlayerId = i;
-						//local game
-					}
-					sendUpdatedStateTo(p);
-					i++;
-				}
-			}
-
-			@Override
-			public void onFinish() {
-				Log.i("TIMER", "DONE!");
-				state.secondsLeft--;
-				state.gameOver = true;
-                for (GamePlayer p : players) { //send an updated state object every second to each player.
-                    sendUpdatedStateTo(p);
-                }
-			}
-
-		}.start();
-
 	}
 	@Override
 	public void timerTicked(){
-		Logger.log("timer","Another 5 second");
+		Logger.log("timer","Another second");
+		Log.i("secondsLeft", "" + state.secondsLeft);
+		Log.i("minutesLeft", "" + state.minutesLeft);
+		if (state.secondsLeft <= 0) {
+			state.secondsLeft = 59;
+			state.minutesLeft--;
+		} else {
+			state.secondsLeft--;
+		}
+		int i = 0;
+		if (state.minutesLeft < 0)  {
+			state.gameOver = true;
+			String msg = checkIfGameOver();
+			if (msg != null) {
+				gameTimer.stop();
+				finishUpGame(msg);
+				return;
+			}
+		}
+		sendAllUpdatedState();
 	}
+
 	public int scores(int player){
 		return (player == 0)? state.getPlayer0Score() : state.getPlayer1Score();
 	}
@@ -105,18 +89,18 @@ public class BogLogalGame extends LocalGame {
 	protected String checkIfGameOver() {
 		Log.i("game", "DONE!" + state.gameOver);
 		if (state.gameOver) {
-            if (state.getPlayer0Score() >= state.getPlayer1Score()) {
-                int gameWinner = 0;
-                return playerNames[gameWinner]+" is the winner.";
-            }
-            else {
-                int gameWinner = 1;
-                return playerNames[gameWinner]+" is the winner.";
-            }
-        }
-        else {
-            return null; //  game not over
-        }
+			if (state.getPlayer0Score() >= state.getPlayer1Score()) {
+				int gameWinner = 0;
+				return playerNames[gameWinner]+" is the winner.";
+			}
+			else {
+				int gameWinner = 1;
+				return playerNames[gameWinner]+" is the winner.";
+			}
+		}
+		else {
+			return null; //  game not over
+		}
 
 	}
 
