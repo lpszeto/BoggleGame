@@ -112,15 +112,17 @@ public class BogLogalGame extends LocalGame {
         for(String i : state.getPlayer1Words()) {
             playerWords[1] = playerWords[1] + i + ", ";
         }
+
+		int gameWinner;
 		if (state.gameOver) {
 			if (state.getPlayer0Score() >= state.getPlayer1Score()) {
-				int gameWinner = 0;
-				message = playerNames[gameWinner] + " is the winner. \n\n";
+				gameWinner = 0;
             }
 			else {
-				int gameWinner = 1;
-                message = playerNames[gameWinner] + " is the winner. \n\n";
+				gameWinner = 1;
 			}
+			message = playerNames[gameWinner] + " is the winner. \n\n";
+			state.incrementWins(gameWinner);
 			int i = 0;
 
 			for (String x : playerNames) {
@@ -184,6 +186,14 @@ public class BogLogalGame extends LocalGame {
 		if(state.localGuiPlayerId == -1) {
 			if(tm.getPlayer().requiresGui()) {
 				state.localGuiPlayerId = playerId;
+			}
+			else {   //Still works for two computer players, and is needed for font color.
+				if (playerId==0) {
+					state.localGuiPlayerId = 1;
+				}
+				else {
+					state.localGuiPlayerId = 0;
+				}
 			}
 		}
 		// get the row and column position of the player's move

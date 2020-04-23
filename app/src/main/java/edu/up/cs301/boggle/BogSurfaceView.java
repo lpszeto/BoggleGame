@@ -235,6 +235,25 @@ public class BogSurfaceView extends FlashSurfaceView {
             }
         }
 
+        //Paint the players' running wins
+        top = (BOG_BORDER_PERCENT * height);
+        bottom = top + (PLAYER_RUNNING_WINS_HEIGHT * height);
+        float left1 = (2 * BOG_BORDER_PERCENT * width) + (TIMER_WIDTH_PERCENT * width);
+        float right1 = left1 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        float left2 = right1;
+        float right2 = left2 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        g.drawRect(left1, top, right1, bottom, p);
+        g.drawRect(left2, top, right2, bottom, p);
+        g.drawText("P1", left1, top - 10, d);
+        g.drawText("P2", left2, top - 10, red);
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                g.drawText("" + state.getPlayer0Wins(), left1 + 10, top + 50, d);
+                g.drawText("" + state.getPlayer1Wins(), left2 + 10, top + 50, red);
+            }
+        }
+
        // g.drawText(state.minutesLeft + ": " + state.secondsLeft, left + 20, bottom, p );
 
         //Paint the word bank
@@ -242,7 +261,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         right = left + (WORD_BANK_WIDTH_PERCENT * width);
         top  = (2 * BOG_BORDER_PERCENT * height) + (PROGRESS_BANK_HEIGHT_PERCENT * height);
         bottom = top + (WORD_BANK_HEIGHT_PERCENT * height);
-        g.drawRect(left, top, right, bottom, p);
+        g.drawRect(left, top, right2, bottom, p);
         g.drawText("WORD BANK", left + 20, top - 10, d);
 
 
@@ -251,12 +270,20 @@ public class BogSurfaceView extends FlashSurfaceView {
             if (state.getPlayer0Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
                 //g.drawText( + state.getPlayer0Score()+"=P0score", left + 20, top + 50, d);
+                d.setTextSize(37);
+                int Lshift = 0;
+                int Tshift = 0;
                 for (int i = 0; i < state.getPlayer0Words().size(); i++) {
                     if(state.localGuiPlayerId == 0) {
-                        g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top + (50 * i) + 100, d);
+                        if (top + (37 * (i - Tshift)) + 40 >= bottom) {
+                            Lshift += 200;
+                            Tshift = i;
+                        }
+                        g.drawText(state.getPlayer0Words().elementAt(i), left + 5 + Lshift, top + (37 * (i - Tshift)) + 40, d);
                     }
                 }
-               // }
+                d.setTextSize(50);
+                // }
             }
             else {
                 Log.i("Word state is: ", "null");
@@ -267,11 +294,21 @@ public class BogSurfaceView extends FlashSurfaceView {
             if (state.getPlayer1Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
                 //g.drawText("P1=" + state.getPlayer1Score(), left + 350, top + 50, red);
+                red.setTextSize(37);
+                int Lshift = 0;
+                int Tshift = 0;
                 for (int i = 0; i < state.getPlayer1Words().size(); i++) {
                     if(state.localGuiPlayerId == 1) {
-                        g.drawText(state.getPlayer1Words().elementAt(i), left + 20, top + (40 * i) + 80, red);
+                        if (top + (37 * (i - Tshift)) + 40 >= bottom) {
+                            Lshift += 200;
+                            Tshift = i;
+                        }
+                        g.drawText(state.getPlayer1Words().elementAt(i), left + 5 + Lshift, top + (37 * (i - Tshift)) + 40, red);
+ //                       g.drawText("wwwwwwwwwwwwwwwwx", left + 20 + Lshift, top + (33 * (i - Tshift)) + 40, red);
+
                     }
                 }
+                red.setTextSize(50);
                 // }
             }
             else {
@@ -280,23 +317,6 @@ public class BogSurfaceView extends FlashSurfaceView {
         }
 
 
-        //Paint the players' running wins
-        top = (BOG_BORDER_PERCENT * height);
-        bottom = top + (PLAYER_RUNNING_WINS_HEIGHT * height);
-        float left1 = (2 * BOG_BORDER_PERCENT * width) + (TIMER_WIDTH_PERCENT * width);
-        float right1 = left1 + (PLAYER_RUNNING_WINS_WIDTH * width);
-        float left2 = right1;
-        float right2 = left2 + (PLAYER_RUNNING_WINS_WIDTH * width);
-        g.drawRect(left1, top, right1, bottom, p);
-        g.drawRect(left2, top, right2, bottom, p);
-        g.drawText("GAMES WON", left1, top - 10, d);
-        if(state != null) {
-            if (state.getPlayer0Words() != null) {
-                //if (state.getPlayer0Words().get(0) != null) {
-                g.drawText("" + state.getPlayer0Wins(), left1 + 10, top + 50, d);
-                g.drawText("" + state.getPlayer1Wins(), left2 + 10, top + 50, red);
-            }
-        }
 
         //Paint the current running total; bottom right hand corner
         top = (3 * BOG_BORDER_PERCENT * height) + (WORD_BANK_HEIGHT_PERCENT * height) + (PLAYER_RUNNING_WINS_HEIGHT * height);
@@ -319,7 +339,14 @@ public class BogSurfaceView extends FlashSurfaceView {
         left = ((BOG_BORDER_PERCENT + BOG_SQUARE_SIZE_PERCENT) * width);
         right = left + (PROGRESS_BANK_WIDTH_PERCENT - BOG_SQUARE_SIZE_PERCENT) * width;
         g.drawRect(left, top, right, bottom, p);
-        g.drawText(playerWord, left + 20, top + 70, d);
+        if(state != null) {
+            if(state.localGuiPlayerId == 0) {
+                g.drawText(playerWord, left + 20, top + 70, d);
+            }
+            else {
+                g.drawText(playerWord, left + 20, top + 70, red);
+            }
+        }
     }
 
     private void fillBoard(Canvas g){

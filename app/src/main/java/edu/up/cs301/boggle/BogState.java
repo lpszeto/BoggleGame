@@ -283,6 +283,16 @@ public class BogState extends GameState {
         }
     }
 
+    public void incrementWins(int playerId) {
+        if(playerId == 0) {
+            player0Wins++;
+        }
+        else {
+            player1Wins++;
+        }
+        return;
+    }
+
     public Vector<String> getPlayer0Words() {return player0Words;}
     public Vector<String> getPlayer1Words() {return player1Words;}
 
