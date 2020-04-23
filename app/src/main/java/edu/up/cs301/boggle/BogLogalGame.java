@@ -92,11 +92,11 @@ public class BogLogalGame extends LocalGame {
         String message = "";
 
         for(String i : state.getPlayer0Words()) {
-            playerWords[0] = playerWords[0] + ", " + i;
+            playerWords[0] = playerWords[0] + i + ", ";
         }
 
         for(String i : state.getPlayer1Words()) {
-            playerWords[1] = playerWords[1] + ", " + i;
+            playerWords[1] = playerWords[1] + i + ", ";
         }
 		if (state.gameOver) {
 			if (state.getPlayer0Score() >= state.getPlayer1Score()) {
