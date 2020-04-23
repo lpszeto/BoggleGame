@@ -11,6 +11,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
 import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 
@@ -33,6 +35,8 @@ public class BogSurfaceView extends FlashSurfaceView {
     //component 1 & 2: total wins from player 1 and player 2
     private int PlayerOneWins = 0;
     private int PlayerTwoWins = 0;
+    public ArrayList<Point> buttonsPressed = new ArrayList<Point>(16);
+
     private final static float PLAYER_RUNNING_WINS_WIDTH = .1f;
     private final static float PLAYER_RUNNING_WINS_HEIGHT = .1f;
 

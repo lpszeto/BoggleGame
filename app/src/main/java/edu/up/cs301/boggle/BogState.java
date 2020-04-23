@@ -36,7 +36,7 @@ public class BogState extends GameState {
     //valid characters
     public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
     //English dictionary data structure.
-    public DictionaryTrie dictionaryTrie = new DictionaryTrie();
+    public static DictionaryTrie dictionaryTrie = new DictionaryTrie();
     //Wordlist variables for player0
     private String player0NewWord = "";
     private Vector<Point> player0WordCoords = new Vector<Point>();
