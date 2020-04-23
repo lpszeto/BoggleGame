@@ -33,31 +33,23 @@ public class BogState extends GameState {
 
     // the 4x4 array of char that represents the letters on the board
     private char[][] board;
-
+    //valid characters
     public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
-
+    //English dictionary data structure.
     public DictionaryTrie dictionaryTrie = new DictionaryTrie();
-
-    // an int that tells whose move it is
-    //private int playerToMove;
-
     //Wordlist variables for player0
     private String player0NewWord = "";
     private Vector<Point> player0WordCoords = new Vector<Point>();
     private Vector<String> player0Words = new Vector<String>();
-
     //Wordlist variables for player1
     private Vector<String> player1Words = new Vector<String>();
     private String player1NewWord = "";
     private Vector<Point> player1WordCoords = new Vector<Point>();
-
-
     //Scores
     private int player0Score = 0;
     private int player0Wins = 0;
     private int player1Score = 0;
     private int player1Wins = 0;
-
     //Timing
     protected int minutesLeft = 3;
     protected int secondsLeft = 0;
@@ -65,7 +57,7 @@ public class BogState extends GameState {
     boolean isHuman = false;
 
     //GUI Info
-    int localGuiPlayerId;
+    int localGuiPlayerId = -1;
 
 
     /**
@@ -109,25 +101,31 @@ public class BogState extends GameState {
                 board[i][j] = original.board[i][j];
             }
         }
+
+        //valid characters
+        alphabet = original.alphabet;
+        //English dictionary data structure.
         dictionaryTrie = original.dictionaryTrie;
+        //Wordlist variables for player0
         player0NewWord = original.player0NewWord;
-        player1NewWord = original.player1NewWord;
-        //Wordlist for player0
+        player0WordCoords = original.player0WordCoords;
         player0Words = original.player0Words;
-        //Wordlist for player1
+        //Wordlist variables for player1
         player1Words = original.player1Words;
+        player1NewWord = original.player1NewWord;
+        player1WordCoords = original.player1WordCoords;
         //Scores
         player0Score = original.player0Score;
+        player0Wins = original.player0Wins;
         player1Score = original.player1Score;
+        player1Wins = original.player1Wins;
+        //Timing
         minutesLeft = original.minutesLeft;
         secondsLeft = original.secondsLeft;
         gameOver = original.gameOver;
-
-
-        // copy the player-to-move information
- //       playerToMove = original.playerToMove;
+        //GUI Info
+        localGuiPlayerId = original.localGuiPlayerId;
     }
-
 
     //player's newWord is assumed to be in the dictionary
     //Time to add the word to the player's wordlist (if not already there),

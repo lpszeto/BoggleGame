@@ -26,12 +26,7 @@ public class BogLogalGame extends LocalGame {
 	// the game's state
 	protected BogState state;
 
-	// the marks for player 0 and player 1, respectively
-	private final static char[] mark = {'X', 'O'};
 	Thread thread = new Thread();
-	// the number of moves that have been played so far, used to
-	// determine whether the game is over
-	protected int moveCount;
 
 	protected CountDownTimer countDownTimer;
 	GameTimer gameTimer;
@@ -43,9 +38,28 @@ public class BogLogalGame extends LocalGame {
 
 		// perform superclass initialization
 		super();
+
+//		int numGuiPlayers = 0;
+//		int i = 0;
+//		while(players == null) {
+//			i++;
+//			i--;
+//		}
+//		for (GamePlayer player : players){
+//			if (player.requiresGui()) {
+//				numGuiPlayers++;
+//			}
+//			i++;
+//		}
+//		if(numGuiPlayers > 1) {
+//			return;
+//		}
+
 		// create a new, shuffled BogState object
 		state = new BogState(context);
+		//state.localGuiPlayerId = i;
 		//start game clock
+
 		gameTimer = super.getTimer();
 		gameTimer.setInterval(1000);
 		gameTimer.start();
@@ -118,7 +132,6 @@ public class BogLogalGame extends LocalGame {
 		else {
 			return null; //  game not over
 		}
-
 	}
 
 	/**
@@ -164,14 +177,20 @@ public class BogLogalGame extends LocalGame {
 	@Override
 	protected boolean makeMove(GameAction action) {
 
-		// get the row and column position of the player's move
 		BogMoveAction tm = (BogMoveAction) action;
+		// get the 0/1 id of our player
+		int playerId = getPlayerIdx(tm.getPlayer());
+
+		if(state.localGuiPlayerId == -1) {
+			if(tm.getPlayer().requiresGui()) {
+				state.localGuiPlayerId = playerId;
+			}
+		}
+		// get the row and column position of the player's move
+
 		int row = tm.getRow();
 		int col = tm.getCol();
 		boolean makesWord = tm.getEndofWord();
-
-		// get the 0/1 id of our player
-		int playerId = getPlayerIdx(tm.getPlayer());
 
 		// if the piece has anything except a lowercase letter, indicate an illegal move
 		for(int i = 0; i < 26; i++) {
@@ -200,7 +219,10 @@ public class BogLogalGame extends LocalGame {
 		// bump the move count
 //		moveCount++;
 
-		// return true, indicating the it was a legal move
+		for(GamePlayer player : players) {
+			sendUpdatedStateTo(player);
+		}
+		//Legal move. Return true.
 		return true;
 	}
 
