@@ -9,8 +9,10 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
+import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 
 /**
  * A SurfaceView which allows which an animation to be drawn on it by a
@@ -31,31 +33,32 @@ public class BogSurfaceView extends FlashSurfaceView {
     //component 1 & 2: total wins from player 1 and player 2
     private int PlayerOneWins = 0;
     private int PlayerTwoWins = 0;
-    private final static float PLAYER_RUNNING_WINS_WIDTH = 35/2;
-    private final static float PLAYER_RUNNING_WINS_HEIGHT = 17;
+    private final static float PLAYER_RUNNING_WINS_WIDTH = .1f;
+    private final static float PLAYER_RUNNING_WINS_HEIGHT = .1f;
 
     //component 3: wordbank
-    private final static float WORD_BANK_WIDTH_PERCENT = 35;
-    private final static float WORD_BANK_HEIGHT_PERCENT = 65;
+    private final static float WORD_BANK_WIDTH_PERCENT = .2f;
+    private final static float WORD_BANK_HEIGHT_PERCENT = .6f;
 
     //component 4: timer
-    private final static float TIMER_WIDTH_PERCENT = 65;
-    private final static float TIMER_HEIGHT_PERCENT = 17;
+    private final static float TIMER_WIDTH_PERCENT = .65f;
+    private final static float TIMER_HEIGHT_PERCENT = .1f;
 
     //component 5: Boggle board
-    private final static float BOG_SQUARE_SIZE_PERCENT = 65/4;
-    private final static float BOG_BORDER_PERCENT = 5;
-    private final static float BOG_WIDTH_PERCENT = 65;
-    private final static float BOG_HEIGHT_PERCENT = 65;
-    private final static float BOG_LINE_WIDTH_PERCENT = 1;
+    private final static float BOG_SQUARE_SIZE_PERCENT = .15f;
+    private final static float BOG_BORDER_PERCENT = .05f;
+    private final static float BOG_WIDTH_PERCENT = .6f;
+    private final static float BOG_HEIGHT_PERCENT = .6f;
+    private final static float BOG_LINE_WIDTH_PERCENT = .01f;
 
     //component 6: progress bank
-    private final static float PROGRESS_BANK_WIDTH_PERCENT = 65;
-    private final static float PROGRESS_BANK_HEIGHT_PERCENT = 20;
+    private final static float PROGRESS_BANK_WIDTH_PERCENT = .65f;
+    private final static float PROGRESS_BANK_HEIGHT_PERCENT = .1f;
 
     //component 7: running total
-    private final static float RUNNING_TOTAL_WIDTH_PERCENT = 35;
-    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = 20;
+    private final static float RUNNING_TOTAL_WIDTH_PERCENT = .2f;
+    private final static float RUNNING_TOTAL_HEIGHT_PERCENT = .1f;
+
 
     // some constants, which are percentages with respect to the minimum
     // of the height and the width. All drawing will be done in the "middle
@@ -89,6 +92,8 @@ public class BogSurfaceView extends FlashSurfaceView {
     // the size of one edge of our "middle square", or -1 if we have not determined
     // size
     protected float fullSquare;
+
+    protected String playerWord = "";
 
     /**
      * Constructor for the BogSurfaceView class.
@@ -129,7 +134,7 @@ public class BogSurfaceView extends FlashSurfaceView {
      * 		the color to paint the tic-tac-toe lines, and the X's and O's
      */
     public int foregroundColor() {
-        return Color.YELLOW;
+        return Color.GREEN;
     }
 
     /**
@@ -137,7 +142,17 @@ public class BogSurfaceView extends FlashSurfaceView {
      * 		the color to paint the tic-tac-toe lines, and the X's and O's
      */
     public int backgroundColor() {
-        return Color.BLUE;
+        return Color.WHITE;
+    }
+
+    public int detailColor() { return Color.GREEN;}
+
+    public void addCharToWord(char c) {
+        playerWord = playerWord + c;
+    }
+
+    public void resetPlayerWord() {
+        playerWord = "";
     }
 
     /**
@@ -149,76 +164,193 @@ public class BogSurfaceView extends FlashSurfaceView {
      */
     public void onDraw(Canvas g) {
 
+        g.drawColor(backgroundColor());
         // update the variables that relate
         // to the dimensions of the animation surface
         updateDimensions(g);
-        int width = g.getWidth();
-        int height = g.getHeight();
+        int width = getWidth();
+        int height = getHeight();
 
         Paint p = new Paint();
         p.setColor(foregroundColor());
+        p.setStyle(Paint.Style.STROKE);
 
-        //paint the Boggle board
-        for(int i = 0; i <= 3; i ++){
-                float left = (width * (i + 1));
-                float right = (BOG_BORDER_PERCENT * width) + (width * (i + 1));
-                float top =(2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height);
-                float bottom = top + (BOG_HEIGHT_PERCENT * height);
+
+        Paint d = new Paint();
+        d.setColor(detailColor());
+        d.setTextSize((float)50);
+
+        Paint red = new Paint();
+        red.setColor(Color.RED);
+        red.setTextSize(50);
+
+        //paints the Boggle Board
+        for(int x = 0; x < 4; x++){
+            for(int y = 0; y < 4; y++){
+                float left = (BOG_BORDER_PERCENT * width) + ( y * BOG_SQUARE_SIZE_PERCENT * width);
+                float right = left + ( BOG_SQUARE_SIZE_PERCENT * width);
+                float top = (2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) +
+                        (x* BOG_SQUARE_SIZE_PERCENT * height);
+                float bottom = top + ( BOG_SQUARE_SIZE_PERCENT * height);
                 g.drawRect(left, top, right, bottom, p);
+              //  g.drawText("" + state.getPiece(x, y), x + 20, y + 20, d);
+            }
         }
 
-        for(int x = 0; x <= 3; x++){
-            float left = BOG_BORDER_PERCENT;
-            float right = (BOG_BORDER_PERCENT * width) + (BOG_WIDTH_PERCENT * width);
-            float top = (2 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) +
-                    (BOG_SQUARE_SIZE_PERCENT * (height * (x + 1)));
-            float bottom = top - (BOG_LINE_WIDTH_PERCENT * x);
-            g.drawRect(left, top, right,bottom, p);
-        }
+        int totalSecondsLeft;
+        int factor;
+        fillBoard(g);
 
         //paint the timer
-        double timeLeft  = 3.00;
-        double percentOfTime = timeLeft/3.00;
+        if (state == null) {
+            totalSecondsLeft = 180;
+            factor = 0;
+        }
+        else {
+            totalSecondsLeft = 60*state.minutesLeft + state.secondsLeft;
+            factor = 180 - totalSecondsLeft;
+        }
 
         //draws the outline of the timer
+        //float left = (BOG_BORDER_PERCENT * width);
         float left = (BOG_BORDER_PERCENT * width);
         float right = left + (TIMER_WIDTH_PERCENT * width);
         float top = (BOG_BORDER_PERCENT * height);
         float bottom = top + (TIMER_HEIGHT_PERCENT * height);
         g.drawRect(left, top, right,bottom, p);
 
+        //draws the time left within the timer
+        right = left + (factor * (TIMER_WIDTH_PERCENT * width) / 180);
+        g.drawRect(left, top, right, bottom, red);
+
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                if(state.secondsLeft < 10) {
+                    g.drawText(+state.minutesLeft + ":0" + state.secondsLeft, left + 20, top + 70, d);
+                }
+                else {
+                    g.drawText(+state.minutesLeft + ":" + state.secondsLeft, left + 20, top + 70, d);
+                }
+            }
+        }
+
+       // g.drawText(state.minutesLeft + ": " + state.secondsLeft, left + 20, bottom, p );
+
         //Paint the word bank
-        right = width -(BOG_BORDER_PERCENT * width);
-        left = width - right - (WORD_BANK_WIDTH_PERCENT * width);
+        left = (2* BOG_BORDER_PERCENT * width) + (BOG_WIDTH_PERCENT * width);
+        right = left + (WORD_BANK_WIDTH_PERCENT * width);
         top  = (2 * BOG_BORDER_PERCENT * height) + (PROGRESS_BANK_HEIGHT_PERCENT * height);
         bottom = top + (WORD_BANK_HEIGHT_PERCENT * height);
         g.drawRect(left, top, right, bottom, p);
+        g.drawText("WORD BANK", left + 20, top - 10, d);
+
+
+//        writes all guessed words
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                //g.drawText( + state.getPlayer0Score()+"=P0score", left + 20, top + 50, d);
+                for (int i = 0; i < state.getPlayer0Words().size(); i++) {
+                    if(state.localGuiPlayerId == 0) {
+                        g.drawText(state.getPlayer0Words().elementAt(i), left + 20, top + (50 * i) + 100, d);
+                    }
+                }
+               // }
+            }
+            else {
+                Log.i("Word state is: ", "null");
+            }
+        }
+
+        if(state != null) {
+            if (state.getPlayer1Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                //g.drawText("P1=" + state.getPlayer1Score(), left + 350, top + 50, red);
+                for (int i = 0; i < state.getPlayer1Words().size(); i++) {
+                    if(state.localGuiPlayerId == 1) {
+                        g.drawText(state.getPlayer1Words().elementAt(i), left + 20, top + (40 * i) + 80, red);
+                    }
+                }
+                // }
+            }
+            else {
+                Log.i("Word state is: ", "null");
+            }
+        }
+
 
         //Paint the players' running wins
-        float top1 = (BOG_BORDER_PERCENT * height);
-        float bottom1 = top1 + (PLAYER_RUNNING_WINS_HEIGHT * height);
-        float right2 = (BOG_BORDER_PERCENT * width);
-        float left2 = right2 + (PLAYER_RUNNING_WINS_WIDTH);
-        float right1 = left2;
-        float left1 = right1 + (PLAYER_RUNNING_WINS_WIDTH * width);
-        g.drawRect(left1, top1, right1, bottom1, p);
-        g.drawRect(left2, top1, right2, bottom1, p);
+        top = (BOG_BORDER_PERCENT * height);
+        bottom = top + (PLAYER_RUNNING_WINS_HEIGHT * height);
+        float left1 = (2 * BOG_BORDER_PERCENT * width) + (TIMER_WIDTH_PERCENT * width);
+        float right1 = left1 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        float left2 = right1;
+        float right2 = left2 + (PLAYER_RUNNING_WINS_WIDTH * width);
+        g.drawRect(left1, top, right1, bottom, p);
+        g.drawRect(left2, top, right2, bottom, p);
+        g.drawText("GAMES WON", left1, top - 10, d);
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                g.drawText("" + state.getPlayer0Wins(), left1 + 10, top + 50, d);
+                g.drawText("" + state.getPlayer1Wins(), left2 + 10, top + 50, red);
+            }
+        }
 
-        //Paint the current running total
-        bottom = (BOG_BORDER_PERCENT * height);
-        top = height - bottom -(RUNNING_TOTAL_HEIGHT_PERCENT * height);
-        right = (BOG_BORDER_PERCENT * width);
-        left = width - right - (RUNNING_TOTAL_WIDTH_PERCENT * width);
+        //Paint the current running total; bottom right hand corner
+        top = (3 * BOG_BORDER_PERCENT * height) + (WORD_BANK_HEIGHT_PERCENT * height) + (PLAYER_RUNNING_WINS_HEIGHT * height);
+        bottom = top + (RUNNING_TOTAL_HEIGHT_PERCENT * height);
+        left = (2 * BOG_BORDER_PERCENT * width) + (PROGRESS_BANK_WIDTH_PERCENT * width);
+        right = left + (RUNNING_TOTAL_WIDTH_PERCENT * width);
         g.drawRect(left, top, right, bottom, p);
+        g.drawText("GAME SCORE", left, top - 10, d);
+        if(state != null) {
+            if (state.getPlayer0Words() != null) {
+                //if (state.getPlayer0Words().get(0) != null) {
+                g.drawText("" + state.getPlayer0Score(), left1 + 10, top + 50, d);
+                g.drawText("" + state.getPlayer1Score(), left2 + 10, top + 50, red);
+            }
+        }
 
         //paint progress bar below
-        bottom = height - (BOG_BORDER_PERCENT * height);
-        top = height - bottom -(PROGRESS_BANK_HEIGHT_PERCENT * height);
-        left = (BOG_BORDER_PERCENT * width);
-        right = left + (PROGRESS_BANK_WIDTH_PERCENT * width);
+        top = (3 * BOG_BORDER_PERCENT * height) + (TIMER_HEIGHT_PERCENT * height) + (BOG_HEIGHT_PERCENT * height);
+        bottom = top + (PROGRESS_BANK_HEIGHT_PERCENT * height);
+        left = ((BOG_BORDER_PERCENT + BOG_SQUARE_SIZE_PERCENT) * width);
+        right = left + (PROGRESS_BANK_WIDTH_PERCENT - BOG_SQUARE_SIZE_PERCENT) * width;
         g.drawRect(left, top, right, bottom, p);
-
+        g.drawText(playerWord, left + 20, top + 70, d);
     }
+
+    private void fillBoard(Canvas g){
+        char[][] tempBoard = new char[4][4];
+        if (state == null) {
+            //if null, load blank board
+            for(int i = 0; i < tempBoard[0].length; i++) {
+                for (int j = 0; j < tempBoard[i].length; j++) {
+                    tempBoard[i][j] = ' ';
+                }
+            }
+        }
+        else {
+            //prepare to draw the board indicated in the gamestate.
+            tempBoard = state.getBoard();
+
+        }
+        Paint p = new Paint();
+        p.setColor(foregroundColor());
+        p.setTextSize((float)130);
+
+       for(int x = 0; x < 4; x ++){
+          for(int y = 0; y < 4; y ++){
+              float top = 20 + (BOG_SQUARE_SIZE_PERCENT * getHeight() / 2) + (TIMER_HEIGHT_PERCENT * getHeight()) + (2 * BOG_BORDER_PERCENT * getHeight() +
+                      (x * BOG_SQUARE_SIZE_PERCENT * getHeight()));
+              float left = 30 + (BOG_BORDER_PERCENT * getWidth()) + (y * BOG_SQUARE_SIZE_PERCENT * getWidth());
+              g.drawText("" + tempBoard[x][y], left, top, p);
+           }
+       }
+
+       }
 
     /**
      * update the instance variables that relate to the drawing surface
@@ -367,6 +499,23 @@ public class BogSurfaceView extends FlashSurfaceView {
      */
     public Point mapPixelToSquare(int x, int y) {
 
+        for( int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+
+            float left = (BOG_BORDER_PERCENT * getWidth()) + ( i * BOG_SQUARE_SIZE_PERCENT * getWidth());
+                float right = left + ( BOG_SQUARE_SIZE_PERCENT * getWidth());
+                float top = (2 * BOG_BORDER_PERCENT * getHeight()) + (TIMER_HEIGHT_PERCENT * getHeight()) +
+                        (j * BOG_SQUARE_SIZE_PERCENT * getHeight());
+                float bottom = top + ( BOG_SQUARE_SIZE_PERCENT * getHeight());
+                if ((x > left) && (x < right) && (y > top) && (y < bottom)) {
+                    return new Point(i, j);
+                }
+            }
+        }
+        return null;
+
+
+        /*
         // loop through each square and see if we get a "hit"; if so, return
         // the corresponding Point in "square" coordinates
         for (int i = 0; i < 3; i++) {
@@ -384,7 +533,7 @@ public class BogSurfaceView extends FlashSurfaceView {
         }
 
         // no match: return null
-        return null;
+        return null;*/
     }
 
     /**
@@ -410,7 +559,5 @@ public class BogSurfaceView extends FlashSurfaceView {
     private float v(float percent) {
         return vBase + percent * fullSquare / 100;
     }
-
-
 
 }

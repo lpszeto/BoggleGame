@@ -3,16 +3,26 @@ package edu.up.cs301.boggle;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
+
+import java.util.ArrayList;
+import java.util.Vector;
 
 import edu.up.cs301.game.GameFramework.GameHumanPlayer;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
+import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
 import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
 import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
 import edu.up.cs301.game.GameFramework.utilities.Logger;
+
+import static java.lang.StrictMath.abs;
 
 /**
  * A GUI that allows a human to play tic-tac-toe. Moves are made by clicking
@@ -21,7 +31,7 @@ import edu.up.cs301.game.GameFramework.utilities.Logger;
  * @author Steven R. Vegdahl
  * @version September 2016
  */
-public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
+public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener{
     //Tag for logging
     private static final String TAG = "BogHumanPlayer1";
     // the current activity
@@ -35,6 +45,16 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     // the ID for the layout to use
     private int layoutId;
+
+    private Button submissionButton;
+
+    private Button backspaceButton;
+
+    private ArrayList<Point> wordPoints = new ArrayList<Point>();
+
+    //
+    private String tempWord;
+
 
     /**
      * constructor
@@ -65,7 +85,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.flash(Color.RED, 50);
         }
         else if (!(info instanceof BogState))
-            // if we do not have a TTTState, ignore
+            // if we do not have a BogState, ignore
             return;
         else {
             state = (BogState) info;
@@ -91,6 +111,14 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         Logger.log("set listener","OnTouch");
         surfaceView.setOnTouchListener(this);
         surfaceView.setState(state);
+
+        submissionButton = (Button) myActivity.findViewById(R.id.submissionButton);
+        Log.i("set listener", "Submission button");
+        submissionButton.setOnClickListener(this);
+
+        backspaceButton = (Button) myActivity.findViewById(R.id.backspaceButton);
+        Log.i("set listener", "Backspace button");
+        backspaceButton.setOnClickListener(this);
     }
 
     /**
@@ -109,7 +137,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * knows what their game-position and opponents' names are.
      */
     protected void initAfterReady() {
-        myActivity.setTitle("Boggle" +allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+        myActivity.setTitle("Welcome to Boggle!");
     }
 
     /**
@@ -121,8 +149,9 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
      * 		the motion event that was detected
      */
     public boolean onTouch(View v, MotionEvent event) {
-        // ignore if not an "up" event
-        if (event.getAction() != MotionEvent.ACTION_UP) return true;
+
+        boolean moving = false;
+
         // get the x and y coordinates of the touch-location;
         // convert them to square coordinates (where both
         // values are in the range 0..2)
@@ -134,12 +163,32 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         // the screen; otherwise, create and send an action to
         // the game
         if (p == null) {
-            surfaceView.flash(Color.RED, 50);
+            surfaceView.flash(Color.RED, 300);
         } else {
-            BogMoveAction action = new BogMoveAction(this, p.y, p.x, false); //TODO when players RELEASE their finger, this must be set to true.
-            Logger.log("onTouch", "Human player sending TTTMA ...");
-            game.sendAction(action);
-            surfaceView.invalidate();
+
+            //Can't use the same cell twice...
+
+            for(int i = 0; i < wordPoints.size(); i++) {
+                if(p.x == wordPoints.get(i).x && p.y == wordPoints.get(i).y){
+                    return true;
+                }
+            }
+
+            //Must be a valid neighbor...
+            if(wordPoints.size() > 0) {
+                if (abs(p.x - wordPoints.get(wordPoints.size() - 1).x) > 1) {
+                    return true;
+                }
+
+                if (abs(p.y - wordPoints.get(wordPoints.size() - 1).y) > 1) {
+                    return true;
+                }
+            }
+
+            wordPoints.add(p);
+            char c = state.getBoard()[p.y][p.x];
+            surfaceView.addCharToWord(c);
+            Logger.log("onTouch", "Boggle swipe made");
         }
 
         // register that we have handled the event
@@ -147,5 +196,31 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     }
 
+    @Override
+    public void onClick(View view) {
 
+        if(view.getId() == (R.id.submissionButton)) {
+            for (int i = 0; i < wordPoints.size(); i++) {
+                boolean end = false;
+                int x = wordPoints.get(i).x;
+                int y = wordPoints.get(i).y;
+                if (i == wordPoints.size() - 1) {
+                    end = true;
+                    wordPoints = new ArrayList<>();
+                }
+                BogMoveAction action = new BogMoveAction(this, y, x, end);
+                Logger.log("onTouch", "Boggle swipe made");
+                game.sendAction(action);
+                surfaceView.resetPlayerWord();
+                surfaceView.invalidate();
+            }
+        }
+        if (view.getId() == R.id.backspaceButton) {
+            if ((surfaceView.playerWord != null) && (surfaceView.playerWord.length() > 0) && (wordPoints.size() > 0)) {
+                wordPoints.remove(wordPoints.size() - 1);
+                surfaceView.playerWord = surfaceView.playerWord.substring(0, surfaceView.playerWord.length() - 1);
+            }
+        }
+
+    }
 }

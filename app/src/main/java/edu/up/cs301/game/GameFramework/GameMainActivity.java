@@ -1,6 +1,7 @@
 package edu.up.cs301.game.GameFramework;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +50,10 @@ public abstract class GameMainActivity extends Activity implements
         View.OnClickListener {
     //Tag for Logging
     private static final String TAG = "GameMainActivity";
+    private TextView mTextViewCountDownTimer;
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning = false;
+    private long mTimerLeftInMillis = (long)180000;
     /*
      * ====================================================================
      * Instance Variables
@@ -161,6 +168,14 @@ public abstract class GameMainActivity extends Activity implements
         // create the default configuration for this game
         this.config = createDefaultConfig();
 
+       // mTextViewCountDownTimer = findViewById(R.id.text_view_countdown);
+        //updateCountDownText();
+
+        //if(!mTimerRunning){
+          // startTimer();
+        //}
+
+
         // if there is a saved configuration, modify the default configuration accordingly
         if (!this.config.restoreSavedConfig(saveFileName(), this)) {
             MessageBox.popUpMessage(Resources.getSystem().getString(R.string.Config_Error_Msg),
@@ -199,6 +214,33 @@ public abstract class GameMainActivity extends Activity implements
             Logger.setDebugValue(false);
         }
     }// onCreate
+
+    private void startTimer() {
+        mCountDownTimer = new CountDownTimer(mTimerLeftInMillis, 1000) {
+            @Override
+            public void onTick(long l) {
+               mTimerLeftInMillis = l;
+               updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i("Game finished", "popup");
+            }
+        }.start();
+
+        mTimerRunning = true;
+    }
+
+    private void updateCountDownText(){
+        int minutes = (int)mTimerLeftInMillis / 1000 / 60;
+        int seconds = (int)mTimerLeftInMillis / 1000 % 60;
+
+        String timeLeftFormatted = String.format(Locale.getDefault(),"%02d:%02d", minutes,seconds);
+        mTextViewCountDownTimer.setText(timeLeftFormatted);
+
+    }
+
 
     /**
      * Returns the name of the configuration save-file.

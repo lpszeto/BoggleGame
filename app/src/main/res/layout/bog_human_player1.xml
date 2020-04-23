@@ -11,9 +11,37 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" />
 
-    <edu.up.cs301.game.GameFramework.animation.AnimationSurface
-        android:id="@+id/animationSurface"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:gravity="bottom|left"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/backspaceButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:text="Backspace"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/submissionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green"
+                android:gravity="bottom|left"
+                android:text="Go!"
+                android:textColor="@color/black"
+                android:textSize="50sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

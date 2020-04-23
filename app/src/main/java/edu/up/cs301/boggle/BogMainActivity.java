@@ -1,5 +1,7 @@
 package edu.up.cs301.boggle;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -17,7 +19,7 @@ import edu.up.cs301.game.R;
  */
 public class BogMainActivity extends GameMainActivity {
 	//Tag for logging
-	private static final String TAG = "TTTMainActivity";
+	private static final String TAG = "BogMainActivity";
 	public static final int PORT_NUMBER = 5213;
 
 	/**
@@ -43,13 +45,6 @@ public class BogMainActivity extends GameMainActivity {
 			}
 		});*/
 
-		// game of 33
-		playerTypes.add(new GamePlayerType("Local Human Player 2") {
-			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer2(name);
-			}
-		});
-
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
@@ -65,11 +60,11 @@ public class BogMainActivity extends GameMainActivity {
 		});
 
 		// Create a game configuration class for Tic-tac-toe
-		GameConfig defaultConfig = new GameConfig(playerTypes, 2,2, "Boggle", PORT_NUMBER);
+		GameConfig defaultConfig = new GameConfig(playerTypes, 1,2, "Boggle", PORT_NUMBER);
 
 		// Add the default players
 		defaultConfig.addPlayer("Human", 0); // yellow-on-blue GUI
-		defaultConfig.addPlayer("Computer", 3); // dumb computer player
+		defaultConfig.addPlayer("Computer", 2); // dumb computer player
 
 		// Set the initial information for the remote player
 		defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
@@ -90,7 +85,7 @@ public class BogMainActivity extends GameMainActivity {
 	 */
 	@Override
 	public LocalGame createLocalGame() {
-		return new BogLogalGame();
+		return new BogLogalGame(this);
 	}
 
 }
