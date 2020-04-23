@@ -130,7 +130,7 @@ public class DictionaryTrie {
         return;
     }
 
-    public void addWord(String word) { //breaks a string into chars and then adds to the trie. Smartly...
+    private void addWord(String word) { //breaks a string into chars and then adds to the trie. Smartly...
 //
 //        if(word.equals("abundantly")) {
 //            System.out.println(word);
