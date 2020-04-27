@@ -14,7 +14,6 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import edu.up.cs301.game.GameFramework.utilities.FlashSurfaceView;
-import edu.up.cs301.game.GameFramework.utilities.GameTimer;
 
 /**
  * A SurfaceView which allows which an animation to be drawn on it by a
@@ -187,7 +186,6 @@ public class BogSurfaceView extends FlashSurfaceView {
         Paint red = new Paint();
         red.setColor(Color.RED);
         red.setTextSize(50);
-
         //paints the Boggle Board
         for(int x = 0; x < 4; x++){
             for(int y = 0; y < 4; y++){

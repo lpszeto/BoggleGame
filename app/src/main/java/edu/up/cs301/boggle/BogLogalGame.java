@@ -26,9 +26,6 @@ public class BogLogalGame extends LocalGame {
 	// the game's state
 	protected BogState state;
 
-	Thread thread = new Thread();
-
-	protected CountDownTimer countDownTimer;
 	GameTimer gameTimer;
 
 	/**
@@ -39,26 +36,9 @@ public class BogLogalGame extends LocalGame {
 		// perform superclass initialization
 		super();
 
-//		int numGuiPlayers = 0;
-//		int i = 0;
-//		while(players == null) {
-//			i++;
-//			i--;
-//		}
-//		for (GamePlayer player : players){
-//			if (player.requiresGui()) {
-//				numGuiPlayers++;
-//			}
-//			i++;
-//		}
-//		if(numGuiPlayers > 1) {
-//			return;
-//		}
-
 		// create a new, shuffled BogState object
 		state = new BogState(context);
-		//state.localGuiPlayerId = i;
-		//start game clock
+
 
 		gameTimer = super.getTimer();
 		gameTimer.setInterval(1000);
@@ -75,7 +55,6 @@ public class BogLogalGame extends LocalGame {
 		} else {
 			state.secondsLeft--;
 		}
-		int i = 0;
 		if (state.minutesLeft < 0)  {
 			state.gameOver = true;
 			String msg = checkIfGameOver();

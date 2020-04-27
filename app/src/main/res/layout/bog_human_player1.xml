@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green"
                 android:gravity="bottom"
-                android:text="Restart"
+                android:text="play again"
                 android:textColor="@color/black"
                 android:textSize="30sp" />
 

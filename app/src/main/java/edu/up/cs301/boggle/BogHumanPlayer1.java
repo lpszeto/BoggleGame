@@ -42,6 +42,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     // the state
     private BogState state;
+    private BogLogalGame local;
 
     // the ID for the layout to use
     private int layoutId;
@@ -50,8 +51,15 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private Button backspaceButton;
 
-    private ArrayList<Point> wordPoints = new ArrayList<Point>();
+    private Button exitButton;
 
+    //private Button restartButton;
+
+    private ArrayList<Point> wordPoints = new ArrayList<Point>();
+/*TODO: word person is highlight
+*  use onTouch to track human finger input
+* call it in surfaceView
+* */
     //
     private String tempWord;
 
@@ -119,6 +127,14 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         backspaceButton = (Button) myActivity.findViewById(R.id.backspaceButton);
         Log.i("set listener", "Backspace button");
         backspaceButton.setOnClickListener(this);
+
+        exitButton = (Button) myActivity.findViewById(R.id.endgameButton);
+        Log.i("set listener", "Exit button");
+        exitButton.setOnClickListener(this);
+
+        /*restartButton = (Button) myActivity.findViewById(R.id.restartButton);
+        Log.i("set listener", "restart button");
+        restartButton.setOnClickListener(this);*/
     }
 
     /**
@@ -223,6 +239,18 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 surfaceView.playerWord = surfaceView.playerWord.substring(0, surfaceView.playerWord.length() - 1);
             }
         }
+        if(view.getId() == (R.id.endgameButton)){
+
+            Log.i("Exit", "End Game");
+            myActivity.finish();
+            System.exit(0);
+
+        }
+     /*  if(view.getId() == (R.id.restartButton)){
+            Log.i("Restart","End Game");
+
+            surfaceView.invalidate();
+        }*/
 
     }
 }
