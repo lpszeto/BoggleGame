@@ -372,12 +372,33 @@ public class BogSurfaceView extends FlashSurfaceView {
         p.setColor(foregroundColor());
         p.setTextSize((float)130);
 
+        Paint blue = new Paint();
+        blue.setColor(Color.CYAN);
+        blue.setTextSize((float)130);
+
+        boolean tilePressed = false;
+
        for(int x = 0; x < 4; x ++){
           for(int y = 0; y < 4; y ++){
               float top = 20 + (BOG_SQUARE_SIZE_PERCENT * getHeight() / 2) + (TIMER_HEIGHT_PERCENT * getHeight()) + (2 * BOG_BORDER_PERCENT * getHeight() +
                       (x * BOG_SQUARE_SIZE_PERCENT * getHeight()));
               float left = 30 + (BOG_BORDER_PERCENT * getWidth()) + (y * BOG_SQUARE_SIZE_PERCENT * getWidth());
-              g.drawText("" + tempBoard[x][y], left, top, p);
+
+              //Check if current tile is one of the buttons already pressed...
+              for (Point pressedTile : buttonsPressed) {
+                  if (pressedTile.x == y && pressedTile.y == x) {
+                      tilePressed = true;
+                      break;
+                  } else {
+                      tilePressed = false;
+                  }
+              }
+              if (tilePressed) {
+                  g.drawText("" + tempBoard[x][y], left, top, blue);
+              }
+              else {
+                  g.drawText("" + tempBoard[x][y], left, top, p);
+              }
            }
        }
 
