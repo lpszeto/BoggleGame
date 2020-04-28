@@ -8,27 +8,21 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.Log;
 
+import java.util.Random;
 import java.util.Vector;
 
 /**
- * A computerized tic-tac-toe player that recognizes an immediate win
- * or loss, and plays appropriately.  If there is not an immediate win
- * (which it plays) or loss (which it blocks), it moves randomly.
- * 
- * @author Steven R. Vegdahl 
- * @version September 2016
- * 
+ * A computerized Boggle player that finds all possible words, but to be a slightly easier player,
+ * only actually guesses 70% of the possible words on average.
+ *
+ * @author Connor J. Gilliland
+ * @version April 2020
+ *
  */
 public class BogComputerPlayer2 extends GameComputerPlayer {
 	//Tag for logging
 	private static final String TAG = "BogComputerPlayer2";
-	/**
-	 * instance variable that tells which piece am I playing ('X' or 'O').
-	 * This is set once the player finds out which player they are, in the
-	 * 'initAfterReady' method.
-	 */
 	protected char piece;
-	protected DictionaryTrie vocabulary;
 	private GuessTrie guessTrie;
 	protected boolean gotInfo = false;
 
@@ -41,23 +35,13 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 	public BogComputerPlayer2(String name) {
 		// invoke superclass constructor
 		super(name);
-
-		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~My Stuff~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		//generate guessTrie based on the boggle board.
-		//iterate through it comparing against the dictionary as we go...
-		//if the word is in the dictionary, make a series of moves in order to guess that word
-		//continue iterating through the guessTrie.
-
-
 	}// constructor
 
 	/**
-	 * perform any initialization that needs to be done after the player
+	 * perform no initialization after the player
 	 * knows what their game-position and opponents' names are.
 	 */
 	protected void initAfterReady() {
-		// initialize our piece
-		piece = "XO".charAt(playerNum);
 	}// initAfterReady
 
 	/**
@@ -80,11 +64,8 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 		gotInfo = true;
 		BogState myState = (BogState) info;
 
-		char [][] board = {{'a', 'x', 'a', 'l'}, {'z', 's', 'y', 'l'}, {'k', 's', 'u', 't'}, {'i', 'u', 'e', 'n'}};
-
 		if(myState.dictionaryTrie.top.size() >= 1) {
-			guessTrie = new GuessTrie(myState.getBoard(), myState.dictionaryTrie); //TODO: use this!!!
-			//guessTrie = new GuessTrie(board, myState.dictionaryTrie);
+			guessTrie = new GuessTrie(myState.getBoard(), myState.dictionaryTrie);
 
 			for(int i = 0; i < guessTrie.top.size(); i++) {
 				guessTrie.printWordsInTrie(guessTrie.top.get(i));
@@ -108,21 +89,13 @@ public class BogComputerPlayer2 extends GameComputerPlayer {
 					if(i == 0) {
 						end = true;
 					}
-					game.sendAction(new BogMoveAction(this, parentBasedWord.get(i).coords[0], parentBasedWord.get(i).coords[1], end));
+					Random ran = new Random();
+					if(ran.nextInt(10) < 8) {  //guess the word 70% of the time...
+						game.sendAction(new BogMoveAction(this, parentBasedWord.get(i).coords[0], parentBasedWord.get(i).coords[1], end));
+					}
 				}
 			}
 
 		}
-
-		// if it's not our move, ignore it
-//		if (myState.getWhoseMove() != this.playerNum) return;
-
-
-		// if we find a win, select that move
-//		Point win = findWin(myState, piece);
-//		if (win != null) {
-//			Logger.log("TTTComputer", "sending action");
-//			game.sendAction(new BogMoveAction(this, ));
-//		}
 	}
 }

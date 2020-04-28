@@ -248,11 +248,11 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             System.exit(0);
 
         }
-     /*  if(view.getId() == (R.id.restartButton)){
+       if(view.getId() == (R.id.restartButton)){
             Log.i("Restart","End Game");
-
+            state.restart = true;
             surfaceView.invalidate();
-        }*/
+        }
 
     }
 }

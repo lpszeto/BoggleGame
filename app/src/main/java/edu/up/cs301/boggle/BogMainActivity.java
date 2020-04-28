@@ -32,7 +32,7 @@ public class BogMainActivity extends GameMainActivity {
 		ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
 		// yellow-on-blue GUI
-		playerTypes.add(new GamePlayerType("Local Human Player 1") {
+		playerTypes.add(new GamePlayerType("Local Human Player") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer1(name, R.layout.bog_human_player1);
 			}
@@ -46,14 +46,21 @@ public class BogMainActivity extends GameMainActivity {
 		});*/
 
 		// dumb computer player
-		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
+		playerTypes.add(new GamePlayerType("Computer Player (50% difficulty)") {
 			public GamePlayer createPlayer(String name) {
 				return new BogComputerPlayer1(name);
 			}
 		});
 
 		// smarter computer player
-		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
+		playerTypes.add(new GamePlayerType("Computer Player (70% difficulty)") {
+			public GamePlayer createPlayer(String name) {
+				return new BogComputerPlayer2(name);
+			}
+		});
+
+		// smarter computer player
+		playerTypes.add(new GamePlayerType("Computer Player (god-player)") {
 			public GamePlayer createPlayer(String name) {
 				return new BogComputerPlayer2(name);
 			}

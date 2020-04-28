@@ -12,16 +12,15 @@ import java.util.Random;
 import java.util.Vector;
 
 /**
- * A computerized Boggle player that finds all possible words, but to be a slightly easier player,
- * only actually guesses 50% of the possible words on average.
+ * A computerized Boggle player that finds all possible words. This player is TERRIFYING.
  *
  * @author Connor J. Gilliland
  * @version April 2020
  *
  */
-public class BogComputerPlayer1 extends GameComputerPlayer {
+public class BogComputerPlayer3 extends GameComputerPlayer {
     //Tag for logging
-    private static final String TAG = "BogComputerPlayer1";
+    private static final String TAG = "BogComputerPlayer3";
     protected char piece;
     private GuessTrie guessTrie;
     protected boolean gotInfo = false;
@@ -32,7 +31,7 @@ public class BogComputerPlayer1 extends GameComputerPlayer {
      * @param name
      * 		the player's name
      */
-    public BogComputerPlayer1(String name) {
+    public BogComputerPlayer3(String name) {
         // invoke superclass constructor
         super(name);
     }// constructor

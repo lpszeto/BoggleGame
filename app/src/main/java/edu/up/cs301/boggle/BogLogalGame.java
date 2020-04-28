@@ -80,20 +80,26 @@ public class BogLogalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
-		Log.i("game", "DONE!" + state.gameOver);
-        String [] playerWords = {"", ""};
-        String message = "";
 
-        for(String i : state.getPlayer0Words()) {
-            playerWords[0] = playerWords[0] + i + ", ";
-        }
+		if(state.restart) {
+			while (true)
+			Log.i("game", "restart!!!!");
+		}
 
-        for(String i : state.getPlayer1Words()) {
-            playerWords[1] = playerWords[1] + i + ", ";
-        }
-
-		int gameWinner;
 		if (state.gameOver) {
+			Log.i("game", "DONE!" + state.gameOver);
+			String [] playerWords = {"", ""};
+			String message = "";
+
+			for(String i : state.getPlayer0Words()) {
+				playerWords[0] = playerWords[0] + i + ", ";
+			}
+
+			for(String i : state.getPlayer1Words()) {
+				playerWords[1] = playerWords[1] + i + ", ";
+			}
+
+			int gameWinner;
 			if (state.getPlayer0Score() >= state.getPlayer1Score()) {
 				gameWinner = 0;
             }
