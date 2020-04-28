@@ -204,6 +204,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             surfaceView.buttonsPressed = wordPoints;
             char c = state.getBoard()[p.y][p.x];
             surfaceView.addCharToWord(c);
+            surfaceView.invalidate();
             Logger.log("onTouch", "Boggle swipe made");
         }
 
@@ -237,6 +238,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 wordPoints.remove(wordPoints.size() - 1);
                 surfaceView.buttonsPressed = wordPoints;
                 surfaceView.playerWord = surfaceView.playerWord.substring(0, surfaceView.playerWord.length() - 1);
+                surfaceView.invalidate();
             }
         }
         if(view.getId() == (R.id.endgameButton)){
