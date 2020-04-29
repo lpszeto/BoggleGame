@@ -168,6 +168,11 @@ public class BogLogalGame extends LocalGame {
 		// get the 0/1 id of our player
 		int playerId = getPlayerIdx(tm.getPlayer());
 
+		if(playerNames.length > 1) {
+			state.multiPlayer = true;
+			sendAllUpdatedState();
+		}
+
 		if(state.localGuiPlayerId == -1) {
 			if(tm.getPlayer().requiresGui()) {
 				state.localGuiPlayerId = playerId;

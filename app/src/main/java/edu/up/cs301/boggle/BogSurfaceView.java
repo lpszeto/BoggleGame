@@ -145,7 +145,7 @@ public class BogSurfaceView extends FlashSurfaceView {
      * 		the color to paint the tic-tac-toe lines, and the X's and O's
      */
     public int backgroundColor() {
-        return Color.WHITE;
+        return Color.DKGRAY;
     }
 
     public int detailColor() { return Color.GREEN;}
@@ -246,13 +246,20 @@ public class BogSurfaceView extends FlashSurfaceView {
         float right2 = left2 + (PLAYER_RUNNING_WINS_WIDTH * width);
         g.drawRect(left1, top, right1, bottom, p);
         g.drawRect(left2, top, right2, bottom, p);
-        g.drawText("P1", left1, top - 10, d);
-        g.drawText("P2", left2, top - 10, red);
+
+//        g.drawText("P1", left1, top - 10, d);
+//        g.drawText("P2", left2, top - 10, red);
+        g.drawText("BOGGLE!", left1, top - 10, d);
+
         if(state != null) {
             if (state.getPlayer0Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
-                g.drawText("" + state.getPlayer0Wins(), left1 + 10, top + 50, d);
-                g.drawText("" + state.getPlayer1Wins(), left2 + 10, top + 50, red);
+                g.drawText("P1", left1 + 10, top + 50, d);
+                if(state.multiPlayer) {
+                    g.drawText("P2", left2 + 10, top + 50, red);
+                }
+//                g.drawText("" + state.getPlayer0Wins(), left1 + 10, top + 50, d);
+//                g.drawText("" + state.getPlayer1Wins(), left2 + 10, top + 50, red);
             }
         }
 
@@ -331,7 +338,9 @@ public class BogSurfaceView extends FlashSurfaceView {
             if (state.getPlayer0Words() != null) {
                 //if (state.getPlayer0Words().get(0) != null) {
                 g.drawText("" + state.getPlayer0Score(), left1 + 10, top + 50, d);
-                g.drawText("" + state.getPlayer1Score(), left2 + 10, top + 50, red);
+                if(state.multiPlayer) {
+                    g.drawText("" + state.getPlayer1Score(), left2 + 10, top + 50, red);
+                }
             }
         }
 

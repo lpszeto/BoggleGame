@@ -51,10 +51,11 @@ public class BogState extends GameState {
     private int player1Score = 0;
     private int player1Wins = 0;
     //Timing
-    protected int minutesLeft = 0;
-    protected int secondsLeft = 5;
+    protected int minutesLeft = 3;
+    protected int secondsLeft = 0;
     public boolean gameOver;
     public boolean restart = false;
+    public boolean multiPlayer = false;
     boolean isHuman = false;
 
     //GUI Info
@@ -121,6 +122,7 @@ public class BogState extends GameState {
         gameOver = original.gameOver;
         //GUI Info
         localGuiPlayerId = original.localGuiPlayerId;
+        multiPlayer = original.multiPlayer;
     }
 
     //player's newWord is assumed to be in the dictionary

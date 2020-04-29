@@ -56,11 +56,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
     //private Button restartButton;
 
     private ArrayList<Point> wordPoints = new ArrayList<Point>();
-/*TODO: word person is highlight
-*  use onTouch to track human finger input
-* call it in surfaceView
-* */
-    //
+
     private String tempWord;
 
 
@@ -248,11 +244,11 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
             System.exit(0);
 
         }
-       if(view.getId() == (R.id.restartButton)){
-            Log.i("Restart","End Game");
-            state.restart = true;
-            surfaceView.invalidate();
-        }
+//       if(view.getId() == (R.id.restartButton)){
+//            Log.i("Restart","End Game");
+//            state.restart = true;
+//            surfaceView.invalidate();
+//        }
 
     }
 }
