@@ -23,7 +23,7 @@ public class BogMainActivity extends GameMainActivity {
 	public static final int PORT_NUMBER = 5213;
 
 	/**
-	 * a tic-tac-toe game is for two players. The default is human vs. computer
+	 * Boggle default is human vs. computer
 	 */
 	@Override
 	public GameConfig createDefaultConfig() {
