@@ -36,7 +36,7 @@ public class BogState extends GameState {
     //valid characters
     public char [] alphabet = {'a','b','c','d','e','f','g','h','j','k','l','m','n','o','p','q','r','s','u','v','w','x','y','z'};
     //English dictionary data structure.
-    public DictionaryTrie dictionaryTrie = new DictionaryTrie();
+    public static DictionaryTrie dictionaryTrie = new DictionaryTrie();
     //Wordlist variables for player0
     private String player0NewWord = "";
     private Vector<Point> player0WordCoords = new Vector<Point>();
@@ -54,6 +54,8 @@ public class BogState extends GameState {
     protected int minutesLeft = 3;
     protected int secondsLeft = 0;
     public boolean gameOver;
+    public boolean restart = false;
+    public boolean multiPlayer = false;
     boolean isHuman = false;
 
     //GUI Info
@@ -77,12 +79,7 @@ public class BogState extends GameState {
         dictionaryTrie.readWordsFromFile(context);
         dictionaryTrie.initializeEnglishDictionaryTrie();
 
-//        for (int i = 0; i < dictionaryTrie.top.size(); i++) {
-//            dictionaryTrie.printWordsInTrie(dictionaryTrie.top.get(i));
-//        }
 
-        // make it player 0's move
-//        playerToMove = 0;
     }// constructor
 
     /**
@@ -125,6 +122,7 @@ public class BogState extends GameState {
         gameOver = original.gameOver;
         //GUI Info
         localGuiPlayerId = original.localGuiPlayerId;
+        multiPlayer = original.multiPlayer;
     }
 
     //player's newWord is assumed to be in the dictionary
@@ -212,7 +210,7 @@ public class BogState extends GameState {
     // * @param
    //  * 		piece the piece to place
      */
-    public void addPiece(int row, int col, int playerId) {
+   public void addPiece(int row, int col, int playerId) {
         // if we're out of bounds or anything, return;
         if (board == null || row < 0 || col < 0) return;
         if (row >= board.length || col >= board[row].length) return;
@@ -256,22 +254,21 @@ public class BogState extends GameState {
             player1WordCoords.add(new Point(row, col));
         }
 
-    }
+   }
 
-    public char[][] getBoard() {
+   public char[][] getBoard() {
         return board;
     }
-
-    public String getPlayerNewWord(int playerId) {
+   public String getPlayerNewWord(int playerId) {
         if(playerId == 0) {
             return player0NewWord;
         }
         else {
             return player1NewWord;
         }
-    }
+   }
 
-    public void resetPlayerNewWord(int playerId) {
+   public void resetPlayerNewWord(int playerId) {
         if(playerId == 0) {
             player0NewWord = "";
             player0WordCoords = new Vector<Point>();
@@ -281,28 +278,43 @@ public class BogState extends GameState {
             player1WordCoords = new Vector<Point>();
 
         }
-    }
+   }
 
-    public Vector<String> getPlayer0Words() {return player0Words;}
-    public Vector<String> getPlayer1Words() {return player1Words;}
+   public void incrementWins(int playerId) {
+        if(playerId == 0) {
+            player0Wins++;
+        }
+        else {
+            player1Wins++;
+        }
+        return;
+   }
 
-    public int getPlayer0Wins() {return player0Wins;};
-    public int getPlayer1Wins() {return player1Wins;}
+   public Vector<String> getPlayer0Words() {return player0Words;}
+   public Vector<String> getPlayer1Words() {return player1Words;}
 
-    public String getplayer0NewWord() {return player0NewWord;}
-    public String getPlayer1NewWord() {return player1NewWord;}
+   public int getPlayer0Wins() {return player0Wins;};
+   public int getPlayer1Wins() {return player1Wins;}
 
-    public int getPlayer0Score() {return player0Score;}
+   public String getplayer0NewWord() {return player0NewWord;}
+   public String getPlayer1NewWord() {return player1NewWord;}
+
+   public int getPlayer0Score() {return player0Score;}
 
 
-    public int getPlayer1Score() {return player1Score;}
-    public void shuffle(){
+   public int getPlayer1Score() {return player1Score;}
+   public void shuffle(){
         for (int i = 0; i < 4; i++) {
             Random ran = new Random();
             for (int j = 0; j < 4; j++) {
                 board[i][j] = alphabet[ran.nextInt(alphabet.length)];
             }
         }
-    }
+   }
+  /* public void reset(){
+       minutesLeft = 0;
+       secondsLeft = 5;
+       gameOver = false;
 
+   }*/
 }

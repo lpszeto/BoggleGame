@@ -28,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green"
                 android:text="Backspace"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="italic" />
 
             <Button
                 android:id="@+id/submissionButton"
@@ -36,9 +37,32 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/green"
                 android:gravity="bottom|left"
-                android:text="Go!"
+                android:text=" Go! "
                 android:textColor="@color/black"
-                android:textSize="50sp" />
+                android:textSize="50sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="30sp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/endgameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/red"
+                android:text="Exit"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="italic" />
+
         </LinearLayout>
 
     </LinearLayout>

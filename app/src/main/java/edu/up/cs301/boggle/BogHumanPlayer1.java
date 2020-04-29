@@ -42,6 +42,7 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     // the state
     private BogState state;
+    private BogLogalGame local;
 
     // the ID for the layout to use
     private int layoutId;
@@ -50,9 +51,12 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
 
     private Button backspaceButton;
 
+    private Button exitButton;
+
+    //private Button restartButton;
+
     private ArrayList<Point> wordPoints = new ArrayList<Point>();
 
-    //
     private String tempWord;
 
 
@@ -119,6 +123,14 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         backspaceButton = (Button) myActivity.findViewById(R.id.backspaceButton);
         Log.i("set listener", "Backspace button");
         backspaceButton.setOnClickListener(this);
+
+        exitButton = (Button) myActivity.findViewById(R.id.endgameButton);
+        Log.i("set listener", "Exit button");
+        exitButton.setOnClickListener(this);
+
+        /*restartButton = (Button) myActivity.findViewById(R.id.restartButton);
+        Log.i("set listener", "restart button");
+        restartButton.setOnClickListener(this);*/
     }
 
     /**
@@ -184,10 +196,11 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                     return true;
                 }
             }
-
             wordPoints.add(p);
+            surfaceView.buttonsPressed = wordPoints;
             char c = state.getBoard()[p.y][p.x];
             surfaceView.addCharToWord(c);
+            surfaceView.invalidate();
             Logger.log("onTouch", "Boggle swipe made");
         }
 
@@ -206,7 +219,8 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
                 int y = wordPoints.get(i).y;
                 if (i == wordPoints.size() - 1) {
                     end = true;
-                    wordPoints = new ArrayList<>();
+                    wordPoints = new ArrayList<Point>();
+                    surfaceView.buttonsPressed = wordPoints;
                 }
                 BogMoveAction action = new BogMoveAction(this, y, x, end);
                 Logger.log("onTouch", "Boggle swipe made");
@@ -218,9 +232,23 @@ public class BogHumanPlayer1 extends GameHumanPlayer implements View.OnTouchList
         if (view.getId() == R.id.backspaceButton) {
             if ((surfaceView.playerWord != null) && (surfaceView.playerWord.length() > 0) && (wordPoints.size() > 0)) {
                 wordPoints.remove(wordPoints.size() - 1);
+                surfaceView.buttonsPressed = wordPoints;
                 surfaceView.playerWord = surfaceView.playerWord.substring(0, surfaceView.playerWord.length() - 1);
+                surfaceView.invalidate();
             }
         }
+        if(view.getId() == (R.id.endgameButton)){
+
+            Log.i("Exit", "End Game");
+            myActivity.finish();
+            System.exit(0);
+
+        }
+//       if(view.getId() == (R.id.restartButton)){
+//            Log.i("Restart","End Game");
+//            state.restart = true;
+//            surfaceView.invalidate();
+//        }
 
     }
 }

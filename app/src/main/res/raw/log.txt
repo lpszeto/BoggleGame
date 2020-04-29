@@ -6,3 +6,4 @@ https://www.java67.com/2013/02/10-examples-of-hashmap-in-java-programming-tutori
 https://www.tutorialspoint.com/java/util/arrays_fill_boolean.htm
 https://stackoverflow.com/questions/3501126/how-to-draw-a-filled-triangle-in-android-canvas
 https://developer.android.com/reference/android/graphics/Path
+https://www.toptal.com/java/the-trie-a-neglected-data-structure

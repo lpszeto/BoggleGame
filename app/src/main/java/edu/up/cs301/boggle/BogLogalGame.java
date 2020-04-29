@@ -26,9 +26,6 @@ public class BogLogalGame extends LocalGame {
 	// the game's state
 	protected BogState state;
 
-	Thread thread = new Thread();
-
-	protected CountDownTimer countDownTimer;
 	GameTimer gameTimer;
 
 	/**
@@ -39,26 +36,9 @@ public class BogLogalGame extends LocalGame {
 		// perform superclass initialization
 		super();
 
-//		int numGuiPlayers = 0;
-//		int i = 0;
-//		while(players == null) {
-//			i++;
-//			i--;
-//		}
-//		for (GamePlayer player : players){
-//			if (player.requiresGui()) {
-//				numGuiPlayers++;
-//			}
-//			i++;
-//		}
-//		if(numGuiPlayers > 1) {
-//			return;
-//		}
-
 		// create a new, shuffled BogState object
 		state = new BogState(context);
-		//state.localGuiPlayerId = i;
-		//start game clock
+
 
 		gameTimer = super.getTimer();
 		gameTimer.setInterval(1000);
@@ -75,7 +55,6 @@ public class BogLogalGame extends LocalGame {
 		} else {
 			state.secondsLeft--;
 		}
-		int i = 0;
 		if (state.minutesLeft < 0)  {
 			state.gameOver = true;
 			String msg = checkIfGameOver();
@@ -101,26 +80,34 @@ public class BogLogalGame extends LocalGame {
 	 */
 	@Override
 	protected String checkIfGameOver() {
-		Log.i("game", "DONE!" + state.gameOver);
-        String [] playerWords = {"", ""};
-        String message = "";
 
-        for(String i : state.getPlayer0Words()) {
-            playerWords[0] = playerWords[0] + i + ", ";
-        }
+		if(state.restart) {
+			while (true)
+			Log.i("game", "restart!!!!");
+		}
 
-        for(String i : state.getPlayer1Words()) {
-            playerWords[1] = playerWords[1] + i + ", ";
-        }
 		if (state.gameOver) {
+			Log.i("game", "DONE!" + state.gameOver);
+			String [] playerWords = {"", ""};
+			String message = "";
+
+			for(String i : state.getPlayer0Words()) {
+				playerWords[0] = playerWords[0] + i + ", ";
+			}
+
+			for(String i : state.getPlayer1Words()) {
+				playerWords[1] = playerWords[1] + i + ", ";
+			}
+
+			int gameWinner;
 			if (state.getPlayer0Score() >= state.getPlayer1Score()) {
-				int gameWinner = 0;
-				message = playerNames[gameWinner] + " is the winner. \n\n";
+				gameWinner = 0;
             }
 			else {
-				int gameWinner = 1;
-                message = playerNames[gameWinner] + " is the winner. \n\n";
+				gameWinner = 1;
 			}
+			message = playerNames[gameWinner] + " is the winner. \n\n";
+			state.incrementWins(gameWinner);
 			int i = 0;
 
 			for (String x : playerNames) {
@@ -181,9 +168,22 @@ public class BogLogalGame extends LocalGame {
 		// get the 0/1 id of our player
 		int playerId = getPlayerIdx(tm.getPlayer());
 
+		if(playerNames.length > 1) {
+			state.multiPlayer = true;
+			sendAllUpdatedState();
+		}
+
 		if(state.localGuiPlayerId == -1) {
 			if(tm.getPlayer().requiresGui()) {
 				state.localGuiPlayerId = playerId;
+			}
+			else {   //Still works for two computer players, and is needed for font color.
+				if (playerId==0) {
+					state.localGuiPlayerId = 1;
+				}
+				else {
+					state.localGuiPlayerId = 0;
+				}
 			}
 		}
 		// get the row and column position of the player's move
