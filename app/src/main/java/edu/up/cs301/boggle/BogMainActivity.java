@@ -31,19 +31,12 @@ public class BogMainActivity extends GameMainActivity {
 		// Define the allowed player types
 		ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
-		// yellow-on-blue GUI
+		// GUI
 		playerTypes.add(new GamePlayerType("Local Human Player") {
 			public GamePlayer createPlayer(String name) {
 				return new BogHumanPlayer1(name, R.layout.bog_human_player1);
 			}
 		});
-
-		// red-on-yellow GUI (TEMPORARY SINCE WE ARE UNSURE OF FLIPPING THE SCREEN)
-		/*playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
-			public GamePlayer createPlayer(String name) {
-				return new BogHumanPlayer1(name, R.layout.bog_human_player1_flipped);
-			}
-		});*/
 
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (50% difficulty)") {
@@ -59,14 +52,14 @@ public class BogMainActivity extends GameMainActivity {
 			}
 		});
 
-		// smarter computer player
+		// smartest computer player
 		playerTypes.add(new GamePlayerType("Computer Player (god-player)") {
 			public GamePlayer createPlayer(String name) {
-				return new BogComputerPlayer2(name);
+				return new BogComputerPlayer3(name);
 			}
 		});
 
-		// Create a game configuration class for Tic-tac-toe
+		// Create a game configuration class for Boggle
 		GameConfig defaultConfig = new GameConfig(playerTypes, 1,2, "Boggle", PORT_NUMBER);
 
 		// Add the default players
@@ -74,7 +67,7 @@ public class BogMainActivity extends GameMainActivity {
 		defaultConfig.addPlayer("Computer", 2); // dumb computer player
 
 		// Set the initial information for the remote player
-		defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
+//		defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
 
 		//done!
 		return defaultConfig;
